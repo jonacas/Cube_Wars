@@ -268,7 +268,7 @@ public class EnemyMovement : MonoBehaviour {
 		if (Vector3.Distance (transform.position, playerReference.transform.position) < thresholdEnemyCapture 
 			&& currentState == EnemyState.InCombat)
 		{
-			EndGamePanelManager.currentInstance.EndGame ();
+			//EndGamePanelManager.currentInstance.EndGame ();
 			PlayerCatched ();
 			//print ("Hemos parado corutina del enemigo");
 		}

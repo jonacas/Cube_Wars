@@ -16,7 +16,7 @@ public struct Pareja
     }
 }
 
-public class Node
+public class Node : MonoBehaviour
 {
     public const int NO_ESTA_EN_LISTA_ABIERTOS = -1, EN_LISTA_CERRADOS = -2;
 
