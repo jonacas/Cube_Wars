@@ -29,6 +29,8 @@ public class Node
 	private bool water;
     public int fil, col;
 
+	public float influence;
+
     //variables para cola prioridad
     private float _prioridad;
     private int _indiceCola;
@@ -118,7 +120,6 @@ public class Node
         set;
     }
 
-
     public Node(Vector3 pos, bool water)
     {
         queuePosition = NO_ESTA_EN_LISTA_ABIERTOS;
@@ -160,6 +161,43 @@ public class Node
     {
         arrayVecinos = vecinos;
     }
+
+
+	public void setInfluence(int steps)
+	{
+		for (int i = 0; i < arrayVecinos.Count; i++) 
+		{
+			setRecursiveInfluence (arrayVecinos [i].nodo, steps, steps);
+		}
+
+
+	}
+
+	private void setRecursiveInfluence(Node actualNode, int remainingSteps, int totalSteps)
+	{
+		if (remainingSteps == 0) {
+			return;
+		} 
+		else if (actualNode == null) 
+		{
+			Debug.Log ("Deberia haber un null aqui?");
+			return;
+		}
+		else
+		{
+			float newInfluence = remainingSteps / totalSteps;
+			if (actualNode.influence < newInfluence) 
+			{
+				actualNode.influence = newInfluence;
+			}
+
+			for (int i = 0; i < arrayVecinos.Count; i++) 
+			{
+				setRecursiveInfluence (actualNode.arrayVecinos[i].nodo, remainingSteps - 1, totalSteps);		
+			}
+		}
+	}
+
 
 
 

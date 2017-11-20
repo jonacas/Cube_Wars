@@ -66,6 +66,8 @@ public class CreacionGrafo : MonoBehaviour {
             {
                 testPos.x = this.transform.position.x + incrementoX * j;
                 testPos.z = this.transform.position.z + incrementoZ * i;
+
+				//==============TEST DE SPAWNEO DE GRAFO, COMENTAR PARA CODIGO FINAL==============
 				Instantiate(GO_NodoBase, new Vector3(this.transform.position.x + incrementoX * j, 
 					this.transform.position.y, this.transform.position.z + incrementoZ * i),
 					GO_NodoBase.transform.rotation);
