@@ -66,6 +66,9 @@ public class CreacionGrafo : MonoBehaviour {
             {
                 testPos.x = this.transform.position.x + incrementoX * j;
                 testPos.z = this.transform.position.z + incrementoZ * i;
+				Instantiate(GO_NodoBase, new Vector3(this.transform.position.x + incrementoX * j, 
+					this.transform.position.y, this.transform.position.z + incrementoZ * i),
+					GO_NodoBase.transform.rotation);
 
                 //comprobamos si el nodo estaria dentro o tocando un obstaculo
                 if (Physics.OverlapSphere(testPos, radioTest, obstacleLayer).Length > 0)
