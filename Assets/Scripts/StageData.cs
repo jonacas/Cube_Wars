@@ -23,6 +23,12 @@ public class StageData : MonoBehaviour
     public GameObject[] tobeInteractedList;
     private bool[] pressedButtons = { false, false, false };
 
+	public enum resourceType
+	{
+		Army, 
+		Resource, 
+		Building
+	};
 
     void Awake()
     {

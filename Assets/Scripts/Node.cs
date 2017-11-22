@@ -29,7 +29,9 @@ public class Node
 	private bool water;
     public int fil, col;
 
-	public float influence;
+	public float influenceView;
+	public float influenceResources;
+	public float influenceEnemy;
 
     //variables para cola prioridad
     private float _prioridad;
@@ -163,17 +165,33 @@ public class Node
     }
 
 
-	public void setInfluence(int steps)
+	public void setInfluence(StageData.resourceType resourceType)
 	{
-		for (int i = 0; i < arrayVecinos.Count; i++) 
+		int steps;
+		switch (resourceType) 
 		{
-			setRecursiveInfluence (arrayVecinos [i].nodo, steps, steps);
+			case StageData.resourceType.Army:
+			{
+				steps = 7;
+				setRecursiveInfluenceView (this, steps, steps);
+				break;
+			}
+		case StageData.resourceType.Building:
+			{
+				steps = 5;
+				setRecursiveInfluenceView (this, steps, steps);
+				break;
+			}
+		case StageData.resourceType.Resource:
+			{
+				steps = 3;
+				setRecursiveInfluenceResource (this, steps, steps);
+				break;
+			}
 		}
-
-
 	}
 
-	private void setRecursiveInfluence(Node actualNode, int remainingSteps, int totalSteps)
+	private void setRecursiveInfluenceView(Node actualNode, int remainingSteps, int totalSteps)
 	{
 		if (remainingSteps == 0) {
 			return;
@@ -186,14 +204,64 @@ public class Node
 		else
 		{
 			float newInfluence = remainingSteps / totalSteps;
-			if (actualNode.influence < newInfluence) 
+			if (actualNode.influenceView < newInfluence) 
 			{
-				actualNode.influence = newInfluence;
+				actualNode.influenceView = newInfluence;
 			}
 
 			for (int i = 0; i < arrayVecinos.Count; i++) 
 			{
-				setRecursiveInfluence (actualNode.arrayVecinos[i].nodo, remainingSteps - 1, totalSteps);		
+				setRecursiveInfluenceView (actualNode.arrayVecinos[i].nodo, remainingSteps - 1, totalSteps);		
+			}
+		}
+	}
+
+	private void setRecursiveInfluenceResource(Node actualNode, int remainingSteps, int totalSteps)
+	{
+		if (remainingSteps == 0) {
+			return;
+		} 
+		else if (actualNode == null) 
+		{
+			Debug.Log ("Deberia haber un null aqui?");
+			return;
+		}
+		else
+		{
+			float newInfluence = remainingSteps / totalSteps;
+			if (actualNode.influenceResources < newInfluence) 
+			{
+				actualNode.influenceResources = newInfluence;
+			}
+
+			for (int i = 0; i < arrayVecinos.Count; i++) 
+			{
+				setRecursiveInfluenceView (actualNode.arrayVecinos[i].nodo, remainingSteps - 1, totalSteps);		
+			}
+		}
+	}
+
+	private void setRecursiveInfluenceEnemy(Node actualNode, int remainingSteps, int totalSteps)
+	{
+		if (remainingSteps == 0) {
+			return;
+		} 
+		else if (actualNode == null) 
+		{
+			Debug.Log ("Deberia haber un null aqui?");
+			return;
+		}
+		else
+		{
+			float newInfluence = remainingSteps / totalSteps;
+			if (actualNode.influenceEnemy < newInfluence) 
+			{
+				actualNode.influenceEnemy = newInfluence;
+			}
+
+			for (int i = 0; i < arrayVecinos.Count; i++) 
+			{
+				setRecursiveInfluenceView (actualNode.arrayVecinos[i].nodo, remainingSteps - 1, totalSteps);		
 			}
 		}
 	}

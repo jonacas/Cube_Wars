@@ -51,9 +51,12 @@ public class CreacionGrafo : MonoBehaviour {
         Node nodoActual;
         Node[,] nodeMap;
 
+		GameObject[,] testGameObjectMap;
+
         //agua.SetActive (false);
         nodeMap = new Node[filas, columnas]; //almacena los _nodos para asignar vecinos
 
+		testGameObjectMap = new GameObject[filas, columnas];
 
         esquina = GO_Esquina.transform.position;
 
@@ -68,7 +71,7 @@ public class CreacionGrafo : MonoBehaviour {
                 testPos.z = this.transform.position.z + incrementoZ * i;
 
 				//==============TEST DE SPAWNEO DE GRAFO, COMENTAR PARA CODIGO FINAL==============
-				Instantiate(GO_NodoBase, new Vector3(this.transform.position.x + incrementoX * j, 
+				GameObject testInstance = Instantiate(GO_NodoBase, new Vector3(this.transform.position.x + incrementoX * j, 
 					this.transform.position.y, this.transform.position.z + incrementoZ * i),
 					GO_NodoBase.transform.rotation);
 
@@ -91,6 +94,9 @@ public class CreacionGrafo : MonoBehaviour {
                 aux.fil = i;
                 aux.col = j;
                 nodeMap[i, j] = aux;
+
+				testGameObjectMap [i, j] = testInstance;
+
             }
         }
 
