@@ -49,7 +49,7 @@ public class CreacionGrafo : MonoBehaviour {
         Node[] vectorAux = new Node[8];
         Node aux;
         Node nodoActual;
-        Node[,] nodeMap;
+        //Node[,] nodeMap;
 
 		GameObject[,] testGameObjectMap;
 

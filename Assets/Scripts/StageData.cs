@@ -23,6 +23,11 @@ public class StageData : MonoBehaviour
     public GameObject[] tobeInteractedList;
     private bool[] pressedButtons = { false, false, false };
 
+	public Node[,] grafoTotal;
+	public Node[,] grafoJugador1;
+	public Node[,] grafoJugador2;
+
+
 	public enum resourceType
 	{
 		Army, 
@@ -35,11 +40,30 @@ public class StageData : MonoBehaviour
         currentInstance = this;
         ComunicationsEnabeled = true;
         aStar = this.GetComponent<AEstrella>();
+		grafoTotal = CG.nodeMap;
+		grafoJugador1 = grafoTotal;
+		grafoJugador2 = grafoTotal;
     }
     public GameObject GetPlayer()
     {
         return player;
     }
+
+	public Node GetNodeFromPosition(Vector3 requester)
+	{
+		///en base a las coordenadas se obtiene la fila y columna de los nodos
+		int initX = (int)Mathf.Round(requester.x / CG.incrementoX);
+		int initZ = (int)Mathf.Round(requester.z / CG.incrementoZ);
+
+		if (initX < 0 || initX >= CG.filas || initZ < 0 || initZ >= CG.columnas) 
+		{
+			return null;
+		}
+		return grafoTotal [initZ, initX];
+
+
+	}
+
     public List<Vector3> GetPathToTarget(Vector3 requester, Vector3 target, EnemyMovement solicitante)
     {
         List<Transform> camino;
