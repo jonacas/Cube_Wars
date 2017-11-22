@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Accion : MonoBehaviour {
+interface IAccion{
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    /// ID DE LA ACCION
+    /// especifica el tipo de accion para no hacer castings con todos los tipos posibles
+    int idAccion {get;}
+
+    int costeAccion { get; } //coste en puntosDeAccion
+    int duracionEnTurnos { get; }
+    int alcance { get; }
+
+    int GetCoste();
+    int GetDuracion();
+    int GetAlcance();
+    int GetIdAccion();
 }
