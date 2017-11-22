@@ -46,6 +46,9 @@ public class StageData : MonoBehaviour
         List<Pareja> listaVecinosAux = new List<Pareja>();
 
         Node inicio, final;
+
+        /*PARTE QUE DETERMINA EL NODO*/
+        ///en base a las coordenadas se obtiene la fila y columna de los nodos
         int initX = (int)Mathf.Round(requester.x / CG.incrementoX);
         int initZ = (int)Mathf.Round(requester.z / CG.incrementoZ);
         int finalX = (int)Mathf.Round(target.x / CG.incrementoX);
@@ -53,6 +56,8 @@ public class StageData : MonoBehaviour
 
         if (initX < 0 || initX >= CG.filas || initZ < 0 || initZ >= CG.columnas || finalX < 0 || finalX >= CG.filas || finalZ < 0 || finalZ >= CG.columnas)
             return null;
+
+        /*FIN DE PARTE QUE DETERMINA EL NODO*/
 
         Node closestNode = null;
 
