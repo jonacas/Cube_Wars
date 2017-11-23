@@ -26,4 +26,14 @@ public class Capital :Unidad {
         else
             Debug.LogError("Se ha intentado modificar la posicion de la capital: " + IdJugador);
     }
+
+    public override bool RecibirAtaque(int danoBruto)
+    {
+ 	    bool destruido = base.RecibirAtaque(danoBruto);
+
+        //codigo para informar de destruccion de capital
+        if (destruido)
+            Partida.GetPartidaActual().DescativarJugadorYComprobarVictoria(IdJugador);
+        return destruido;
+    }
 }

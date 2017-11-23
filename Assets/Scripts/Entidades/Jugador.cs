@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Jugador
+public abstract class Jugador
 {
 
     #region CONSTANTES
@@ -28,6 +28,8 @@ public class Jugador
     int piedra;
     int comida;
     #endregion
+
+    bool activo = true; //indica si el jugador ha perdido o si sigue jugando
 
     public Jugador(int id, Unidad capital)
     {
@@ -70,5 +72,17 @@ public class Jugador
     {
         return capital.Vida;
     }
+
+    public void CapitalDestruida()
+    {
+        activo = false;
+    }
+
+    public bool GetActivo()
+    {
+        return activo;
+    }
+
+    public abstract void Turno(ref bool turnoFinalizado);
 
 }

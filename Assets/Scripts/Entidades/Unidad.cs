@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Unidad : MonoBehaviour{
+public abstract class Unidad : MonoBehaviour{
+
+    Node nodo; //el nodo sobre el que se situa la unidad;
 
     Vector3 posicion;
     public Vector3 Posicion
@@ -58,7 +60,11 @@ public class Unidad : MonoBehaviour{
     /*Atributos de habilidad pasiva*/
     /*Esta accion se ejecuta en cada turno sin coste*/
     int alcance;
-    IAccion accionPasiva;
+    Accion accionPasiva;
+
+    /*Lista de acciones que se pueden realizar en los turnos*/
+    List<Accion> acciones;
+    abstract public void llenarListaAccione(); 
 
     /*public Unidad(Vector3 pos, int saludMax, float defensaMax, int idJugador)
     {
@@ -69,5 +75,17 @@ public class Unidad : MonoBehaviour{
         defensaMaxima = defensaMax;
         this.idJugador = idJugador;
     }*/
+
+    public virtual bool RecibirAtaque(int danoBruto)
+    {
+        int dano = danoBruto - (int) (danoBruto * defensa / 100);
+        if (vida <= 0)
+        {
+            vida = 0;
+            return true;
+        }
+        else
+            return false;
+    }
 
 }
