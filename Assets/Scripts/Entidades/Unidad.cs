@@ -13,7 +13,7 @@ public abstract class Unidad : MonoBehaviour{
          set { posicion = value; }
     }
 
-    int saludMaxima;
+    protected int saludMaxima;
     public int SaludMaxima
     {
         get { return saludMaxima; }
@@ -28,7 +28,7 @@ public abstract class Unidad : MonoBehaviour{
     }
 
 
-    float defensaMaxima;
+    protected float defensaMaxima;
     public float DefensaMaxima
     {
         get { return defensaMaxima; }
@@ -42,6 +42,8 @@ public abstract class Unidad : MonoBehaviour{
     }
 
     /*FALTAN ATRIBUTOS INFLUENCIAS*/
+
+
     private int idJugador = -1;
 
     public int IdJugador
@@ -56,14 +58,29 @@ public abstract class Unidad : MonoBehaviour{
         }
     }
 
+    //identifica el tipo de unidad para el casting
+    protected int idUnidad;
+    public int IdUnidad
+    {
+        get;
+    }
 
+    protected int vision;
+    public int Vision
+    {
+        get;
+    }
     /*Atributos de habilidad pasiva*/
     /*Esta accion se ejecuta en cada turno sin coste*/
     int alcance;
-    Accion accionPasiva;
+    protected Accion accionPasiva;
 
     /*Lista de acciones que se pueden realizar en los turnos*/
-    List<Accion> acciones;
+    protected List<Accion> acciones;
+    public List<Accion> Acciones
+    {
+        get;
+    }
     //abstract public void llenarListaAccione(); 
 
     /*public Unidad(Vector3 pos, int saludMax, float defensaMax, int idJugador)
@@ -88,4 +105,9 @@ public abstract class Unidad : MonoBehaviour{
             return false;
     }
 
+
+    public void ResaltarCasillasAlAlcance(int alcance)
+    {
+        //este codigo debe resaltar las casillas del tablero que entran dentro del rango de una de las acciones
+    }
 }

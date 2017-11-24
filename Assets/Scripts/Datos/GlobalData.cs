@@ -9,4 +9,9 @@ public static class GlobalData
     public const int MAX_DIFICULTAD = 5;
 
     public const int DEFENSA_MAXIMA = 100; //con esta defensa, una unidad es invulnerable al dano
+
+
+    #region ID UNIDADES
+    public const int ID_EXPLORADOR = 0;
+    #endregion
 }
