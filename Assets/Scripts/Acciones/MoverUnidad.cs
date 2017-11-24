@@ -5,11 +5,11 @@ using UnityEngine;
 public class MoverUnidad :  Accion{
 
     GameObject obj;
-    Vector3[] ruta;
+    List<Vector3> ruta;
     int posicionActualRuta;
     float margen = 1.0f; //Margen para indicar que se está lo suficientemente cerca de un punto.
 
-    public bool Ejecutar(GameObject ob, Vector3[] ruta)
+    public bool Ejecutar(GameObject ob, List<Vector3> ruta)
     {
         Unidad unidadActual = GetComponent<Unidad>();
         if (Partida.GetPartidaActual().Jugadores[unidadActual.IdJugador].RestarPuntosDeAccion(costeAccion))
@@ -27,7 +27,7 @@ public class MoverUnidad :  Accion{
 
     IEnumerator RecorrerRuta()
     {
-        while(posicionActualRuta >= ruta.Length)
+        while(posicionActualRuta >= ruta.Count)
         {
             obj.transform.position = Vector3.Lerp(ruta[posicionActualRuta], ruta[posicionActualRuta + 1], Time.deltaTime);
             if (!(Vector3.Distance(obj.transform.position, ruta[posicionActualRuta + 1]) > margen))
@@ -38,7 +38,7 @@ public class MoverUnidad :  Accion{
             {
                 posicionActualRuta++;
             }
-            if (posicionActualRuta > ruta.Length)
+            if (posicionActualRuta > ruta.Count)
             {
                 StopCoroutine("RecorrerRuta");
             }
