@@ -83,6 +83,17 @@ public abstract class Jugador
         return activo;
     }
 
+    public bool RestarPuntosDeAccion(int valor)
+    {
+        if ((puntosDeAccion - valor) < 0)
+            return false;
+        else
+        {
+            puntosDeAccion -= valor;
+            return true;
+        }
+    }
+
     public abstract void Turno(ref bool turnoFinalizado);
 
 }
