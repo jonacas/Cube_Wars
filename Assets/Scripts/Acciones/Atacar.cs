@@ -4,60 +4,65 @@ using UnityEngine;
 using System;
 
 public class Atacar : Accion {
-    
+
     public bool Ejecutar(GameObject objetivo, int danyo)
-    {        
-        if(Partida)
-        //Hay que controlar si el objetivo está al alcance de la unidad que ataca cuando se llama a esta funcion.
-        try
+    {
+        Unidad unidadActual = GetComponent<Unidad>();
+        if (Partida.GetPartidaActual().Jugadores[unidadActual.IdJugador].RestarPuntosDeAccion(costeAccion))
         {
-            Unidad atacante = gameObject.GetComponent<Unidad>();
-            Unidad victima = objetivo.GetComponent<Unidad>();
-
-            victima.RecibirAtaque(danyo);
-
-            // PA CUANDO SE IMPLEMENTEN LAS UNIDADES QUE ATACAN, PODER CONTRATACAR
-
-            /*
+            //Hay que controlar si el objetivo está al alcance de la unidad que ataca cuando se llama a esta funcion.
             try
             {
-                Guerrero unidadQueContrataca = (Guerrero)victima;
-            }
-            catch (Exception e)
-            {
+                Unidad atacante = gameObject.GetComponent<Unidad>();
+                Unidad victima = objetivo.GetComponent<Unidad>();
+
+                victima.RecibirAtaque(danyo);
+
+                // PA CUANDO SE IMPLEMENTEN LAS UNIDADES QUE ATACAN, PODER CONTRATACAR
+
+                /*
                 try
                 {
-                    Arquero unidadQueContrataca = (Arquero)victima;
+                    Guerrero unidadQueContrataca = (Guerrero)victima;
                 }
                 catch (Exception e)
                 {
                     try
                     {
-                        Torre unidadQueContrataca = (Torre)victima;
+                        Arquero unidadQueContrataca = (Arquero)victima;
                     }
                     catch (Exception e)
                     {
-                        print("La unidad atacada no puede contratacar");
+                        try
+                        {
+                            Torre unidadQueContrataca = (Torre)victima;
+                        }
+                        catch (Exception e)
+                        {
+                            print("La unidad atacada no puede contratacar");
+                        }
                     }
-                }
 
-            }
-            try
-            {
-                atacante.RecibirAtaque(victima.GetDanyoContraataque());
+                }
+                try
+                {
+                    atacante.RecibirAtaque(victima.GetDanyoContraataque());
+                }
+                catch (Exception e)
+                {
+
+                }*/
+
+                //Ejecutar alguna animacion en caso de que se hiciera, para ver que se está atacando y no que haya solo dos cubos quietos.
+                return true;
             }
             catch (Exception e)
             {
-
-            }*/
-
-            //Ejecutar alguna animacion en caso de que se hiciera, para ver que se está atacando y no que haya solo dos cubos quietos.
-            return true;
+                Debug.LogError("Se está intentando atacar a algo sin el componente Unidad");
+                return false;
+            }
         }
-        catch (Exception e) {
-            Debug.LogError("Se está intentando atacar a algo sin el componente Unidad");
-            return false;
-        }
+        return false;
     }
 
 }

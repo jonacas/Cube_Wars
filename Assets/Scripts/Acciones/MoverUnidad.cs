@@ -11,16 +11,18 @@ public class MoverUnidad :  Accion{
 
     public bool Ejecutar(GameObject ob, Vector3[] ruta)
     {
+        Unidad unidadActual = GetComponent<Unidad>();
+        if (Partida.GetPartidaActual().Jugadores[unidadActual.IdJugador].RestarPuntosDeAccion(costeAccion))
+        {
+            obj = ob;
+            this.ruta = ruta; //IMPORTANTE CONTROLAR DESDE FUERA QUE LLEGUE UNA RUTA VIABLE, ES DECIR, QUE EL OBJETIVO ESTÉ AL ALCANCE DE LA UNIDAD QUE SE QUIERE MOVER. AQUI NO SE CONTROLA ESE ERROR.
 
-        obj = ob;
-        this.ruta = ruta;
+            StartCoroutine("RecorrerRuta");
 
-        StartCoroutine("RecorrerRuta");
-
-        // a ver como manejamos lo que devolvemos
-
-        return false;
-
+            return true;
+        }
+        else
+            return false;
     }
 
     IEnumerator RecorrerRuta()
