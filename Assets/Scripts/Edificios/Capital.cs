@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Capital :Unidad {
+public class Capital : Unidad {
 
     private const int SALUD_MAX = 500;
     private const int DEFENSA_MAX = 100;
@@ -35,5 +35,10 @@ public class Capital :Unidad {
         if (destruido)
             Partida.GetPartidaActual().DescativarJugadorYComprobarVictoria(IdJugador);
         return destruido;
+    }
+
+    public void llenarListaAcciones()
+    {
+        throw new System.NotImplementedException();
     }
 }
