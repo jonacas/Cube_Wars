@@ -14,6 +14,8 @@ public class Partida : MonoBehaviour{
 
     Jugador[] jugadores;
 
+    public Jugador[] Jugadores { get { return jugadores; } }
+
     void Awake()
     {
         partidaActual = this;
