@@ -94,6 +94,25 @@ public abstract class Jugador
         }
     }
 
+    public void SumarRecursos(int idRecurso, int cantidad)
+    {
+        switch (idRecurso)
+        {
+            case GlobalData.ID_COMIDA:
+                comida += cantidad;
+                break;
+            case GlobalData.ID_MADERA:
+                madera += cantidad;
+                break;
+            case GlobalData.ID_METAL:
+                metal += cantidad;
+                break;
+            case GlobalData.ID_PIEDRA:
+                piedra += cantidad;
+                break;
+        }
+    }
+
     public abstract void Turno(ref bool turnoFinalizado);
 
 }
