@@ -17,6 +17,22 @@ public class MapResource : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+
+
+        if (Input.GetKeyDown(KeyCode.D)) {
+
+            StageData.currentInstance.GetNodeFromPosition(transform.position).setInfluence(StageData.resourceType.Resource);
+
+
+        }
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+
+            StageData.currentInstance.GetNodeFromPosition(transform.position).setInfluence(StageData.resourceType.Army);
+
+
+        }
+
+    }
 }

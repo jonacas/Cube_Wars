@@ -29,9 +29,9 @@ public class Node
 	private bool water;
     public int fil, col;
 
-	public float influenceView;
-	public float influenceResources;
-	public float influenceEnemy;
+	public float influenceView = 0f;
+	public float influenceResources = 0f;
+	public float influenceEnemy = 0f;
 
     //variables para cola prioridad
     private float _prioridad;
@@ -172,7 +172,7 @@ public class Node
 		{
 			case StageData.resourceType.Army:
 			{
-				steps = 7;
+				steps = 5;
 				setRecursiveInfluenceView (this, steps, steps);
 				break;
 			}
@@ -191,9 +191,10 @@ public class Node
 		}
 	}
 
-	private void setRecursiveInfluenceView(Node actualNode, int remainingSteps, int totalSteps)
+	private void setRecursiveInfluenceView(Node actualNode, float remainingSteps, float totalSteps)
 	{
-		if (remainingSteps == 0) {
+        Debug.Log("EntraVie");
+        if (remainingSteps == 0) {
 			return;
 		} 
 		else if (actualNode == null) 
@@ -207,18 +208,22 @@ public class Node
 			if (actualNode.influenceView < newInfluence) 
 			{
 				actualNode.influenceView = newInfluence;
+                Debug.Log("Conseguido");
 			}
 
 			for (int i = 0; i < arrayVecinos.Count; i++) 
 			{
-				setRecursiveInfluenceView (actualNode.arrayVecinos[i].nodo, remainingSteps - 1, totalSteps);		
+                
+				setRecursiveInfluenceView (actualNode.arrayVecinos[i].nodo, remainingSteps - 1, totalSteps);
+                Debug.Log("Entra");
 			}
 		}
 	}
 
-	private void setRecursiveInfluenceResource(Node actualNode, int remainingSteps, int totalSteps)
+	private void setRecursiveInfluenceResource(Node actualNode, float remainingSteps, float totalSteps)
 	{
-		if (remainingSteps == 0) {
+        Debug.Log("EntraRes");
+        if (remainingSteps == 0) {
 			return;
 		} 
 		else if (actualNode == null) 
@@ -232,7 +237,8 @@ public class Node
 			if (actualNode.influenceResources < newInfluence) 
 			{
 				actualNode.influenceResources = newInfluence;
-			}
+                Debug.Log("Conseguido");
+            }
 
 			for (int i = 0; i < arrayVecinos.Count; i++) 
 			{
@@ -241,9 +247,10 @@ public class Node
 		}
 	}
 
-	private void setRecursiveInfluenceEnemy(Node actualNode, int remainingSteps, int totalSteps)
+	private void setRecursiveInfluenceEnemy(Node actualNode, float remainingSteps, float totalSteps)
 	{
-		if (remainingSteps == 0) {
+        Debug.Log("EntraEne");
+        if (remainingSteps == 0) {
 			return;
 		} 
 		else if (actualNode == null) 
