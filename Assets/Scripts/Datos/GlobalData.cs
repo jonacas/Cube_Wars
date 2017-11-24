@@ -14,4 +14,11 @@ public static class GlobalData
     #region ID UNIDADES
     public const int ID_EXPLORADOR = 0;
     #endregion
+
+    #region ID RECURSOS
+    public const int ID_MADERA = 0;
+    public const int ID_METAL = 1;
+    public const int ID_PIEDRA = 2;
+    public const int ID_COMIDA = 3;
+    #endregion
 }
