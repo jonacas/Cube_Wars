@@ -28,11 +28,34 @@ public class CreacionGrafo : MonoBehaviour {
 	public float incrementoX, incrementoZ;
     public Node[,] grafo1, grafo2;
 
+	//=== VALORES A TENER EN CUENTA PARA UNA CORRECTA CREACION DEL GRAFO:
+	//=== ESCALA DE LA CASILLA, SEGUN MODELADO ORIGINAL: 1.075, 1.075, 0.5
+	//=== DATOS CREACION DEL GRAFO: 100 filas, 100 columnas, radio test 2
+	//== Posicion de esquina: 300, 0, 300
+
+	public GameObject casilla;
+	public GameObject[,] tablero;
+	/*
+	 * public float scaleCasillaX = 1f;
+	public float scaleCasillaY = 1f;
+	public float scaleCasillaZ = 0.5f;
+	*/
 
     void Awake()
     {
         nodeMap = CrearGrafo();
     }
+
+	/*void Update()
+	{
+		for (int i = 0; i < filas - 1; i++) 
+		{
+			for (int j = 0; i < columnas - 1; j++) 
+			{
+				tablero [i, j].transform.localScale = new Vector3 (scaleCasillaX, scaleCasillaY, scaleCasillaZ);
+			}
+		}
+	}*/
 
 	// Use this for initialization
     public Node[,] CrearGrafo()
@@ -57,6 +80,7 @@ public class CreacionGrafo : MonoBehaviour {
         nodeMap = new Node[filas, columnas]; //almacena los _nodos para asignar vecinos
 
 		testGameObjectMap = new GameObject[filas, columnas];
+		tablero = new GameObject[filas, columnas];
 
         esquina = GO_Esquina.transform.position;
 
@@ -71,9 +95,15 @@ public class CreacionGrafo : MonoBehaviour {
                 testPos.z = this.transform.position.z + incrementoZ * i;
 
 				//==============TEST DE SPAWNEO DE GRAFO, COMENTAR PARA CODIGO FINAL==============
-				GameObject testInstance = Instantiate(GO_NodoBase, new Vector3(this.transform.position.x + incrementoX * j, 
+				/*GameObject testInstance = Instantiate(GO_NodoBase, new Vector3(this.transform.position.x + incrementoX * j, 
 					this.transform.position.y, this.transform.position.z + incrementoZ * i),
-					GO_NodoBase.transform.rotation);
+					GO_NodoBase.transform.rotation); */
+				//================================================================================
+				//==============SPAWNEO DE EL GRAN TABLERO =======================================
+				GameObject casillaNueva = Instantiate(casilla, new Vector3(this.transform.position.x + incrementoX * j, 
+					this.transform.position.y - 2, this.transform.position.z + incrementoZ * i),
+					casilla.transform.rotation);
+				//================================================================================
 
                 //comprobamos si el nodo estaria dentro o tocando un obstaculo
                 if (Physics.OverlapSphere(testPos, radioTest, obstacleLayer).Length > 0)
@@ -95,8 +125,8 @@ public class CreacionGrafo : MonoBehaviour {
                 aux.col = j;
                 nodeMap[i, j] = aux;
 
-				testGameObjectMap [i, j] = testInstance;
-
+				//testGameObjectMap [i, j] = testInstance;
+				tablero[i,j] = casillaNueva;
             }
         }
 

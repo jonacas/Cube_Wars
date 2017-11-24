@@ -64,7 +64,7 @@ public abstract class Unidad : MonoBehaviour{
 
     /*Lista de acciones que se pueden realizar en los turnos*/
     List<Accion> acciones;
-    abstract public void llenarListaAccione(); 
+    //abstract public void llenarListaAccione(); 
 
     /*public Unidad(Vector3 pos, int saludMax, float defensaMax, int idJugador)
     {
