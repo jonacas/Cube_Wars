@@ -19,4 +19,11 @@ public class Explorador : Unidad {
 
         //FALTA RELLENAR INFLUENCIAS
 	}
+
+	public void AccionMover()
+	{
+		MoverUnidad mv = (MoverUnidad)acciones [0];
+		mv.Ejecutar (this.gameObject, this.caminoActual);
+
+	}
 }

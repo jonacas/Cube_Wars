@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour {
-
+    /*
 	private const float MOVE_SPEED = 9.4728f;
 	private const float TURN_RATE = 270f;
 	public float PATH_REACH_NODE_THS = 3f;
@@ -392,5 +392,5 @@ public class EnemyMovement : MonoBehaviour {
         SetNewPath(camino);
         StageData.currentInstance.LimpiarGrafo(grafo);
     }
-
+    */
 }

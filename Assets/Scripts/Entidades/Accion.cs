@@ -8,12 +8,12 @@ public abstract class Accion : MonoBehaviour
     /// ID DE LA ACCION
     /// especifica el tipo de accion para no hacer castings con todos los tipos posibles
     protected int idAccion;
-    public int IDAccion{ get;}
+	public int IDAccion{ get{return 0; }}
 
     protected int costeAccion;
-    public int CosteAccion { get; } //coste en puntosDeAccion
+	public int CosteAccion { get{ return 0;} } //coste en puntosDeAccion
     protected int duracionEnTurnos;
-    public int DuracionEnTurnos{ get; }
+	public int DuracionEnTurnos{ get{ return 0;} }
     protected int alcance;
-    public int Alcance{ get; }
+	public int Alcance{ get{return 0; } }
 }

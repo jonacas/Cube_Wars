@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -29,6 +30,17 @@ public abstract class Unidad : MonoBehaviour{
 
 
     protected float defensaMaxima;
+
+    protected List<Vector3> caminoActual;
+    protected bool caminoListo;
+
+    internal void ResultadoAEstrella(List<Vector3> aux)
+    {
+		print ("Camino listo");
+        caminoActual = aux;
+        caminoListo = true;
+    }
+
     public float DefensaMaxima
     {
         get { return defensaMaxima; }
@@ -62,13 +74,13 @@ public abstract class Unidad : MonoBehaviour{
     protected int idUnidad;
     public int IdUnidad
     {
-        get;
+		get{return 0; }
     }
 
     protected int vision;
     public int Vision
     {
-        get;
+		get{return 0; }
     }
     /*Atributos de habilidad pasiva*/
     /*Esta accion se ejecuta en cada turno sin coste*/
@@ -79,7 +91,7 @@ public abstract class Unidad : MonoBehaviour{
     protected List<Accion> acciones;
     public List<Accion> Acciones
     {
-        get;
+		get{ return null;}
     }
     //abstract public void llenarListaAccione(); 
 

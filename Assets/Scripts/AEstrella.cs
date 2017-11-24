@@ -7,7 +7,7 @@ public class AEstrella : MonoBehaviour{
 
     public const bool MAS_PRECISO = true, MAS_RAPIDO = false;
 
-	public List<Vector3> FindPath(Node origin, Node destiny, int capacity, bool precission, bool manhattan, EnemyMovement solicitante, Node[,] copiaNodo)
+	public List<Vector3> FindPath(Node origin, Node destiny, int capacity, bool precission, bool manhattan, Unidad solicitante, Node[,] copiaNodo)
     {
        // Debug.Log("INICIO de nodo " + origin.gameObject.name + " a ndodo " + destiny.gameObject.name);
 		if (origin == destiny) {
@@ -31,7 +31,7 @@ public class AEstrella : MonoBehaviour{
 		return diferencia;
 	}
 
-    IEnumerator Work(Node origin, Node destiny, int capacity, bool precission, bool manhattan, EnemyMovement solicitante, Node[,] copiaNodo)
+    IEnumerator Work(Node origin, Node destiny, int capacity, bool precission, bool manhattan, Unidad solicitante, Node[,] copiaNodo)
     {
 
         PriorityQueue abiertos = new PriorityQueue(capacity);
@@ -117,7 +117,7 @@ public class AEstrella : MonoBehaviour{
                 final = true;
             }
 
-            if (fragmentador >= 5 /*100*/)
+            if (fragmentador >= 50000 /*100*/)
             {
                 //print(solicitante.gameObject.name + " fragmentando A*");
                 fragmentador = 0;

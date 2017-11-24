@@ -103,6 +103,7 @@ public class CreacionGrafo : MonoBehaviour {
 				GameObject casillaNueva = Instantiate(casilla, new Vector3(this.transform.position.x + incrementoX * j, 
 					this.transform.position.y - 2, this.transform.position.z + incrementoZ * i),
 					casilla.transform.rotation);
+                casillaNueva.name = "CasillaX" + i + "X" + j; 
 				//================================================================================
 
                 //comprobamos si el nodo estaria dentro o tocando un obstaculo

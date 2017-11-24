@@ -64,9 +64,8 @@ public class StageData : MonoBehaviour
 
 	}
 
-    public List<Vector3> GetPathToTarget(Vector3 requester, Vector3 target, EnemyMovement solicitante)
+    public List<Vector3> GetPathToTarget(Vector3 requester, Vector3 target, Unidad solicitante)
     {
-        List<Transform> camino;
         List<Pareja> listaVecinosAux = new List<Pareja>();
 
         Node inicio, final;
@@ -85,8 +84,8 @@ public class StageData : MonoBehaviour
 
         Node closestNode = null;
 
-        if (solicitante.grafo[initZ, initX] != null)
-            inicio = solicitante.grafo[initZ, initX];
+        if (grafoTotal[initZ, initX] != null)
+            inicio = grafoTotal[initZ, initX];
         else
             inicio = null;
 
@@ -97,13 +96,13 @@ public class StageData : MonoBehaviour
             {
                 for (int j = -1; j < 2; j++)
                 {
-                    if (solicitante.grafo[initZ + i, initX + j] != null)
-                        inicio = solicitante.grafo[initZ + i, initX + j];
+                    if (grafoTotal[initZ + i, initX + j] != null)
+                        inicio = grafoTotal[initZ + i, initX + j];
                     else
                         inicio = null;
 
-                    if (inicio != null && !Physics.Raycast(solicitante.grafo[initZ + i, initX + j].position, target,
-                        Vector3.Distance(solicitante.grafo[initZ + i, initX + j].position, target), obstacleLayerMask))
+                    if (inicio != null && !Physics.Raycast(grafoTotal[initZ + i, initX + j].position, target,
+                        Vector3.Distance(grafoTotal[initZ + i, initX + j].position, target), obstacleLayerMask))
                     {
                         if (closestNode == null)
                         {
@@ -120,8 +119,8 @@ public class StageData : MonoBehaviour
             inicio = closestNode;
         }
 
-        if (solicitante.grafo[finalZ, finalX] != null)
-            final = solicitante.grafo[finalZ, finalX];
+        if (grafoTotal[finalZ, finalX] != null)
+            final = grafoTotal[finalZ, finalX];
         else
             final = null;
 
@@ -132,13 +131,13 @@ public class StageData : MonoBehaviour
             {
                 for (int j = -1; j < 2; j++)
                 {
-                    if (solicitante.grafo[finalZ + i, finalX + j] != null)
-                        final = solicitante.grafo[finalZ + i, finalX + j];
+                    if (grafoTotal[finalZ + i, finalX + j] != null)
+                        final = grafoTotal[finalZ + i, finalX + j];
                     else
                         final = null;
 
-                    if (final != null && !Physics.Raycast(solicitante.grafo[finalZ + i, finalX + j].position, target,
-                            Vector3.Distance(solicitante.grafo[finalZ + i, finalX + j].position, target), obstacleLayerMask))
+                    if (final != null && !Physics.Raycast(grafoTotal[finalZ + i, finalX + j].position, target,
+                            Vector3.Distance(grafoTotal[finalZ + i, finalX + j].position, target), obstacleLayerMask))
                     {
                         if (closestNode == null)
                         {
@@ -155,11 +154,16 @@ public class StageData : MonoBehaviour
             final = closestNode;
         }
 
-        aStar.FindPath(final, inicio, CG.filas * CG.columnas, false, true, solicitante, solicitante.grafo);
+        print(final == null);
+        print(inicio == null);
+        print(solicitante == null);
+        print(CG == null);
+
+        aStar.FindPath(final, inicio, CG.filas * CG.columnas, false, true, solicitante, grafoTotal);
 
         return new List<Vector3>();
     }
-
+    /*
     public void SendAlert(Vector3 detectedPos, int stage, int area)
     {
         if (ComunicationsEnabeled)
@@ -176,7 +180,7 @@ public class StageData : MonoBehaviour
             sendAlertToOtherZones(stage, area);
         }
     }
-
+    /*
     private void sendAlertToOtherZones(int area, int stage)
     {
         print("Alerta a otras zonas");
@@ -335,7 +339,7 @@ public class StageData : MonoBehaviour
         tobeInteractedList[4].SetActive(false);
     }
 
-
+    */
     public void LimpiarGrafo(Node[,] nodeMap)
     {
         foreach (Node n in nodeMap)
@@ -345,5 +349,4 @@ public class StageData : MonoBehaviour
         }
 
     }
-
 }
