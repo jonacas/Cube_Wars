@@ -84,8 +84,8 @@ public class CreacionGrafo : MonoBehaviour {
 
         esquina = GO_Esquina.transform.position;
 
-        incrementoX = (esquina.x - this.transform.position.x) / columnas - 1;
-        incrementoZ = (esquina.z - this.transform.position.z) / filas - 1;
+        incrementoX = (esquina.x - this.transform.position.x) / columnas;
+        incrementoZ = (esquina.z - this.transform.position.z) / filas;
 
         for (int i = 0; i < filas; i++)
         {
