@@ -340,6 +340,24 @@ public class StageData : MonoBehaviour
     }
 
     */
+
+
+  /*  /// <summary>
+    ///  Devuelve el nodo al que pertenece una posicion
+    /// </summary>
+    /// <param name="pos">Posicion para la que se calcula el nodo</param>
+    /// <param name="grafo">Grafo del que se extraera el nodo
+    /// <returns></returns>
+    public Node GetNodoClick(Vector3 pos, Node[,] grafo)
+    {
+        int posX = (int)Mathf.Round(pos.x / CG.incrementoX);
+        int posZ = (int)Mathf.Round(pos.z / CG.incrementoZ);
+
+        return grafo[posX, posZ];
+
+    }*/
+
+
     public void LimpiarGrafo(Node[,] nodeMap)
     {
         foreach (Node n in nodeMap)

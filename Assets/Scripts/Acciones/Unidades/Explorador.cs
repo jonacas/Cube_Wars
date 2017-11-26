@@ -8,6 +8,9 @@ public class Explorador : Unidad {
     private int VISION_EXPLORADOR = 7;
     private int CASILLAS_MOVIMIENTO_EXPLORADOR = 4;
 
+    //ACCIONES DE LA UNIDAD
+    private const int ACCION_MOVER = 0;
+
 	// Use this for initialization
 	void Awake () {
         saludMaxima = SALUD__MAX_EXPLORADOR;
@@ -22,7 +25,7 @@ public class Explorador : Unidad {
 
 	public void AccionMover()
 	{
-		MoverUnidad mv = (MoverUnidad)acciones [0];
+		MoverUnidad mv = (MoverUnidad)acciones [ACCION_MOVER];
 		mv.Ejecutar (this.gameObject, this.caminoActual);
 
 	}

@@ -39,5 +39,6 @@ public class MoverUnidad :  Accion{
 				yield return null;
         
         }
+        posicionActualRuta = 0;
     }
 }
