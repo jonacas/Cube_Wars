@@ -36,12 +36,12 @@ public class MapResource : MonoBehaviour {
 
         }
         */
-        if (Input.GetKeyDown(KeyCode.S))
+       /* if (Input.GetKeyDown(KeyCode.S))
         {
             print(transform.position + StageData.currentInstance.grafoTotal[0, 0].position);
             StageData.currentInstance.GetPathToTarget(transform.position, StageData.currentInstance.grafoTotal[0, 0].position, this.gameObject.GetComponent<Explorador>());
 			this.gameObject.GetComponent<Explorador> ().AccionMover ();
-        }
+        }*/
 
 
 

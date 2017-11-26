@@ -6,6 +6,13 @@ public class CameraControl : MonoBehaviour {
 
     Camera cam;
     StageData SD;
+    List<Node> validPositions = null;
+
+    public Unidad unidadSeleccionada;
+
+    ///VARIABLES AUXILIARES PARA ALMACENAR INSTANCIAS DE UNIDADES
+    public Explorador explorador;
+
 	// Use this for initialization
 	void Start () {
         cam = this.GetComponent<Camera>();
@@ -16,12 +23,23 @@ public class CameraControl : MonoBehaviour {
 	void Update () {
 		if(Input.GetButtonDown("ClickIzq"))
         {
-            print("clickIzq");
-            int[] filaColumna = LanzaRaycast();
-            Node nodo = SD.CG.nodeMap[filaColumna[0], filaColumna[1]];
-            SD.LimpiarGrafo(SD.CG.nodeMap);
-            Control.GetNodosAlAlcance(nodo, 2);
-            SD.LimpiarGrafo(SD.CG.nodeMap);
+            if (validPositions == null)
+            {
+                print("clickIzq");
+                int[] filaColumna = LanzaRaycast();
+                Node nodo = SD.CG.nodeMap[filaColumna[0], filaColumna[1]];
+                SD.LimpiarGrafo(SD.CG.nodeMap);
+                validPositions = Control.GetNodosAlAlcance(nodo, 2);
+                SD.LimpiarGrafo(SD.CG.nodeMap);
+            }
+            else
+            {
+                int[] filaColumna = LanzaRaycast();
+                Node nodo = SD.CG.nodeMap[filaColumna[0], filaColumna[1]];
+                if (validPositions.Contains(nodo))
+                    explorador.SolicitarYRecorrerCamino(nodo.position);
+                validPositions = null;
+            }
         }
 	}
 
@@ -45,5 +63,17 @@ public class CameraControl : MonoBehaviour {
         }
         else
             return null;
+    }
+
+    private List<Vector3> getNodesPosition(List<Node> nodes)
+    {
+        List<Vector3> path = new List<Vector3>();
+        foreach (Node n in nodes)
+        {
+            path.Add(n.position);
+        }
+
+        return path;
+
     }
 }

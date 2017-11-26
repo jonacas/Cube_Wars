@@ -122,4 +122,14 @@ public abstract class Unidad : MonoBehaviour{
     {
         //este codigo debe resaltar las casillas del tablero que entran dentro del rango de una de las acciones
     }
+
+    /// <summary>
+    /// Solicita un camino y lo recorre cuando esta listo desde su posicion hasta la que se le proporciona
+    /// </summary>
+    /// <param name="final"></param>
+    public virtual void SolicitarYRecorrerCamino(Vector3 final)
+    {
+        caminoListo = false;
+        StageData.currentInstance.GetPathToTarget(this.transform.position, final, this);
+    }
 }

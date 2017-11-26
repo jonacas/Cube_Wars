@@ -23,10 +23,23 @@ public class Explorador : Unidad {
         //FALTA RELLENAR INFLUENCIAS
 	}
 
-	public void AccionMover()
+	public void AccionMover(List<Vector3> camino)
 	{
 		MoverUnidad mv = (MoverUnidad)acciones [ACCION_MOVER];
-		mv.Ejecutar (this.gameObject, this.caminoActual);
+		mv.Ejecutar (this.gameObject, camino);
 
 	}
+
+    public override void SolicitarYRecorrerCamino(Vector3 final)
+    {
+        base.SolicitarYRecorrerCamino(final);
+        StartCoroutine("EsperarCamino");
+    }
+
+    public IEnumerator EsperarCamino()
+    {
+        while (!caminoListo)
+            yield return null;
+        AccionMover(caminoActual);
+    }
 }
