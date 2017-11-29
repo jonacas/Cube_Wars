@@ -31,6 +31,9 @@ public abstract class Jugador
 
     bool activo = true; //indica si el jugador ha perdido o si sigue jugando
 
+    //mapa influencias del jugador
+    Node[] influencias;
+
     public Jugador(int id, Unidad capital)
     {
         idJugador = id;
