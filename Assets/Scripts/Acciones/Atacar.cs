@@ -65,4 +65,9 @@ public class Atacar : Accion {
         return false;
     }
 
+
+    public override void CancelarAccion()
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -16,4 +16,10 @@ public abstract class Accion : MonoBehaviour
 	public int DuracionEnTurnos{ get{ return 0;} }
     protected int alcance;
 	public int Alcance{ get{return 0; } }
+
+
+    /// <summary>
+    /// Esta funcion se ejecutara siempre que el usuario, despues de seleccionar una accion, elija otra o la cancele
+    /// </summary>
+    public abstract void CancelarAccion();
 }

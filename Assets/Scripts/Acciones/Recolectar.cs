@@ -14,4 +14,9 @@ public class Recolectar : Accion {
         return true;        
     }
 
+
+    public override void CancelarAccion()
+    {
+        throw new System.NotImplementedException();
+    }
 }

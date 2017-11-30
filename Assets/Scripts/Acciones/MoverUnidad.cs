@@ -13,6 +13,7 @@ public class MoverUnidad :  Accion{
 
     public bool Ejecutar(GameObject ob, List<Vector3> ruta)
     {
+        Debug.LogError("ERROR EN ACCION MOVER: Falta que las unidades sobre los nodos se actualicen");
         Unidad unidadActual = GetComponent<Unidad>();
         /*if (Partida.GetPartidaActual().Jugadores[unidadActual.IdJugador].RestarPuntosDeAccion(costeAccion))
         {*/
@@ -40,5 +41,10 @@ public class MoverUnidad :  Accion{
         
         }
         posicionActualRuta = 0;
+    }
+
+    public override void CancelarAccion()
+    {
+        throw new System.NotImplementedException();
     }
 }

@@ -45,5 +45,95 @@ public struct OrdenRecoleccion
     {
         return prioridadMetal;
     }
+
+    public float GetPrioridad()
+    {
+        return pioridadOrden;
+    }
 }
 
+public struct OrdenAtaque
+{
+    float prioridadOrden;
+
+    public OrdenAtaque(float p)
+    {
+        prioridadOrden = p;
+    }
+
+    public float GetPrioridad()
+    {
+        return prioridadOrden;
+    }
+
+}
+
+public struct OrdenDefensa
+{
+    float prioridadOrden;
+
+    public OrdenDefensa(float p)
+    {
+        prioridadOrden = p;
+    }
+
+    public float GetPrioridad()
+    {
+        return prioridadOrden;
+    }
+
+}
+
+public struct OrdenPreparacion
+{
+    float prioridadOrden;
+
+    public OrdenPreparacion(float p)
+    {
+        prioridadOrden = p;
+    }
+
+    public float GetPrioridad()
+    {
+        return prioridadOrden;
+    }
+
+}
+
+public struct Ordenes
+{
+    OrdenAtaque oa;
+    OrdenDefensa od;
+    OrdenPreparacion op;
+    OrdenRecoleccion or;
+
+    public Ordenes(OrdenAtaque a, OrdenDefensa d, OrdenRecoleccion r, OrdenPreparacion p)
+    {
+        oa = a;
+        op = p;
+        od = d;
+        or = r;
+    }
+
+    public OrdenAtaque GetOrdenAtaque()
+    {
+        return oa;
+    }
+
+        public OrdenDefensa GetOrdenDefensa()
+    {
+        return od;
+    }
+
+
+        public OrdenPreparacion GetOrdenPreparacion()
+    {
+        return op;
+    }
+
+        public OrdenRecoleccion GetOrdenRecoleccion()
+    {
+        return or;
+    }
+
+}
