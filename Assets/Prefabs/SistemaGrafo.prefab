@@ -71,6 +71,7 @@ GameObject:
   - component: {fileID: 4863796977044024}
   - component: {fileID: 33147800637136166}
   - component: {fileID: 23589277070653120}
+  - component: {fileID: 65113102862121602}
   m_Layer: 0
   m_Name: Casilla
   m_TagString: Untagged
@@ -147,7 +148,7 @@ Transform:
   m_GameObject: {fileID: 1728795130768504}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
   m_LocalPosition: {x: -10, y: 0, z: -10}
-  m_LocalScale: {x: 1.6, y: 1.6, z: 0.5}
+  m_LocalScale: {x: 3.25, y: 3.25, z: 0.5}
   m_Children: []
   m_Father: {fileID: 4311107656911776}
   m_RootOrder: 3
@@ -290,6 +291,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1765956692390858}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &65113102862121602
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1728795130768504}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.848983, y: 1.8531281, z: 2.0454175}
+  m_Center: {x: -0.00070151687, y: 0.008786021, z: -0.021023808}
 --- !u!114 &114504071347367198
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -312,8 +325,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c56bc4baf5c36514899b6c97a7b8259b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  filas: 100
-  columnas: 100
+  filas: 50
+  columnas: 50
   radioTest: 2
   GO_NodoBase: {fileID: 1356168509140276}
   GO_Esquina: {fileID: 1765956692390858}

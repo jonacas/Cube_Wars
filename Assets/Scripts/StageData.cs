@@ -28,12 +28,21 @@ public class StageData : MonoBehaviour
 	public Node[,] grafoJugador2;
 
 
-	public enum resourceType
+	public enum UnityType
 	{
 		Army, 
 		Resource, 
 		Building
 	};
+
+	public enum ResourceType
+	{
+		Food,
+		Wood,
+		Steel,
+		Rock
+	};
+
 
     void Awake()
     {
@@ -357,6 +366,15 @@ public class StageData : MonoBehaviour
 
     }*/
 
+	public void SetUnidadToNode( Unidad objeto)
+	{
+		GetNodeFromPosition (objeto.transform.position).unidad = objeto;
+	}
+
+	public void SetResourceTypeToNode (StageData.ResourceType type, Vector3 resourcePosition)
+	{
+		GetNodeFromPosition (resourcePosition).resourceType = type;
+	}
 
     public void LimpiarGrafo(Node[,] nodeMap)
     {

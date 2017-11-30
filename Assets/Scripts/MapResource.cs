@@ -5,7 +5,7 @@ using UnityEngine;
 public class MapResource : MonoBehaviour {
 
 
-	public StageData.resourceType currentType;
+	public StageData.UnityType currentType;
 	public int unitFromPlayer;
     //0 = resource, 1 = player1, 2 = player2
 

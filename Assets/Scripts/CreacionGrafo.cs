@@ -100,10 +100,11 @@ public class CreacionGrafo : MonoBehaviour {
 					GO_NodoBase.transform.rotation); */
 				//================================================================================
 				//==============SPAWNEO DE EL GRAN TABLERO =======================================
-				GameObject casillaNueva = Instantiate(casilla, new Vector3(this.transform.position.x + incrementoX * j, 
+				/*GameObject casillaNueva = Instantiate(casilla, new Vector3(this.transform.position.x + incrementoX * j, 
 					this.transform.position.y - 2, this.transform.position.z + incrementoZ * i),
 					casilla.transform.rotation);
                 casillaNueva.name = "CasillaX" + i + "X" + j; 
+                */
 				//================================================================================
 
                 //comprobamos si el nodo estaria dentro o tocando un obstaculo
@@ -127,7 +128,7 @@ public class CreacionGrafo : MonoBehaviour {
                 nodeMap[i, j] = aux;
 
 				//testGameObjectMap [i, j] = testInstance;
-				tablero[i,j] = casillaNueva;
+				//tablero[i,j] = casillaNueva;
             }
         }
 

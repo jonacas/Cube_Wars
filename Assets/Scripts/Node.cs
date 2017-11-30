@@ -33,6 +33,9 @@ public class Node
 	public float influenceResources = 0f;
 	public float influenceEnemy = 0f;
 
+	public Unidad unidad;
+	public StageData.ResourceType resourceType;
+
     //variables para cola prioridad
     private float _prioridad;
     private int _indiceCola;
@@ -165,24 +168,24 @@ public class Node
     }
 
 
-	public void setInfluence(StageData.resourceType resourceType)
+	public void setInfluence(StageData.UnityType resourceType)
 	{
 		int steps;
 		switch (resourceType) 
 		{
-			case StageData.resourceType.Army:
+			case StageData.UnityType.Army:
 			{
 				steps = 5;
 				setRecursiveInfluenceView (this, steps, steps);
 				break;
 			}
-		case StageData.resourceType.Building:
+		case StageData.UnityType.Building:
 			{
 				steps = 5;
 				setRecursiveInfluenceView (this, steps, steps);
 				break;
 			}
-		case StageData.resourceType.Resource:
+		case StageData.UnityType.Resource:
 			{
 				steps = 3;
 				setRecursiveInfluenceResource (this, steps, steps);
