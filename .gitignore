@@ -79,3 +79,9 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+*.lock
+*.ide
+*.ide-shm
+*.ide-wal
+*.ide
+*.ide

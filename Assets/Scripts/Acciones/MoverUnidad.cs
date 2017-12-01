@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class MoverUnidad :  Accion{
 
+    Unidad m_Unidad;
     GameObject obj;
     List<Vector3> ruta;
     int posicionActualRuta = 0;
 	private const float MOVE_SPEED = 10f;
 
     float margen = 1.0f; //Margen para indicar que se está lo suficientemente cerca de un punto.
+
+    private void Awake()
+    {
+        m_Unidad = GetComponent<Unidad>();
+    }
 
     public bool Ejecutar(GameObject ob, List<Vector3> ruta)
     {
@@ -45,6 +51,16 @@ public class MoverUnidad :  Accion{
 
     public override void CancelarAccion()
     {
-        throw new System.NotImplementedException();
+        //codigo para des-resaltar las casillas del alcance
+    }
+
+    public override void EmpezarAccion()
+    {
+        m_Unidad.ResaltarCasillasAlAlcance(Alcance);
+    }
+
+    public override void CompletarAccion()
+    {
+        //necesito la informacion del nodo objetivo para poder ejecutarla
     }
 }

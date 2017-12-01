@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Unidad : MonoBehaviour{
+public abstract class Unidad : MonoBehaviour {
 
     Node nodo; //el nodo sobre el que se situa la unidad;
 
@@ -11,7 +11,7 @@ public abstract class Unidad : MonoBehaviour{
     public Vector3 Posicion
     {
         get { return posicion; }
-         set { posicion = value; }
+        set { posicion = value; }
     }
 
     protected int saludMaxima;
@@ -20,6 +20,16 @@ public abstract class Unidad : MonoBehaviour{
         get { return saludMaxima; }
     }
 
+    int danyo;
+    public int Danyo
+    {
+        get { return danyo; }
+    }
+
+    public int DanyoContraataque
+    {
+        get { return danyo / 5; }
+    }
 
     int vida;
     public int Vida
@@ -83,8 +93,7 @@ public abstract class Unidad : MonoBehaviour{
 		get{return 0; }
     }
     /*Atributos de habilidad pasiva*/
-    /*Esta accion se ejecuta en cada turno sin coste*/
-    int alcance;
+    /*Esta accion se ejecuta en cada turno sin coste*/    
     protected Accion accionPasiva;
 
     /*Lista de acciones que se pueden realizar en los turnos*/

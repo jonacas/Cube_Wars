@@ -8,7 +8,7 @@ public class Construir : Accion {
 
     public List<Node> alcance;
 
-
+    Unidad m_Unidad;
     GameObject fantasmaTorre;
     GameObject fantasmaEdificioRecoleccion;
 
@@ -16,6 +16,7 @@ public class Construir : Accion {
     {
         //aqui se deben coger los fantasmas que se mostraran para no instanciarlos mas tarde
         costeAccion = 50;
+        m_Unidad = GetComponent<Unidad>();
     }
 
     /// <summary>
@@ -76,5 +77,16 @@ public class Construir : Accion {
         fantasmaTorre.SetActive(false);
         fantasmaEdificioRecoleccion.SetActive(false);
         alcance = null;
+        //codigo para des-resaltar las casillas del alcance
+    }
+
+    public override void EmpezarAccion()
+    {
+        m_Unidad.ResaltarCasillasAlAlcance(Alcance);
+    }
+
+    public override void CompletarAccion()
+    {
+        //necesito la informacion del nodo objetivo para poder ejecutarla
     }
 }

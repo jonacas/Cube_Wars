@@ -22,4 +22,6 @@ public abstract class Accion : MonoBehaviour
     /// Esta funcion se ejecutara siempre que el usuario, despues de seleccionar una accion, elija otra o la cancele
     /// </summary>
     public abstract void CancelarAccion();
+    public abstract void EmpezarAccion();
+    public abstract void CompletarAccion();
 }

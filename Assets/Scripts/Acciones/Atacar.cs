@@ -5,10 +5,17 @@ using System;
 
 public class Atacar : Accion {
 
-    public bool Ejecutar(GameObject objetivo, int danyo)
+    Unidad m_Unidad;
+
+    private void Awake()
     {
-        Unidad unidadActual = GetComponent<Unidad>();
-        if (Partida.GetPartidaActual().Jugadores[unidadActual.IdJugador].RestarPuntosDeAccion(costeAccion))
+        m_Unidad = GetComponent<Unidad>();
+    }
+
+    public bool Ejecutar(GameObject objetivo)
+    {
+        
+        if (Partida.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(costeAccion))
         {
             //Hay que controlar si el objetivo está al alcance de la unidad que ataca cuando se llama a esta funcion.
             try
@@ -16,42 +23,9 @@ public class Atacar : Accion {
                 Unidad atacante = gameObject.GetComponent<Unidad>();
                 Unidad victima = objetivo.GetComponent<Unidad>();
 
-                victima.RecibirAtaque(danyo);
+                victima.RecibirAtaque(m_Unidad.Danyo);
 
-                // PA CUANDO SE IMPLEMENTEN LAS UNIDADES QUE ATACAN, PODER CONTRATACAR
-
-                /*
-                try
-                {
-                    Guerrero unidadQueContrataca = (Guerrero)victima;
-                }
-                catch (Exception e)
-                {
-                    try
-                    {
-                        Arquero unidadQueContrataca = (Arquero)victima;
-                    }
-                    catch (Exception e)
-                    {
-                        try
-                        {
-                            Torre unidadQueContrataca = (Torre)victima;
-                        }
-                        catch (Exception e)
-                        {
-                            print("La unidad atacada no puede contratacar");
-                        }
-                    }
-
-                }
-                try
-                {
-                    atacante.RecibirAtaque(victima.GetDanyoContraataque());
-                }
-                catch (Exception e)
-                {
-
-                }*/
+                atacante.RecibirAtaque(victima.DanyoContraataque);
 
                 //Ejecutar alguna animacion en caso de que se hiciera, para ver que se está atacando y no que haya solo dos cubos quietos.
                 return true;
@@ -63,11 +37,20 @@ public class Atacar : Accion {
             }
         }
         return false;
-    }
-
+    }    
 
     public override void CancelarAccion()
     {
-        throw new NotImplementedException();
+        //codigo para des-resaltar las casillas del alcance
+    }
+
+    public override void EmpezarAccion()
+    {
+        m_Unidad.ResaltarCasillasAlAlcance(Alcance);
+    }
+
+    public override void CompletarAccion()
+    {
+        //necesito la informacion del nodo objetivo para poder ejecutarla
     }
 }
