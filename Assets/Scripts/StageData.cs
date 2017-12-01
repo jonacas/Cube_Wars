@@ -11,7 +11,7 @@ public class StageData : MonoBehaviour
     public CreacionGrafo CG;
 
     private int obstacleLayerMask = 1 << 8;
-    private bool cmunicationsEnabeled;
+    //private bool cmunicationsEnabeled;
     public bool ComunicationsEnabeled
     {
         get;
@@ -23,10 +23,11 @@ public class StageData : MonoBehaviour
     public GameObject[] tobeInteractedList;
     private bool[] pressedButtons = { false, false, false };
 
+    public Node LastClickedNode;
 	public Node[,] grafoTotal;
 	public Node[,] grafoJugador1;
 	public Node[,] grafoJugador2;
-
+    
 
 	public enum UnityType
 	{
@@ -40,7 +41,8 @@ public class StageData : MonoBehaviour
 		Food,
 		Wood,
 		Steel,
-		Rock
+		Rock,
+        NullResourceType
 	};
 
 
@@ -71,7 +73,7 @@ public class StageData : MonoBehaviour
 		return grafoTotal [initZ, initX];
 
 
-	}
+	}    
 
     public List<Vector3> GetPathToTarget(Vector3 requester, Vector3 target, Unidad solicitante)
     {

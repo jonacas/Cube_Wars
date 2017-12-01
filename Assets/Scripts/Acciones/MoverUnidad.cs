@@ -23,12 +23,12 @@ public class MoverUnidad :  Accion{
         Unidad unidadActual = GetComponent<Unidad>();
         /*if (Partida.GetPartidaActual().Jugadores[unidadActual.IdJugador].RestarPuntosDeAccion(costeAccion))
         {*/
-            obj = ob;
-            this.ruta = ruta; //IMPORTANTE CONTROLAR DESDE FUERA QUE LLEGUE UNA RUTA VIABLE, ES DECIR, QUE EL OBJETIVO ESTÉ AL ALCANCE DE LA UNIDAD QUE SE QUIERE MOVER. AQUI NO SE CONTROLA ESE ERROR.
-			
-            StartCoroutine("RecorrerRuta");
+        obj = ob;
+        this.ruta = ruta; //IMPORTANTE CONTROLAR DESDE FUERA QUE LLEGUE UNA RUTA VIABLE, ES DECIR, QUE EL OBJETIVO ESTÉ AL ALCANCE DE LA UNIDAD QUE SE QUIERE MOVER. AQUI NO SE CONTROLA ESE ERROR.
+        AccionEmpezada = false;
+        StartCoroutine("RecorrerRuta");
 
-            return true;
+        return true;
         /*}
         else
             return false;*/
@@ -49,18 +49,30 @@ public class MoverUnidad :  Accion{
         posicionActualRuta = 0;
     }
 
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (AccionEmpezada &&
+            StageData.currentInstance.LastClickedNode.unidad == null &&
+            StageData.currentInstance.LastClickedNode.resourceType == StageData.ResourceType.NullResourceType
+            /*&& COMPROBAR QUE ESTÁ AL ALCANCE*/)
+            {
+                List<Vector3> rutaCalculada = new List<Vector3>();// = calcularRuta(transform.position, StageData.currentInstance.LastClickedNode.position);
+                Ejecutar(gameObject, rutaCalculada);
+            }
+        }
+    }
+
     public override void CancelarAccion()
     {
         //codigo para des-resaltar las casillas del alcance
+        AccionEmpezada = false;
     }
 
     public override void EmpezarAccion()
     {
         m_Unidad.ResaltarCasillasAlAlcance(Alcance);
-    }
-
-    public override void CompletarAccion()
-    {
-        //necesito la informacion del nodo objetivo para poder ejecutarla
+        AccionEmpezada = true;
     }
 }

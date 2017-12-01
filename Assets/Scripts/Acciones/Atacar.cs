@@ -12,22 +12,26 @@ public class Atacar : Accion {
         m_Unidad = GetComponent<Unidad>();
     }
 
-    public bool Ejecutar(GameObject objetivo)
+    bool Ejecutar(Unidad victima)
     {
         
-        if (Partida.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(costeAccion))
+        if (Partida.GetPartidaActual().Jugadores[m_Unidad.IdJugador].PuntosDeAccion - costeAccion >= 0)
         {
             //Hay que controlar si el objetivo está al alcance de la unidad que ataca cuando se llama a esta funcion.
             try
             {
                 Unidad atacante = gameObject.GetComponent<Unidad>();
-                Unidad victima = objetivo.GetComponent<Unidad>();
 
                 victima.RecibirAtaque(m_Unidad.Danyo);
 
                 atacante.RecibirAtaque(victima.DanyoContraataque);
 
+                Partida.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(costeAccion);
+
                 //Ejecutar alguna animacion en caso de que se hiciera, para ver que se está atacando y no que haya solo dos cubos quietos.
+                //Des-resaltar casillas
+
+                AccionEmpezada = false;
                 return true;
             }
             catch (Exception e)
@@ -41,16 +45,27 @@ public class Atacar : Accion {
 
     public override void CancelarAccion()
     {
+        AccionEmpezada = false;
         //codigo para des-resaltar las casillas del alcance
     }
 
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (AccionEmpezada &&
+            StageData.currentInstance.LastClickedNode.unidad != m_Unidad &&
+            StageData.currentInstance.LastClickedNode.unidad.IdJugador != m_Unidad.IdJugador
+            /*&& COMPROBAR QUE ESTÁ AL ALCANCE*/)
+            {
+                Ejecutar(StageData.currentInstance.LastClickedNode.unidad);
+            }
+        }
+    }
+    
     public override void EmpezarAccion()
     {
         m_Unidad.ResaltarCasillasAlAlcance(Alcance);
-    }
-
-    public override void CompletarAccion()
-    {
-        //necesito la informacion del nodo objetivo para poder ejecutarla
-    }
+        AccionEmpezada = true;
+    }        
 }

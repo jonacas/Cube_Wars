@@ -129,7 +129,9 @@ public class Node
     {
         queuePosition = NO_ESTA_EN_LISTA_ABIERTOS;
         Cost = float.PositiveInfinity;
-        
+
+        resourceType = StageData.ResourceType.NullResourceType;
+
         arrayVecinos = new List<Pareja>();
         position = pos;
         Water = water;

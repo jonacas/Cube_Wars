@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Explorador : Unidad {
 
-    private int SALUD__MAX_EXPLORADOR = 100;
+    private int SALUD_MAX_EXPLORADOR = 100;
     private int VISION_EXPLORADOR = 7;
     private int CASILLAS_MOVIMIENTO_EXPLORADOR = 4;
 
@@ -13,8 +13,8 @@ public class Explorador : Unidad {
 
 	// Use this for initialization
 	void Awake () {
-        saludMaxima = SALUD__MAX_EXPLORADOR;
-        Vida = SALUD__MAX_EXPLORADOR;
+        saludMaxima = SALUD_MAX_EXPLORADOR;
+        Vida = SALUD_MAX_EXPLORADOR;
         vision = VISION_EXPLORADOR;
         acciones = new List<Accion>();
         acciones.Add(this.GetComponent<MoverUnidad>());

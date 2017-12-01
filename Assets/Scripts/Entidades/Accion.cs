@@ -11,11 +11,13 @@ public abstract class Accion : MonoBehaviour
 	public int IDAccion{ get{return 0; }}
 
     protected int costeAccion;
-	public int CosteAccion { get{ return 0;} } //coste en puntosDeAccion
+	public int CosteAccion { get{ return costeAccion;} } //coste en puntosDeAccion
     protected int duracionEnTurnos;
-	public int DuracionEnTurnos{ get{ return 0;} }
+	public int DuracionEnTurnos{ get{ return duracionEnTurnos;} }
     protected int alcance;
-	public int Alcance{ get{return 0; } }
+    public int Alcance { get { return alcance; } }
+    protected bool accionEmpezada;
+    public bool AccionEmpezada { get { return accionEmpezada; } set { accionEmpezada = true; } }
 
 
     /// <summary>
@@ -23,5 +25,4 @@ public abstract class Accion : MonoBehaviour
     /// </summary>
     public abstract void CancelarAccion();
     public abstract void EmpezarAccion();
-    public abstract void CompletarAccion();
 }

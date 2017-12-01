@@ -48,9 +48,9 @@ public class Construir : Accion {
     /// </summary>
     /// <param name="j">Jugador que realiza la accion</param>
     /// <returns></returns>
-    public bool Ejecutar(Jugador j, Node n)
+    bool Ejecutar(Node n)
     {
-        if (j.RestarPuntosDeAccion(costeAccion))
+        if (Partida.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(costeAccion))
         {
             //comprobar que en la casilla no haya edificios ni unidades enemigas
 
@@ -72,21 +72,32 @@ public class Construir : Accion {
         alcance = nodos;
     }
 
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (AccionEmpezada &&
+            StageData.currentInstance.LastClickedNode.unidad == null &&
+            StageData.currentInstance.LastClickedNode.resourceType == StageData.ResourceType.NullResourceType
+            /*&& COMPROBAR QUE ESTÁ AL ALCANCE*/)
+            {
+                Ejecutar(StageData.currentInstance.LastClickedNode);
+            }
+        }
+    }
+
     public override void CancelarAccion()
     {
         fantasmaTorre.SetActive(false);
         fantasmaEdificioRecoleccion.SetActive(false);
         alcance = null;
+        AccionEmpezada = true;
         //codigo para des-resaltar las casillas del alcance
     }
 
     public override void EmpezarAccion()
     {
         m_Unidad.ResaltarCasillasAlAlcance(Alcance);
-    }
-
-    public override void CompletarAccion()
-    {
-        //necesito la informacion del nodo objetivo para poder ejecutarla
+        AccionEmpezada = true;
     }
 }

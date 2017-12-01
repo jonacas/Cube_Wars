@@ -20,6 +20,10 @@ public abstract class Jugador
     Unidad capital = null; //unidad que hay que destruir para ganar la partida
 
     int puntosDeAccion;
+    public int PuntosDeAccion
+    {
+        get { return puntosDeAccion; }
+    }
     int idJugador;
 
     #region RECURSOS
@@ -97,20 +101,20 @@ public abstract class Jugador
         }
     }
 
-    public void SumarRecursos(int idRecurso, int cantidad)
+    public void SumarRecursos(StageData.ResourceType idRecurso, int cantidad)
     {
         switch (idRecurso)
         {
-            case GlobalData.ID_COMIDA:
+            case StageData.ResourceType.Food:
                 comida += cantidad;
                 break;
-            case GlobalData.ID_MADERA:
+            case StageData.ResourceType.Wood:
                 madera += cantidad;
                 break;
-            case GlobalData.ID_METAL:
+            case StageData.ResourceType.Steel:
                 metal += cantidad;
                 break;
-            case GlobalData.ID_PIEDRA:
+            case StageData.ResourceType.Rock:
                 piedra += cantidad;
                 break;
         }
