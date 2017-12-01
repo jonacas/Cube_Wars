@@ -5,7 +5,6 @@ using UnityEngine;
 public class MoverUnidad :  Accion{
 
     Unidad m_Unidad;
-    GameObject obj;
     List<Vector3> ruta;
     int posicionActualRuta = 0;
 	private const float MOVE_SPEED = 10f;
@@ -15,6 +14,7 @@ public class MoverUnidad :  Accion{
 
     private void Awake()
     {
+       
         m_Unidad = GetComponent<Unidad>();
         switch (m_Unidad.IdUnidad)
         {
@@ -25,23 +25,37 @@ public class MoverUnidad :  Accion{
                 Alcance = 6;
                 break;
         }
+       
     }
 
-    public bool Ejecutar(GameObject ob, List<Vector3> ruta)
+    private void Start()
     {
-        if (NodosAlAlcance.Contains(m_Unidad.Nodo))
+        StageData.currentInstance.LimpiarGrafo(StageData.currentInstance.CG.nodeMap);
+        NodosAlAlcance = Control.GetNodosAlAlcance(StageData.currentInstance.GetNodeFromPosition(transform.position), 3);
+        m_Unidad.Nodo = StageData.currentInstance.GetNodeFromPosition(transform.position);
+        StageData.currentInstance.LimpiarGrafo(StageData.currentInstance.CG.nodeMap);
+    }
+
+    public bool Ejecutar(Node destino, List<Vector3> ruta)
+    {
+        print("Ejecutar entrado");
+        print(NodosAlAlcance.Count);
+        //print(destino == null);
+        if (NodosAlAlcance.Contains(destino))
         {
+            StageData.currentInstance.GetNodeFromPosition(ruta[ruta.Count - 1]).unidad = null;
+            print("Mover Unidad");
             //Debug.LogError("ERROR EN ACCION MOVER: Falta que las unidades sobre los nodos se actualicen");
             Unidad unidadActual = GetComponent<Unidad>();
             /*if (Partida.GetPartidaActual().Jugadores[unidadActual.IdJugador].RestarPuntosDeAccion(costeAccion))
             {*/
-            obj = ob;
             this.ruta = ruta; //IMPORTANTE CONTROLAR DESDE FUERA QUE LLEGUE UNA RUTA VIABLE, ES DECIR, QUE EL OBJETIVO ESTÉ AL ALCANCE DE LA UNIDAD QUE SE QUIERE MOVER. AQUI NO SE CONTROLA ESE ERROR.
             StartCoroutine("RecorrerRuta");
 
             CancelarAccion();
 
             m_Unidad.Nodo = StageData.currentInstance.GetNodeFromPosition(ruta[ruta.Count - 1]);
+            StageData.currentInstance.GetNodeFromPosition(ruta[ruta.Count - 1]).unidad = this.m_Unidad;
             return true;
             /*}
             else
@@ -55,14 +69,16 @@ public class MoverUnidad :  Accion{
         while(posicionActualRuta < ruta.Count-1)
         {
 			
-			obj.transform.position = Vector3.MoveTowards(obj.transform.position, ruta[posicionActualRuta + 1], Time.deltaTime * MOVE_SPEED);
-			if (Vector3.Distance(obj.transform.position, ruta[posicionActualRuta + 1]) < margen)
+			transform.position = Vector3.MoveTowards(transform.position, ruta[posicionActualRuta + 1], Time.deltaTime * MOVE_SPEED);
+			if (Vector3.Distance(transform.position, ruta[posicionActualRuta + 1]) < margen)
 				posicionActualRuta++;
 			else
 				yield return null;
         
         }
         posicionActualRuta = 0;
+        StageData.currentInstance.LimpiarGrafo(StageData.currentInstance.CG.nodeMap);
+        NodosAlAlcance = Control.GetNodosAlAlcance(StageData.currentInstance.GetNodeFromPosition(transform.position), 3);
     }   
 
     public override void CancelarAccion()

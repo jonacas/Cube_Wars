@@ -26,18 +26,20 @@ public class CameraControl : MonoBehaviour {
             if (validPositions == null)
             {
                 print("clickIzq");
-                int[] filaColumna = LanzaRaycast();
-                Node nodo = SD.CG.nodeMap[filaColumna[0], filaColumna[1]];
+                Node nodo = LanzaRaycast();
                 SD.LimpiarGrafo(SD.CG.nodeMap);
                 validPositions = Control.GetNodosAlAlcance(nodo, 2);
                 SD.LimpiarGrafo(SD.CG.nodeMap);
             }
             else
             {
-                int[] filaColumna = LanzaRaycast();
-                Node nodo = SD.CG.nodeMap[filaColumna[0], filaColumna[1]];
+                
+                Node nodo = LanzaRaycast();
                 if (validPositions.Contains(nodo))
+                {
+                    print("Posicion valida");
                     explorador.SolicitarYRecorrerCamino(nodo.position);
+                }
                 validPositions = null;
             }
         }
@@ -47,7 +49,7 @@ public class CameraControl : MonoBehaviour {
     /// Devuelve fila y columna correspondiente al click
     /// </summary>
     /// <returns></returns>
-    private int[] LanzaRaycast()
+    private Node LanzaRaycast()
     {
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -55,11 +57,8 @@ public class CameraControl : MonoBehaviour {
 
         if (hit.collider != null)
         {
-            string[] nombreFrag = hit.collider.gameObject.name.Split('X');
-            print(nombreFrag[0] + nombreFrag[1] + nombreFrag[2]);
-
-
-            return new int[2] { System.Convert.ToInt32(nombreFrag[1]), System.Convert.ToInt32(nombreFrag[2]) };
+            
+            return SD.GetNodeFromPosition(hit.point);
         }
         else
             return null;

@@ -168,12 +168,6 @@ public class StageData : MonoBehaviour
             }
             final = closestNode;
         }
-
-        print(final == null);
-        print(inicio == null);
-        print(solicitante == null);
-        print(CG == null);
-
         aStar.FindPath(final, inicio, CG.filas * CG.columnas, false, true, solicitante, grafoTotal);
 
         return new List<Vector3>();

@@ -26,7 +26,8 @@ public class Explorador : Unidad {
 	public void AccionMover(List<Vector3> camino)
 	{
 		MoverUnidad mv = (MoverUnidad)acciones [ACCION_MOVER];
-		mv.Ejecutar (this.gameObject, camino);
+        print(mv == null);
+		mv.Ejecutar (StageData.currentInstance.GetNodeFromPosition(camino[camino.Count-1]), camino);
 
 	}
 
@@ -40,6 +41,7 @@ public class Explorador : Unidad {
     {
         while (!caminoListo)
             yield return null;
+        print("Espera camino terminada");
         AccionMover(caminoActual);
     }
 }

@@ -33,7 +33,7 @@ public class Control : MonoBehaviour {
                     vecino.nodo.Cost = nodoActual.Cost + 1;
                 else
                     continue;
-                if (vecino.nodo.Cost <= alcance)
+                if (vecino.nodo.Cost < alcance)
                 {
                     //evitamos anadir duplicados
                     if(!pendientes.Contains(vecino.nodo))

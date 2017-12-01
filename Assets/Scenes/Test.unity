@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -219,6 +219,23 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 32cbbd6af94979a49973b31ac185f9b6, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1402559634 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1027248475543508, guid: 11a80ace49872554ea9c3363165ba61f,
+    type: 2}
+  m_PrefabInternal: {fileID: 2103947444}
+--- !u!65 &1402559638
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1402559634}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 33.068573, y: 92.44917, z: 2.0228858}
+  m_Center: {x: -15.621605, y: 0.000041961666, z: -0.71782947}
 --- !u!1 &1662721595
 GameObject:
   m_ObjectHideFlags: 0
@@ -377,7 +394,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1702216172}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 46.7, y: 1, z: 37}
+  m_LocalPosition: {x: 24.6, y: -2, z: -0.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -569,6 +586,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2469f348f9eee6b4b9e7c6b7278da6be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1866643363 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1852531531037296, guid: 11a80ace49872554ea9c3363165ba61f,
+    type: 2}
+  m_PrefabInternal: {fileID: 2103947444}
+--- !u!65 &1866643365
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1866643363}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 92.51052, y: 94.81302, z: 1}
+  m_Center: {x: -45.755257, y: 1.4410354, z: 2.0446291e-14}
 --- !u!1001 &2103947444
 Prefab:
   m_ObjectHideFlags: 0
