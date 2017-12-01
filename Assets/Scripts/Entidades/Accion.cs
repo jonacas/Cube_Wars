@@ -22,4 +22,5 @@ public abstract class Accion : MonoBehaviour
     /// </summary>
     public abstract void CancelarAccion();
     public abstract void EmpezarAccion();
+    public abstract void SeleccionarResaltoDeCasilla();
 }

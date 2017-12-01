@@ -6,7 +6,7 @@ public class Construir : Accion {
 
     private const float OFFSET_Y = 2F;
 
-    public List<Node> alcance;
+    public List<Node> NodosAlAlcance;
 
     Unidad m_Unidad;
     GameObject fantasmaTorre;
@@ -17,6 +17,8 @@ public class Construir : Accion {
         //aqui se deben coger los fantasmas que se mostraran para no instanciarlos mas tarde
         costeAccion = 50;
         m_Unidad = GetComponent<Unidad>();
+        Alcance = 1;
+        NodosAlAlcance = Control.GetNodosAlAlcance(m_Unidad.Nodo, Alcance);
     }
 
     /// <summary>
@@ -27,9 +29,9 @@ public class Construir : Accion {
     public void MostrarFantasmas(Node nodo)
     {
         Debug.LogError("ERROR EN ACCION CONSTRUIR: La funcion aun no esta del todo implementada");
-        if (alcance != null)
+        if (NodosAlAlcance != null)
         {
-            if (alcance.Contains(nodo))
+            if (NodosAlAlcance.Contains(nodo))
             {
                 //si no hay una unidad ocupando la celda
                 if (nodo.unidad == null)
@@ -68,7 +70,7 @@ public class Construir : Accion {
     bool Ejecutar(Node n)
     {
         //si el nodo esta al alcance
-        if (alcance.Contains(n))
+        if (NodosAlAlcance.Contains(n))
         {
             if (n.unidad == null)
             {
@@ -77,6 +79,7 @@ public class Construir : Accion {
                     if (Partida.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(costeAccion))
                     {
                         //instanciamos torre de defensa
+                        CancelarAccion();
                         return true;
                     }
                 }
@@ -85,11 +88,13 @@ public class Construir : Accion {
                     if (Partida.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(costeAccion))
                     {
                         //instanciamos edificio de recoleccion
+                        CancelarAccion();
                         return true;
                     }
                 }
             }
         }
+        CancelarAccion();
         return false;
     }
 
@@ -99,35 +104,34 @@ public class Construir : Accion {
     /// <param name="nodos"> Lista de nodos dentro dle rango de alcance de la accion</param>
     public void SetAlcance(List<Node> nodos)
     {
-        alcance = nodos;
-    }
-
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (AccionEmpezada &&
-            StageData.currentInstance.LastClickedNode.unidad == null &&
-            StageData.currentInstance.LastClickedNode.resourceType == StageData.ResourceType.NullResourceType
-            /*&& COMPROBAR QUE ESTÁ AL ALCANCE*/)
-            {
-                Ejecutar(StageData.currentInstance.LastClickedNode);
-            }
-        }
+        NodosAlAlcance = nodos;
     }
 
     public override void CancelarAccion()
     {
         fantasmaTorre.SetActive(false);
         fantasmaEdificioRecoleccion.SetActive(false);
-        alcance = null;
-        AccionEmpezada = true;
+        NodosAlAlcance = null;
         //codigo para des-resaltar las casillas del alcance
+        m_Unidad.QuitarResaltoCasillasAlAlcance(NodosAlAlcance);
     }
 
     public override void EmpezarAccion()
     {
-        m_Unidad.ResaltarCasillasAlAlcance(Alcance);
-        AccionEmpezada = true;
+        SeleccionarResaltoDeCasilla();
+        m_Unidad.ResaltarCasillasAlAlcance(NodosAlAlcance);
+    }
+
+    public override void SeleccionarResaltoDeCasilla()
+    {
+        NodosAlAlcance = Control.GetNodosAlAlcance(m_Unidad.Nodo, Alcance);
+        foreach (Node n in NodosAlAlcance)
+        {
+            if (n.unidad != null &&
+                n.resourceType != TipoRecurso.NullResourceType)
+            {
+                NodosAlAlcance.Remove(n);
+            }
+        }
     }
 }

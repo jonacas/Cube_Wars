@@ -6,6 +6,11 @@ using UnityEngine;
 public abstract class Unidad : MonoBehaviour {
 
     Node nodo; //el nodo sobre el que se situa la unidad;
+    public Node Nodo
+    {
+        get { return nodo; }
+        set { nodo = value; }
+    }
 
     Vector3 posicion;
     public Vector3 Posicion
@@ -127,10 +132,19 @@ public abstract class Unidad : MonoBehaviour {
     }
 
 
-    public void ResaltarCasillasAlAlcance(int alcance)
+    public void ResaltarCasillasAlAlcance(List<Node> alcance)
     {
         //este codigo debe resaltar las casillas del tablero que entran dentro del rango de una de las acciones
+
     }
+
+    public void QuitarResaltoCasillasAlAlcance(List<Node> alcance)
+    {
+        //este codigo debe des-resaltar las casillas del tablero que entran dentro del rango de una de las acciones
+
+    }
+
+
 
     /// <summary>
     /// Solicita un camino y lo recorre cuando esta listo desde su posicion hasta la que se le proporciona

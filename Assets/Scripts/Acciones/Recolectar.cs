@@ -5,11 +5,13 @@ using UnityEngine;
 public class Recolectar : Accion {
 
     Unidad m_Unidad;
+    public List<Node> NodosAlAlcance;
 
     private void Awake()
     {
         m_Unidad = GetComponent<Unidad>();
         Alcance = 1;
+        NodosAlAlcance = Control.GetNodosAlAlcance(m_Unidad.Nodo, Alcance);
     }
 
     bool Ejecutar(TipoRecurso tipo, int cantidad)
@@ -24,11 +26,16 @@ public class Recolectar : Accion {
 
     public override void CancelarAccion()
     {
-        //codigo para des-resaltar las casillas del alcance
+        
     }
 
     public override void EmpezarAccion()
     {
-        m_Unidad.ResaltarCasillasAlAlcance(Alcance);
-    }    
+        
+    }
+
+    public override void SeleccionarResaltoDeCasilla()
+    {
+        
+    }
 }

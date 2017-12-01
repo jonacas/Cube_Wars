@@ -6,6 +6,7 @@ using System;
 public class Atacar : Accion {
 
     Unidad m_Unidad;
+    public List<Node> NodosAlAlcance;
     
     private void Awake()
     {
@@ -23,41 +24,60 @@ public class Atacar : Accion {
 
     bool Ejecutar(Unidad victima)
     {
-        
-        if (Partida.GetPartidaActual().Jugadores[m_Unidad.IdJugador].PuntosDeAccion - costeAccion >= 0)
-        {
-            //Hay que controlar si el objetivo está al alcance de la unidad que ataca cuando se llama a esta funcion.
-            try
+        if (NodosAlAlcance.Contains(victima.Nodo)) {
+            if (Partida.GetPartidaActual().Jugadores[m_Unidad.IdJugador].PuntosDeAccion - costeAccion >= 0)
             {
-                Unidad atacante = gameObject.GetComponent<Unidad>();
+                //Hay que controlar si el objetivo está al alcance de la unidad que ataca cuando se llama a esta funcion.
+                try
+                {
+                    Unidad atacante = gameObject.GetComponent<Unidad>();
 
-                victima.RecibirAtaque(m_Unidad.Danyo);
+                    victima.RecibirAtaque(m_Unidad.Danyo);
 
-                atacante.RecibirAtaque(victima.DanyoContraataque);
+                    atacante.RecibirAtaque(victima.DanyoContraataque);
 
-                Partida.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(costeAccion);
+                    Partida.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(costeAccion);
 
-                //Ejecutar alguna animacion en caso de que se hiciera, para ver que se está atacando y no que haya solo dos cubos quietos.
-                //Des-resaltar casillas
-                
-                return true;
-            }
-            catch (Exception e)
-            {
-                Debug.LogError("Se está intentando atacar a algo sin el componente Unidad");
-                return false;
+                    //Ejecutar alguna animacion en caso de que se hiciera, para ver que se está atacando y no que haya solo dos cubos quietos.
+                    //Des-resaltar casillas
+
+                    CancelarAccion();
+
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    CancelarAccion();
+                    Debug.LogError("Se está intentando atacar a algo sin el componente Unidad");
+                    return false;
+                }
             }
         }
+        CancelarAccion();
         return false;
-    }    
+    }
 
     public override void CancelarAccion()
     {
-        //codigo para des-resaltar las casillas del alcance
+        m_Unidad.QuitarResaltoCasillasAlAlcance(NodosAlAlcance);
     }
         
     public override void EmpezarAccion()
     {
-        m_Unidad.ResaltarCasillasAlAlcance(Alcance);
-    }        
+        SeleccionarResaltoDeCasilla();
+        m_Unidad.ResaltarCasillasAlAlcance(NodosAlAlcance);
+    }
+
+    public override void SeleccionarResaltoDeCasilla()
+    {
+        NodosAlAlcance = Control.GetNodosAlAlcance(m_Unidad.Nodo, Alcance);
+        foreach (Node n in NodosAlAlcance)
+        {
+            if (n.unidad == null || 
+                n.unidad.IdJugador == m_Unidad.IdJugador)
+            {
+                NodosAlAlcance.Remove(n);
+            }
+        }
+    }
 }

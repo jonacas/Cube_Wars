@@ -9,6 +9,7 @@ public class MoverUnidad :  Accion{
     List<Vector3> ruta;
     int posicionActualRuta = 0;
 	private const float MOVE_SPEED = 10f;
+    public List<Node> NodosAlAlcance;
 
     float margen = 1.0f; //Margen para indicar que se está lo suficientemente cerca de un punto.
 
@@ -28,18 +29,25 @@ public class MoverUnidad :  Accion{
 
     public bool Ejecutar(GameObject ob, List<Vector3> ruta)
     {
-        Debug.LogError("ERROR EN ACCION MOVER: Falta que las unidades sobre los nodos se actualicen");
-        Unidad unidadActual = GetComponent<Unidad>();
-        /*if (Partida.GetPartidaActual().Jugadores[unidadActual.IdJugador].RestarPuntosDeAccion(costeAccion))
-        {*/
-        obj = ob;
-        this.ruta = ruta; //IMPORTANTE CONTROLAR DESDE FUERA QUE LLEGUE UNA RUTA VIABLE, ES DECIR, QUE EL OBJETIVO ESTÉ AL ALCANCE DE LA UNIDAD QUE SE QUIERE MOVER. AQUI NO SE CONTROLA ESE ERROR.
-        StartCoroutine("RecorrerRuta");
+        if (NodosAlAlcance.Contains(m_Unidad.Nodo))
+        {
+            //Debug.LogError("ERROR EN ACCION MOVER: Falta que las unidades sobre los nodos se actualicen");
+            Unidad unidadActual = GetComponent<Unidad>();
+            /*if (Partida.GetPartidaActual().Jugadores[unidadActual.IdJugador].RestarPuntosDeAccion(costeAccion))
+            {*/
+            obj = ob;
+            this.ruta = ruta; //IMPORTANTE CONTROLAR DESDE FUERA QUE LLEGUE UNA RUTA VIABLE, ES DECIR, QUE EL OBJETIVO ESTÉ AL ALCANCE DE LA UNIDAD QUE SE QUIERE MOVER. AQUI NO SE CONTROLA ESE ERROR.
+            StartCoroutine("RecorrerRuta");
 
-        return true;
-        /*}
-        else
-            return false;*/
+            CancelarAccion();
+
+            m_Unidad.Nodo = StageData.currentInstance.GetNodeFromPosition(ruta[ruta.Count - 1]);
+            return true;
+            /*}
+            else
+                return false;*/
+        }
+        return false;
     }
 
     IEnumerator RecorrerRuta()
@@ -59,11 +67,28 @@ public class MoverUnidad :  Accion{
 
     public override void CancelarAccion()
     {
-        //codigo para des-resaltar las casillas del alcance
+        m_Unidad.QuitarResaltoCasillasAlAlcance(NodosAlAlcance);
     }
 
     public override void EmpezarAccion()
     {
-        m_Unidad.ResaltarCasillasAlAlcance(Alcance);
+        SeleccionarResaltoDeCasilla();
+        m_Unidad.ResaltarCasillasAlAlcance(NodosAlAlcance);
     }
+
+    public override void SeleccionarResaltoDeCasilla()
+    {
+        NodosAlAlcance = Control.GetNodosAlAlcance(m_Unidad.Nodo, Alcance);
+        foreach (Node n in NodosAlAlcance)
+        {
+            if (n.unidad != null &&
+                n.resourceType != TipoRecurso.NullResourceType)
+            {
+                NodosAlAlcance.Remove(n);
+            }
+        }
+    }
+
+
+
 }
