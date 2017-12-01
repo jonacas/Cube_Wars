@@ -17,6 +17,8 @@ public class Guerrero : Unidad {
     {
         nodo = StageData.currentInstance.GetNodeFromPosition(transform.position);
         acciones = new List<Accion>();
+        acciones.Add(GetComponent<Atacar>());
+        acciones.Add(GetComponent<MoverUnidad>());
         vision = VISION_GUERRERO;
         saludMaxima = SALUD_MAX_GUERRERO;
         Vida = SALUD_MAX_GUERRERO;

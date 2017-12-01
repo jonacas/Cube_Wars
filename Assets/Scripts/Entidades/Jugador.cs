@@ -125,4 +125,39 @@ public abstract class Jugador
 
     public abstract void Turno(ref bool turnoFinalizado);
 
+
+    /// <summary>
+    /// Comprueba si tiene los recursos suficientes
+    /// </summary>
+    /// <param name="fac">Los recursos necesarios</param>
+    /// <returns>True si los tiene, false si no</returns>
+    public bool ComprobarRecursosNecesarios(FacturaRecursos fac)
+    {
+        return puntosDeAccion >= fac.GetPA() &&
+            madera >= fac.GetMadera() &&
+            comida >= fac.GetComida() &&
+            piedra >= fac.GetPiedra() &&
+            metal >= fac.GetMetal();
+    }
+
+    /// <summary>
+    /// Intenta restar los recursos que cuesta una accion
+    /// </summary>
+    /// <param name="fac">Costes</param>
+    /// <returns>True si ha sido posibl, false si no</returns>
+    public bool RestarRecursos(FacturaRecursos fac)
+    {
+        if (ComprobarRecursosNecesarios(fac))
+        {
+            puntosDeAccion -= fac.GetPA();
+            comida -= fac.GetComida();
+            madera -= fac.GetMadera();
+            metal -= fac.GetMetal();
+            piedra -= fac.GetPiedra();
+            return true;
+        }
+        else
+            return false;
+    }
+
 }
