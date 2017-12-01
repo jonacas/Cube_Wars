@@ -14,19 +14,19 @@ public class CrearUnidad : Accion
     #endregion
 
     #region COSTES EXPLORADOR
-    public const int COSTE_PA_CREACION_ALDEANO = 10;
-    public const int COSTE_MADERA_CREACION_ALDEANO = 0;
-    public const int COSTE_COMIDA_CREACION_ALDEANO = 10;
-    public const int COSTE_METAL_CREACION_ALDEANO = 0;
-    public const int COSTE_PIEDRA_CREACION_ALDEANO = 0;
+    public const int COSTE_PA_CREACION_EXPLORADOR = 10;
+    public const int COSTE_MADERA_CREACION_EXPLORADOR = 0;
+    public const int COSTE_COMIDA_CREACION_EXPLORADOR = 10;
+    public const int COSTE_METAL_CREACION_EXPLORADOR = 0;
+    public const int COSTE_PIEDRA_CREACION_EXPLORADOR = 0;
     #endregion
 
     #region COSTES GUERRERO
-    public const int COSTE_PA_CREACION_ALDEANO = 20;
-    public const int COSTE_MADERA_CREACION_ALDEANO = 0;
-    public const int COSTE_COMIDA_CREACION_ALDEANO = 40;
-    public const int COSTE_METAL_CREACION_ALDEANO = 10;
-    public const int COSTE_PIEDRA_CREACION_ALDEANO = 0;
+    public const int COSTE_PA_CREACION_GUERRERO = 20;
+    public const int COSTE_MADERA_CREACION_GUERRERO = 0;
+    public const int COSTE_COMIDA_CREACION_GUERRERO = 40;
+    public const int COSTE_METAL_CREACION_GUERRERO = 10;
+    public const int COSTE_PIEDRA_CREACION_GUERRERO = 0;
     #endregion
 
     //dado que solo pueden crear unidades los edificios, el alcance es siempre el mismo
@@ -49,5 +49,13 @@ public class CrearUnidad : Accion
         //throw new System.NotImplementedException();
     }
 
+    public override void EmpezarAccion()
+    {
 
+    }
+
+    public override void SeleccionarResaltoDeCasilla()
+    {
+
+    }
 }
