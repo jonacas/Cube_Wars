@@ -31,11 +31,28 @@ public class Construir : Accion {
         {
             if (alcance.Contains(nodo))
             {
-                //comprobamos que en el nodo no hay una unidad enemiga
+                //si no hay una unidad ocupando la celda
+                if (nodo.unidad == null)
+                {
                     //si no hay un recurso, se muestra la torre
+                    if (nodo.resourceType != null)
+                    {
+                        fantasmaTorre.SetActive(true);
                         fantasmaTorre.transform.position = nodo.position + new Vector3(0, OFFSET_Y, 0);
+                    }
                     //si hay un recurso, se muestra el edificio de recoleccion
+                    else
+                    {
+                        fantasmaEdificioRecoleccion.SetActive(true);
                         fantasmaEdificioRecoleccion.transform.position = nodo.position + new Vector3(0, OFFSET_Y, 0);
+                    }
+                }
+            }
+            else
+            {
+                //desactivamos fantasmas
+                fantasmaTorre.SetActive(false);
+                fantasmaEdificioRecoleccion.SetActive(false);
             }
         }
 
@@ -50,15 +67,28 @@ public class Construir : Accion {
     /// <returns></returns>
     bool Ejecutar(Node n)
     {
-        if (Partida.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(costeAccion))
+        //si el nodo esta al alcance
+        if (alcance.Contains(n))
         {
-            //comprobar que en la casilla no haya edificios ni unidades enemigas
-
-                //comprobamos si hay recurso
-                    //instanciamos edificio recolectos y anadimos a la lista del jugador
-                //si no lo hay
-                    //instanciamos torre y anadimos a la lista del jugador
-            return true;
+            if (n.unidad == null)
+            {
+                if (n.resourceType == null)
+                {
+                    if (Partida.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(costeAccion))
+                    {
+                        //instanciamos torre de defensa
+                        return true;
+                    }
+                }
+                else
+                {//por si queremos poner costes distintos
+                    if (Partida.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(costeAccion))
+                    {
+                        //instanciamos edificio de recoleccion
+                        return true;
+                    }
+                }
+            }
         }
         return false;
     }

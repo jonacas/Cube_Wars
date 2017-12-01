@@ -16,6 +16,7 @@ public abstract class Jugador
 
 
     List<Unidad> unidadesDisponibles;
+    List<Unidad> edificios;
 
     Unidad capital = null; //unidad que hay que destruir para ganar la partida
 
@@ -60,6 +61,8 @@ public abstract class Jugador
 
         puntosDeAccion = 100;
         this.capital = capital;
+        unidadesDisponibles = new List<Unidad>();
+        edificios = new List<Unidad>();
     }
 
 
