@@ -6,10 +6,19 @@ using System;
 public class Atacar : Accion {
 
     Unidad m_Unidad;
-
+    
     private void Awake()
     {
         m_Unidad = GetComponent<Unidad>();
+        switch (m_Unidad.IdUnidad)
+        {
+            case StageData.UnityType.Warrior: //en caso de que al final se añadan otras unidades, pues ya sabes loko
+                Alcance = 1;
+                break;
+            case StageData.UnityType.DefensiveBuilding:
+                Alcance = 4;
+                break;
+        }
     }
 
     bool Ejecutar(Unidad victima)
@@ -30,8 +39,7 @@ public class Atacar : Accion {
 
                 //Ejecutar alguna animacion en caso de que se hiciera, para ver que se está atacando y no que haya solo dos cubos quietos.
                 //Des-resaltar casillas
-
-                AccionEmpezada = false;
+                
                 return true;
             }
             catch (Exception e)
@@ -45,27 +53,11 @@ public class Atacar : Accion {
 
     public override void CancelarAccion()
     {
-        AccionEmpezada = false;
         //codigo para des-resaltar las casillas del alcance
     }
-
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (AccionEmpezada &&
-            StageData.currentInstance.LastClickedNode.unidad != m_Unidad &&
-            StageData.currentInstance.LastClickedNode.unidad.IdJugador != m_Unidad.IdJugador
-            /*&& COMPROBAR QUE ESTÁ AL ALCANCE*/)
-            {
-                Ejecutar(StageData.currentInstance.LastClickedNode.unidad);
-            }
-        }
-    }
-    
+        
     public override void EmpezarAccion()
     {
         m_Unidad.ResaltarCasillasAlAlcance(Alcance);
-        AccionEmpezada = true;
     }        
 }

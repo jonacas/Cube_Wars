@@ -15,6 +15,15 @@ public class MoverUnidad :  Accion{
     private void Awake()
     {
         m_Unidad = GetComponent<Unidad>();
+        switch (m_Unidad.IdUnidad)
+        {
+            case StageData.UnityType.Warrior: //en caso de que al final se añadan otras unidades, pues ya sabes loko
+                Alcance = 4;
+                break;
+            case StageData.UnityType.Worker:
+                Alcance = 6;
+                break;
+        }
     }
 
     public bool Ejecutar(GameObject ob, List<Vector3> ruta)
@@ -25,7 +34,6 @@ public class MoverUnidad :  Accion{
         {*/
         obj = ob;
         this.ruta = ruta; //IMPORTANTE CONTROLAR DESDE FUERA QUE LLEGUE UNA RUTA VIABLE, ES DECIR, QUE EL OBJETIVO ESTÉ AL ALCANCE DE LA UNIDAD QUE SE QUIERE MOVER. AQUI NO SE CONTROLA ESE ERROR.
-        AccionEmpezada = false;
         StartCoroutine("RecorrerRuta");
 
         return true;
@@ -47,32 +55,15 @@ public class MoverUnidad :  Accion{
         
         }
         posicionActualRuta = 0;
-    }
-
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (AccionEmpezada &&
-            StageData.currentInstance.LastClickedNode.unidad == null &&
-            StageData.currentInstance.LastClickedNode.resourceType == StageData.ResourceType.NullResourceType
-            /*&& COMPROBAR QUE ESTÁ AL ALCANCE*/)
-            {
-                List<Vector3> rutaCalculada = new List<Vector3>();// = calcularRuta(transform.position, StageData.currentInstance.LastClickedNode.position);
-                Ejecutar(gameObject, rutaCalculada);
-            }
-        }
-    }
+    }   
 
     public override void CancelarAccion()
     {
         //codigo para des-resaltar las casillas del alcance
-        AccionEmpezada = false;
     }
 
     public override void EmpezarAccion()
     {
         m_Unidad.ResaltarCasillasAlAlcance(Alcance);
-        AccionEmpezada = true;
     }
 }

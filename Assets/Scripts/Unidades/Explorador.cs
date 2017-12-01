@@ -6,7 +6,7 @@ public class Explorador : Unidad {
 
     private int SALUD_MAX_EXPLORADOR = 100;
     private int VISION_EXPLORADOR = 7;
-    private int CASILLAS_MOVIMIENTO_EXPLORADOR = 4;
+    //private int CASILLAS_MOVIMIENTO_EXPLORADOR = 4;
 
     //ACCIONES DE LA UNIDAD
     private const int ACCION_MOVER = 0;

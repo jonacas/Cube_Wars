@@ -31,9 +31,11 @@ public class StageData : MonoBehaviour
 
 	public enum UnityType
 	{
-		Army, 
+		Warrior,
+        Worker,
 		Resource, 
-		Building
+		Building,
+        DefensiveBuilding
 	};
 
 	public enum ResourceType
