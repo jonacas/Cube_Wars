@@ -34,7 +34,7 @@ public class Node
 	public float influenceEnemy = 0f;
 
 	public Unidad unidad;
-	public StageData.ResourceType resourceType;
+	public TipoRecurso resourceType;
 
     //variables para cola prioridad
     private float _prioridad;
@@ -130,7 +130,7 @@ public class Node
         queuePosition = NO_ESTA_EN_LISTA_ABIERTOS;
         Cost = float.PositiveInfinity;
 
-        resourceType = StageData.ResourceType.NullResourceType;
+        resourceType = TipoRecurso.NullResourceType;
 
         arrayVecinos = new List<Pareja>();
         position = pos;
@@ -170,24 +170,24 @@ public class Node
     }
 
 
-	public void setInfluence(StageData.UnityType resourceType)
+	public void setInfluence(TipoUnidad resourceType)
 	{
 		int steps;
 		switch (resourceType) 
 		{
-			case StageData.UnityType.Army:
+            case TipoUnidad.Warrior:
 			{
 				steps = 5;
 				setRecursiveInfluenceView (this, steps, steps);
 				break;
 			}
-		case StageData.UnityType.Building:
+            case TipoUnidad.Building:
 			{
 				steps = 5;
 				setRecursiveInfluenceView (this, steps, steps);
 				break;
 			}
-		case StageData.UnityType.Resource:
+            case TipoUnidad.Resource:
 			{
 				steps = 3;
 				setRecursiveInfluenceResource (this, steps, steps);

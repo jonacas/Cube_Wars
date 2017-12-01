@@ -21,7 +21,7 @@ public class TorreDefensa : Unidad{
         Vida = SALUD_MAX_TORRE_DEFENSA;
         defensaMaxima = DEFENSA_MAX_TORRE_DEFENSA;
         Defensa = DEFENSA_MAX_TORRE_DEFENSA;
-        idUnidad = GlobalData.ID_TORRE_DEFENSA;
+        idUnidad = TipoUnidad.DefensiveBuilding;
     }
 
     public void AtacarAlInicioTurno()

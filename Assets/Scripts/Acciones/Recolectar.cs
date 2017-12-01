@@ -12,7 +12,7 @@ public class Recolectar : Accion {
         Alcance = 1;
     }
 
-    bool Ejecutar(StageData.ResourceType tipo, int cantidad)
+    bool Ejecutar(TipoRecurso tipo, int cantidad)
     {
         Unidad unidadActual = GetComponent<Unidad>();
         Jugador jugador = Partida.GetPartidaActual().Jugadores[unidadActual.IdJugador];

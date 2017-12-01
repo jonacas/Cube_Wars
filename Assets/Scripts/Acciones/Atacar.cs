@@ -12,10 +12,10 @@ public class Atacar : Accion {
         m_Unidad = GetComponent<Unidad>();
         switch (m_Unidad.IdUnidad)
         {
-            case StageData.UnityType.Warrior: //en caso de que al final se añadan otras unidades, pues ya sabes loko
+            case TipoUnidad.Warrior: //en caso de que al final se añadan otras unidades, pues ya sabes loko
                 Alcance = 1;
                 break;
-            case StageData.UnityType.DefensiveBuilding:
+            case TipoUnidad.DefensiveBuilding:
                 Alcance = 4;
                 break;
         }

@@ -104,20 +104,20 @@ public abstract class Jugador
         }
     }
 
-    public void SumarRecursos(StageData.ResourceType idRecurso, int cantidad)
+    public void SumarRecursos(TipoRecurso idRecurso, int cantidad)
     {
         switch (idRecurso)
         {
-            case StageData.ResourceType.Food:
+            case TipoRecurso.Food:
                 comida += cantidad;
                 break;
-            case StageData.ResourceType.Wood:
+            case TipoRecurso.Wood:
                 madera += cantidad;
                 break;
-            case StageData.ResourceType.Steel:
+            case TipoRecurso.Steel:
                 metal += cantidad;
                 break;
-            case StageData.ResourceType.Rock:
+            case TipoRecurso.Rock:
                 piedra += cantidad;
                 break;
         }

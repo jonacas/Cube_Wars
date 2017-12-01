@@ -81,8 +81,8 @@ public abstract class Unidad : MonoBehaviour {
     }
 
     //identifica el tipo de unidad para el casting
-    protected StageData.UnityType idUnidad;
-    public StageData.UnityType IdUnidad
+    protected TipoUnidad idUnidad;
+    public TipoUnidad IdUnidad
     {
 		get{return idUnidad; }
     }

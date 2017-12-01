@@ -17,10 +17,10 @@ public class MoverUnidad :  Accion{
         m_Unidad = GetComponent<Unidad>();
         switch (m_Unidad.IdUnidad)
         {
-            case StageData.UnityType.Warrior: //en caso de que al final se añadan otras unidades, pues ya sabes loko
+            case TipoUnidad.Warrior: //en caso de que al final se añadan otras unidades, pues ya sabes loko
                 Alcance = 4;
                 break;
-            case StageData.UnityType.Worker:
+            case TipoUnidad.Worker:
                 Alcance = 6;
                 break;
         }

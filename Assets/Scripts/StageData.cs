@@ -2,6 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public enum TipoUnidad
+{
+    Warrior,
+    Worker,
+    Explorer,
+    Resource,
+    Building,
+    DefensiveBuilding
+};
+
+public enum TipoRecurso
+{
+    Food,
+    Wood,
+    Steel,
+    Rock,
+    NullResourceType
+};
+
+
 public class StageData : MonoBehaviour
 {
 
@@ -27,25 +48,6 @@ public class StageData : MonoBehaviour
 	public Node[,] grafoTotal;
 	public Node[,] grafoJugador1;
 	public Node[,] grafoJugador2;
-    
-
-	public enum UnityType
-	{
-		Warrior,
-        Worker,
-		Resource, 
-		Building,
-        DefensiveBuilding
-	};
-
-	public enum ResourceType
-	{
-		Food,
-		Wood,
-		Steel,
-		Rock,
-        NullResourceType
-	};
 
 
     void Awake()
@@ -375,7 +377,7 @@ public class StageData : MonoBehaviour
 		GetNodeFromPosition (objeto.transform.position).unidad = objeto;
 	}
 
-	public void SetResourceTypeToNode (StageData.ResourceType type, Vector3 resourcePosition)
+	public void SetResourceTypeToNode (TipoRecurso type, Vector3 resourcePosition)
 	{
 		GetNodeFromPosition (resourcePosition).resourceType = type;
 	}
