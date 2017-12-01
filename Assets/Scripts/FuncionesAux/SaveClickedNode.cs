@@ -4,13 +4,21 @@ using UnityEngine;
 
 public class SaveClickedNode : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    StageData m_Instance;
+    Camera c;
+
+    private void Start()
+    {
+        m_Instance = StageData.currentInstance;
+        c = GetComponent<Camera>();
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            m_Instance.LastClickedNode = m_Instance.GetNodeFromPosition(c.ScreenToViewportPoint(new Vector3 (Input.mousePosition.x, Input.mousePosition.y, c.nearClipPlane)));
+        }
+    }
+
 }
