@@ -5,12 +5,19 @@ using UnityEngine.UI;
 
 public class UnitNamePanel : MonoBehaviour {
 
+    // Importante. Todas las unidades deben instanciar uno de estos y ponerlo como child del Canvas del nivel, ademas, las unidades deben dejar una referencia a si mismas en
+    // el parametro unitReferenced al instanciarlo.
+
 	private bool mouseOver = false;
 	private bool selected = false;
 	private float animationSpeed = 6f;
 	private CanvasGroup CG;
+    public Unidad unitReferenced;
 
 	public CanvasGroup SelectedCG;
+    public Transform SelectedL;
+    public Transform SelectedR;
+    
 	public Image HealthFill;
 	public Text UnitName;
 	public Text HealthNum;
@@ -61,11 +68,14 @@ public class UnitNamePanel : MonoBehaviour {
 	}
 	IEnumerator SelectedAnimation()
 	{
-		SelectedCG.alpha = 1;
+		SelectedCG.alpha = 0;
+        SelectedL.localRotation = SelectedR.localRotation = Quaternion.identity;
 		float turnSpeed = 20;
 		while (selected) {
-			SelectedCG.transform.Rotate (0, 0, turnSpeed * Time.deltaTime);
-			yield return null;
+            SelectedCG.alpha = Mathf.MoveTowards(SelectedCG.alpha, 1, Time.deltaTime * 4f);
+			SelectedL.Rotate (0, 0, turnSpeed * Time.deltaTime);
+            SelectedR.Rotate(0, 0, -turnSpeed * Time.deltaTime);
+            yield return null;
 		}
 		SelectedCG.alpha = 0;
 			
