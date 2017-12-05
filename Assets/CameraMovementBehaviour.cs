@@ -13,6 +13,9 @@ public class CameraMovementBehaviour : MonoBehaviour {
 
 	public float angleForce = 0.0f;
 
+	public GameObject limitPositionMinimumXZ;
+	public GameObject limitPositionMaximumXZ;
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -49,23 +52,35 @@ public class CameraMovementBehaviour : MonoBehaviour {
 	{
 		if (Input.mousePosition.x > (Screen.width / 10) * 9) 
 		{
-			cameraReference.transform.position = new Vector3 (cameraReference.transform.position.x + Time.deltaTime * 20, 
-				cameraReference.transform.position.y , cameraReference.transform.position.z);
+			if (cameraReference.transform.position.x < limitPositionMaximumXZ.transform.position.x) 
+			{
+				cameraReference.transform.position = new Vector3 (cameraReference.transform.position.x + Time.deltaTime * 20, 
+					cameraReference.transform.position.y , cameraReference.transform.position.z);
+			}
 		}
 		 else if (Input.mousePosition.x < (Screen.width / 10) * 1) 
 		{
-			cameraReference.transform.position = new Vector3 (cameraReference.transform.position.x - Time.deltaTime * 20, 
-				cameraReference.transform.position.y , cameraReference.transform.position.z);
+			if (cameraReference.transform.position.x > limitPositionMinimumXZ.transform.position.x) 
+			{
+				cameraReference.transform.position = new Vector3 (cameraReference.transform.position.x - Time.deltaTime * 20, 
+					cameraReference.transform.position.y , cameraReference.transform.position.z);
+			}
 		}
 		if (Input.mousePosition.y > (Screen.height / 10) * 9) 
 		{
-			cameraReference.transform.position = new Vector3 (cameraReference.transform.position.x, 
-				cameraReference.transform.position.y, cameraReference.transform.position.z  + Time.deltaTime * 20);
+			if (cameraReference.transform.position.z < limitPositionMaximumXZ.transform.position.z) 
+			{
+				cameraReference.transform.position = new Vector3 (cameraReference.transform.position.x, 
+					cameraReference.transform.position.y, cameraReference.transform.position.z + Time.deltaTime * 20);
+			}
 		}
 		 else if (Input.mousePosition.y < (Screen.height / 10) * 1) 
 		{
-			cameraReference.transform.position = new Vector3 (cameraReference.transform.position.x, 
-				cameraReference.transform.position.y, cameraReference.transform.position.z  - Time.deltaTime * 20);
+			if (cameraReference.transform.position.z > limitPositionMinimumXZ.transform.position.z) 
+			{
+				cameraReference.transform.position = new Vector3 (cameraReference.transform.position.x, 
+					cameraReference.transform.position.y, cameraReference.transform.position.z - Time.deltaTime * 20);
+			}
 		}
 		
 	}
@@ -90,11 +105,11 @@ public class CameraMovementBehaviour : MonoBehaviour {
 
 		ZoomCameraControl ();
 		PositionCameraControl ();
-		if (Input.GetMouseButtonDown (1)) 
+		/*if (Input.GetMouseButtonDown (1)) 
 		{
 			RotateAroundCameraControl ();
 		}
-
+		*/
 		//Testeo de que funciona mover la camara y tal...
 		/*cameraReference.gameObject.transform.position = new Vector3(cameraReference.gameObject.transform.position.x,
 			cameraReference.gameObject.transform.position.y + 1, cameraReference.gameObject.transform.position.z);*/
