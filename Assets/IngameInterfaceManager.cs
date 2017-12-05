@@ -5,7 +5,9 @@ using UnityEngine.UI;
 
 public class IngameInterfaceManager : MonoBehaviour {
 
-	[Header("Unit Info Panel")]
+    [Header("Unit Panels Parent")]
+    public Transform unitPanels_Parent;
+    [Header("Unit Info Panel")]
 	public CanvasGroup unitPanel_CG;
 	public Transform unitPanel_NameShade;
 	public Transform unitPanel_ColouredDeco;
@@ -41,7 +43,7 @@ public class IngameInterfaceManager : MonoBehaviour {
 	public CanvasGroup CG_cityInfo;
 	public CanvasGroup CG_buildingInfo;
 
-	private HUDState currentHudState = HUDState.nothingSelected;
+	public HUDState currentHudState = HUDState.nothingSelected;
 
 	private Vector3 initPos_alwaysOnDisplay;
 	private Vector3 initPos_unitInfo_parent;
@@ -56,7 +58,7 @@ public class IngameInterfaceManager : MonoBehaviour {
 	private Vector3 initPos_buildingInfo;
 
 	private bool animationInProgress = false;
-	private UnitNamePanel unitPanelSelected;
+	public UnitNamePanel unitPanelSelected;
 
 	public static IngameInterfaceManager currentInstance;
 
@@ -160,7 +162,12 @@ public class IngameInterfaceManager : MonoBehaviour {
 	{
         if (!(currentHudState == HUDState.nothingSelected || currentHudState == HUDState.unitSelected))
             return;
+        if (unitPanelSelected != null)
+        {
+            unitPanelSelected.DeSelect();
+        }
 		unitPanelSelected = UNP;
+        UpdateUnitDisplayedInfo();
 		StartCoroutine ("OpenAnim_unitInfo");
 		StopCoroutine ("CloseAnim_unitInfo");
 	}
@@ -176,6 +183,7 @@ public class IngameInterfaceManager : MonoBehaviour {
 	}
     void UpdateUnitDisplayedInfo()
     {
+        //TODO: ESTO DE AQUI
         // Desactivamos todas y activamos las que correspondan.
         /*
         unitActions_attack.gameObject.SetActive(false);
@@ -183,13 +191,14 @@ public class IngameInterfaceManager : MonoBehaviour {
         unitActions_gather.gameObject.SetActive(false);
         unitActions_build.gameObject.SetActive(false);
         unitActions_create.gameObject.SetActive(false);
-        */
+        
         foreach (Accion action in unitPanelSelected.unitReferenced.Acciones)
         {
             //COMPROBAR SI TIENE CADA ACCION, E IR ACTIVANDOLAS UNA A UNA
         }
-        //unitPanel_unitName.text = unitPanelSelected.unitReferenced.... Nombre?;
-        //unitPanel_unitHealth.text = unitPanelSelected.unitReferenced...vidaActual ? +"/" + unitPanelSelected.unitReferenced...vidaTotal ?;
+        */
+        unitPanel_unitName.text = unitPanelSelected.unitReferenced.name;
+        unitPanel_unitHealth.text = unitPanelSelected.unitReferenced.Vida + "/" + unitPanelSelected.unitReferenced.SaludMaxima;
 
     }
 

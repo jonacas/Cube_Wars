@@ -5,6 +5,9 @@ using UnityEngine;
 
 public abstract class Unidad : MonoBehaviour {
 
+    public GameObject unitPanelPrefab;
+    public UnitNamePanel UNP;
+
 	public GameObject CasillaMarcada;
 
 	List<GameObject> casillasMarcadas;
@@ -21,6 +24,14 @@ public abstract class Unidad : MonoBehaviour {
     {
         get { return posicion; }
         set { posicion = value; }
+    }
+    private void Start()
+    {
+        if (IngameInterfaceManager.currentInstance != null)
+        {
+            GameObject panelCreated = Instantiate(unitPanelPrefab, IngameInterfaceManager.currentInstance.unitPanels_Parent) as GameObject;
+            panelCreated.GetComponent<UnitNamePanel>().unitReferenced = this;
+        }
     }
 
     protected int saludMaxima;

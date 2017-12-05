@@ -94,6 +94,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1101510214128582
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 224969438474637554}
+  - component: {fileID: 225628073792540714}
+  m_Layer: 5
+  m_Name: '[CG] UnitPanels Parent'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1132260255118794
 GameObject:
   m_ObjectHideFlags: 1
@@ -1792,6 +1808,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d71ae67cee11f3e409d4ec8f04b6b5a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitPanels_Parent: {fileID: 224969438474637554}
   unitPanel_CG: {fileID: 225770785198297736}
   unitPanel_NameShade: {fileID: 224536087863359482}
   unitPanel_ColouredDeco: {fileID: 224199388338872494}
@@ -1813,6 +1830,8 @@ MonoBehaviour:
   CG_alwaysOnDisplay: {fileID: 225733407839103176}
   CG_cityInfo: {fileID: 225400119944660020}
   CG_buildingInfo: {fileID: 225685201915239210}
+  currentHudState: 0
+  unitPanelSelected: {fileID: 0}
 --- !u!114 &114943162795042810
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2290,7 +2309,7 @@ RectTransform:
   - {fileID: 224959071099496364}
   - {fileID: 224658959592847812}
   m_Father: {fileID: 224589051311823474}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.9}
   m_AnchorMax: {x: 1, y: 1}
@@ -2311,7 +2330,7 @@ RectTransform:
   - {fileID: 224705924873278356}
   - {fileID: 224297228063903796}
   m_Father: {fileID: 224589051311823474}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2349,7 +2368,7 @@ RectTransform:
   m_LocalScale: {x: 0.999989, y: 0.999989, z: 0.999989}
   m_Children: []
   m_Father: {fileID: 224589051311823474}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2367,7 +2386,7 @@ RectTransform:
   m_LocalScale: {x: 0.999989, y: 0.999989, z: 0.999989}
   m_Children: []
   m_Father: {fileID: 224589051311823474}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2448,7 +2467,7 @@ RectTransform:
   - {fileID: 224882439104219218}
   - {fileID: 224478795483255278}
   m_Father: {fileID: 224589051311823474}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2596,6 +2615,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 224969438474637554}
   - {fileID: 224062112527896980}
   - {fileID: 224256601165019678}
   - {fileID: 224084688159769934}
@@ -2807,7 +2827,7 @@ RectTransform:
   m_Children:
   - {fileID: 224747859808299724}
   m_Father: {fileID: 224589051311823474}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2943,6 +2963,24 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!224 &224969438474637554
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1101510214128582}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 224589051311823474}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &225165066317688224
 CanvasGroup:
   m_ObjectHideFlags: 1
@@ -2982,6 +3020,17 @@ CanvasGroup:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1080999430635118}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!225 &225628073792540714
+CanvasGroup:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1101510214128582}
   m_Enabled: 1
   m_Alpha: 1
   m_Interactable: 1

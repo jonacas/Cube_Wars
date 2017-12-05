@@ -22,6 +22,8 @@ public class UnitNamePanel : MonoBehaviour {
 	public Text UnitName;
 	public Text HealthNum;
 
+    private const float FOLLOW_UNIT_OFFSET_Y = 100f;
+
 	void Start ()
 	{
 		CG = this.GetComponent<CanvasGroup> ();
@@ -34,14 +36,21 @@ public class UnitNamePanel : MonoBehaviour {
 			transform.localScale = Vector3.MoveTowards (transform.localScale, Vector3.one * 0.75f, Time.deltaTime * animationSpeed);
 			CG.alpha = Mathf.MoveTowards (CG.alpha, 0.33f, Time.deltaTime * animationSpeed);
 		}
+        if (unitReferenced != null)
+        {
+            transform.position = Camera.main.WorldToScreenPoint(unitReferenced.transform.position) + (Vector3.up * FOLLOW_UNIT_OFFSET_Y);
+            UpdateDisplayedInfo();
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
 	}
 	public void UpdateDisplayedInfo()
 	{
-		// Leer de algun lado la informacion de la imagen y ajustar
-
-		//HealthFill.fillAmount = HEALTHPERCENT * 0.5f;
-		//HealthNum.text = HEALTHCURRENT + "/" + HEALTHMAX;
-		//UnitName.text = UNITNAME;
+		HealthFill.fillAmount = unitReferenced.Vida/unitReferenced.SaludMaxima * 0.5f;
+		HealthNum.text = unitReferenced.Vida + "/" + unitReferenced.SaludMaxima;
+		UnitName.text = unitReferenced.name;
 	}
 	public void OnMouseEnter()
 	{
@@ -53,12 +62,16 @@ public class UnitNamePanel : MonoBehaviour {
 	}
 	public void OnMouseClick()
 	{
-		IngameInterfaceManager.currentInstance.OpenUnitInfo (this);
 		Select ();
 	}
 	public void Select()
 	{
-		selected = true;
+        if (IngameInterfaceManager.currentInstance == null)
+            return;
+        if (IngameInterfaceManager.currentInstance.currentHudState == IngameInterfaceManager.HUDState.actionSelected)
+            return;
+        IngameInterfaceManager.currentInstance.OpenUnitInfo(this);
+        selected = true;
 		StopCoroutine ("SelectedAnimation");
 		StartCoroutine ("SelectedAnimation");
 	}
