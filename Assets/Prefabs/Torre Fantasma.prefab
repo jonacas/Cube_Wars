@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 65305529630437996}
   - component: {fileID: 23004395200185506}
   m_Layer: 0
-  m_Name: Torre
+  m_Name: Torre Fantasma
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
