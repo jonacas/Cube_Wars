@@ -11,6 +11,8 @@ public class Explorador : Unidad {
     //ACCIONES DE LA UNIDAD
     private const int ACCION_MOVER = 0;
 
+
+
 	// Use this for initialization
 	void Awake () {
         saludMaxima = SALUD_MAX_EXPLORADOR;

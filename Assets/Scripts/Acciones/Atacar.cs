@@ -22,10 +22,10 @@ public class Atacar : Accion {
         idAccion = AccionID.attack;
     }
 
-    public bool Ejecutar(Unidad victima)
+    public bool Ejecutar(Node victima)
     {
         SeleccionarResaltoDeCasilla();
-        if (NodosAlAlcance.Contains(victima.Nodo)) {
+        if (NodosAlAlcance.Contains(victima)) {
             if (Partida.GetPartidaActual().Jugadores[m_Unidad.IdJugador].PuntosDeAccion - costeAccion >= 0)
             {
                 //Hay que controlar si el objetivo está al alcance de la unidad que ataca cuando se llama a esta funcion.
@@ -33,9 +33,9 @@ public class Atacar : Accion {
                 {
                     Unidad atacante = gameObject.GetComponent<Unidad>();
 
-                    victima.RecibirAtaque(m_Unidad.Danyo);
+                    victima.unidad.RecibirAtaque(m_Unidad.Danyo);
 
-                    atacante.RecibirAtaque(victima.DanyoContraataque);
+                    atacante.RecibirAtaque(victima.unidad.DanyoContraataque);
 
                     Partida.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(costeAccion);
 
