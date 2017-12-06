@@ -94,13 +94,13 @@ public class MoverUnidad :  Accion{
     {
         print("SeleccionarResaltoCasilla" + Alcance);
         NodosAlAlcance = Control.GetNodosAlAlcance(m_Unidad.Nodo, Alcance);
-        foreach (Node n in NodosAlAlcance)
+        for (int i = NodosAlAlcance.Count - 1; i >= 0; i--)
         {
-            if (n.unidad != null ||
-                n.resourceType != TipoRecurso.NullResourceType)
+            if (NodosAlAlcance[i].unidad != null ||
+                NodosAlAlcance[i].resourceType != TipoRecurso.NullResourceType)
             {
-                print(n.unidad + "   " + n.resourceType + "  Eliminado");
-                NodosAlAlcance.Remove(n);
+                print(NodosAlAlcance[i].unidad + "   " + NodosAlAlcance[i].resourceType + "  Eliminado");
+                NodosAlAlcance.Remove(NodosAlAlcance[i]);
             }
         }
 

@@ -73,12 +73,12 @@ public class Atacar : Accion {
     public override void SeleccionarResaltoDeCasilla()
     {
         NodosAlAlcance = Control.GetNodosAlAlcance(m_Unidad.Nodo, Alcance);
-        foreach (Node n in NodosAlAlcance)
+        for(int i = NodosAlAlcance.Count-1; i >= 0; i--)
         {
-            if (n.unidad == null || 
-                n.unidad.IdJugador == m_Unidad.IdJugador)
+            if (NodosAlAlcance[i].unidad == null ||
+                NodosAlAlcance[i].unidad.IdJugador == m_Unidad.IdJugador)
             {
-                NodosAlAlcance.Remove(n);
+                NodosAlAlcance.Remove(NodosAlAlcance[i]);
             }
         }
     }
