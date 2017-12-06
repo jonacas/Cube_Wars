@@ -35,11 +35,16 @@ public class Atacar : Accion {
                 {
                     Unidad atacante = m_Unidad;
 
-                    victima.unidad.RecibirAtaque(m_Unidad.Danyo);
+                    bool victimaMuerto = victima.unidad.RecibirAtaque(m_Unidad.Danyo);
                     print(victima.unidad.name);
                     print(victima.unidad.Vida);
 
-                    atacante.RecibirAtaque(victima.unidad.DanyoContraataque);
+                    bool atacanteMuerto = atacante.RecibirAtaque(victima.unidad.DanyoContraataque);
+
+                    if (victimaMuerto)
+                        Destroy(victima.unidad.gameObject);
+                    if (atacanteMuerto)
+                        Destroy(atacante.gameObject);
 
                     //Partida.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(costeAccion);
 
