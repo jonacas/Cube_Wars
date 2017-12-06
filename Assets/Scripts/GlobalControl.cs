@@ -120,24 +120,26 @@ public class GlobalControl : MonoBehaviour {
         CrearUnidad crearAux;
         Construir construirAux;
 
-        switch(unidadSeleccionada.Acciones[indiceAccionEncurso].IDAccion)
-            {
-                case(AccionID.attack):
-                    atacarAux = (Atacar) unidadSeleccionada.Acciones[indiceAccionEncurso];
-                    atacarAux.Ejecutar(nodo);
-                    break;
-                case (AccionID.build):
-                    construirAux = (Construir)unidadSeleccionada.Acciones[indiceAccionEncurso];
-                    break;
-                case (AccionID.create):
-                    crearAux = (CrearUnidad)unidadSeleccionada.Acciones[indiceAccionEncurso];
-                    break;
-                case (AccionID.move):
-                    print("Intentando ejecutar mover");
-                    moverAux = (MoverUnidad)unidadSeleccionada.Acciones[indiceAccionEncurso];
-                    moverAux.Ejecutar(nodo);
-                    break;
-            }
+        switch (unidadSeleccionada.Acciones[indiceAccionEncurso].IDAccion)
+        {
+            case (AccionID.attack):
+                atacarAux = (Atacar)unidadSeleccionada.Acciones[indiceAccionEncurso];
+                atacarAux.Ejecutar(nodo);
+                break;
+            case (AccionID.build):
+                construirAux = (Construir)unidadSeleccionada.Acciones[indiceAccionEncurso];
+                break;
+            case (AccionID.create):
+                print("Intentando ejecutar crear unidad");
+                crearAux = (CrearUnidad)unidadSeleccionada.Acciones[indiceAccionEncurso];
+                crearAux.Ejecutar(nodo, TipoUnidad.Warrior);
+                break;
+            case (AccionID.move):
+                print("Intentando ejecutar mover");
+                moverAux = (MoverUnidad)unidadSeleccionada.Acciones[indiceAccionEncurso];
+                moverAux.Ejecutar(nodo);
+                break;
+        }
 
     }
 

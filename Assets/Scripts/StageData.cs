@@ -26,7 +26,7 @@ public enum TipoRecurso
 public class StageData : MonoBehaviour
 {
 
-    public GameObject player;
+    public GameObject player, WarriorPrefab, WorkerPrefab, ExplorerPrefab;
     public static StageData currentInstance;
     public List<EnemyMovement> enemiesInStage;
     public CreacionGrafo CG;

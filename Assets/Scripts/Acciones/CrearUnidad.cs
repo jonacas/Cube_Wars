@@ -30,7 +30,7 @@ public class CrearUnidad : Accion
     #endregion
 
     //dado que solo pueden crear unidades los edificios, el alcance es siempre el mismo
-    List<Node> alcance;
+    List<Node> NodosAlAlcance;
 
 
     private void Awake()
@@ -42,6 +42,7 @@ public class CrearUnidad : Accion
                 break;
         }
         idAccion = AccionID.create;
+        Alcance = 2;
     }
 
 
@@ -50,25 +51,55 @@ public class CrearUnidad : Accion
     /// </summary>
     /// <param name="tipo">Tipo de la unidad que va a crearse</param>
     /// <returns>Devuelve true si se ha podido realizar, false si no</returns>
-    public bool Ejecutar(TipoUnidad tipo)
+    public bool Ejecutar(Node destino, TipoUnidad tipo)
     {
         //se debe coger el jugador de la instancia de partida del stageData
         //Jugador jug = SGetComponent<Unidad>().IdJugador
+
+        Instantiate(StageData.currentInstance.WarriorPrefab, NodosAlAlcance[0].position, StageData.currentInstance.WarriorPrefab.transform.rotation);
+        CancelarAccion();
+        /*
+        if (NodosAlAlcance.Contains(destino))
+        {
+            switch (tipo)
+            {
+                case TipoUnidad.Warrior:
+                    Instantiate(StageData.currentInstance.WarriorPrefab, destino.position, StageData.currentInstance.WarriorPrefab.transform.rotation);
+                    break;
+                case TipoUnidad.Worker:
+                    Instantiate(StageData.currentInstance.WorkerPrefab, destino.position, StageData.currentInstance.WorkerPrefab.transform.rotation);
+                    break;
+                case TipoUnidad.Explorer:
+                    Instantiate(StageData.currentInstance.ExplorerPrefab, destino.position, StageData.currentInstance.ExplorerPrefab.transform.rotation);
+                    break;
+            }
+            
+            return true;
+        }*/
         return false;
     }
 
     public override void CancelarAccion()
     {
-        //throw new System.NotImplementedException();
+        m_Unidad.QuitarResaltoCasillasAlAlcance(NodosAlAlcance);
     }
 
     public override void EmpezarAccion()
     {
-
+        SeleccionarResaltoDeCasilla();
+        m_Unidad.ResaltarCasillasAlAlcance(NodosAlAlcance);
     }
 
     public override void SeleccionarResaltoDeCasilla()
     {
-
+        NodosAlAlcance = Control.GetNodosAlAlcance(m_Unidad.Nodo, Alcance);
+        for (int i = NodosAlAlcance.Count - 1; i >= 0; i--)
+        {
+            if (NodosAlAlcance[i].unidad != null ||
+                NodosAlAlcance[i].resourceType != TipoRecurso.NullResourceType)
+            {
+                NodosAlAlcance.Remove(NodosAlAlcance[i]);
+            }
+        }
     }
 }

@@ -10,7 +10,21 @@ public class Capital : Unidad {
 
     int nivel;
     bool posicionAsignada;
-    
+
+    private void Awake()
+    {
+        saludMaxima = SALUD_MAX;
+        Vida = SALUD_MAX;
+        acciones = new List<Accion>();
+        acciones.Add(GetComponent<CrearUnidad>());
+    }
+
+    void Update()
+    {
+        Nodo = StageData.currentInstance.GetNodeFromPosition(transform.position);
+        Nodo.unidad = this;
+    }
+
     public override bool RecibirAtaque(int danoBruto)
     {
  	    bool destruido = base.RecibirAtaque(danoBruto);
