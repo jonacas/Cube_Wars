@@ -67,14 +67,15 @@ public class Construir : Accion {
     /// </summary>
     /// <param name="j">Jugador que realiza la accion</param>
     /// <returns></returns>
-    bool Ejecutar(Node n)
+    public bool Ejecutar(Node n)
     {
+        SeleccionarResaltoDeCasilla();
         //si el nodo esta al alcance
         if (NodosAlAlcance.Contains(n))
         {
             if (n.unidad == null)
             {
-                if (n.resourceType == null)
+                if (n.resourceType == TipoRecurso.NullResourceType)
                 {
                     if (Partida.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(costeAccion))
                     {

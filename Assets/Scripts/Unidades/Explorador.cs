@@ -13,12 +13,13 @@ public class Explorador : Unidad {
 
 	// Use this for initialization
 	void Awake () {
+        Nodo = StageData.currentInstance.GetNodeFromPosition(transform.position);
         saludMaxima = SALUD_MAX_EXPLORADOR;
         Vida = SALUD_MAX_EXPLORADOR;
         vision = VISION_EXPLORADOR;
         acciones = new List<Accion>();
         acciones.Add(this.GetComponent<MoverUnidad>());
-        idUnidad = GlobalData.ID_EXPLORADOR;
+        idUnidad = TipoUnidad.Explorer;
 
         //FALTA RELLENAR INFLUENCIAS
 	}
@@ -28,7 +29,6 @@ public class Explorador : Unidad {
 		MoverUnidad mv = (MoverUnidad)acciones [ACCION_MOVER];
         print(mv == null);
 		mv.Ejecutar (StageData.currentInstance.GetNodeFromPosition(camino[camino.Count-1]), camino);
-
 	}
 
     public override void SolicitarYRecorrerCamino(Vector3 final)

@@ -38,6 +38,7 @@ public class MoverUnidad :  Accion{
 
     public bool Ejecutar(Node destino, List<Vector3> ruta)
     {
+        SeleccionarResaltoDeCasilla();
         print("Ejecutar entrado");
         print(NodosAlAlcance.Count);
         //print(destino == null);
@@ -97,7 +98,7 @@ public class MoverUnidad :  Accion{
         NodosAlAlcance = Control.GetNodosAlAlcance(m_Unidad.Nodo, Alcance);
         foreach (Node n in NodosAlAlcance)
         {
-            if (n.unidad != null &&
+            if (n.unidad != null ||
                 n.resourceType != TipoRecurso.NullResourceType)
             {
                 NodosAlAlcance.Remove(n);

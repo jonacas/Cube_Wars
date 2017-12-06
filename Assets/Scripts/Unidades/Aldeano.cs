@@ -15,14 +15,43 @@ public class Aldeano : Unidad {
 
     void Awake()
     {
+        Nodo = StageData.currentInstance.GetNodeFromPosition(transform.position);
         saludMaxima = SALUD_MAX_ALDEANO;
         Vida = SALUD_MAX_ALDEANO;
         vision = VISION_ALDEANO;
         acciones = new List<Accion>();
         acciones.Add(this.GetComponent<MoverUnidad>());
-        idUnidad = GlobalData.ID_EXPLORADOR;
+        idUnidad = TipoUnidad.Worker;
 
         //FALTA RELLENAR INFLUENCIAS
+    }
+
+    public void AccionMover(List<Vector3> camino)
+    {
+        MoverUnidad mv = (MoverUnidad)acciones[ACCION_MOVER];
+        print(mv == null);
+        mv.Ejecutar(StageData.currentInstance.GetNodeFromPosition(camino[camino.Count - 1]), camino);
+    }
+
+    public override void SolicitarYRecorrerCamino(Vector3 final)
+    {
+        base.SolicitarYRecorrerCamino(final);
+        StartCoroutine("EsperarCamino");
+    }
+
+    public IEnumerator EsperarCamino()
+    {
+        while (!caminoListo)
+            yield return null;
+        print("Espera camino terminada");
+        AccionMover(caminoActual);
+    }
+
+    public void AccionConstruir(Node objetivo)
+    {
+        Construir co = (Construir)acciones[ACCION_CONSTRUIR];
+        print(co == null);
+        co.Ejecutar(objetivo);
     }
 
 }

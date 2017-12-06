@@ -30,7 +30,7 @@ public class TorreDefensa : Unidad{
 
         foreach (Node n in nodos)
         {
-            if (n.unidad != null)
+            if (n.unidad != null && n.unidad.IdJugador == IdJugador)
             {
                 n.unidad.RecibirAtaque(ATAQUE_TORRE_DEFENSA);
             }

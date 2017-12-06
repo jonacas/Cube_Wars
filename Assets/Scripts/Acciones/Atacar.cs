@@ -22,8 +22,9 @@ public class Atacar : Accion {
         }
     }
 
-    bool Ejecutar(Unidad victima)
+    public bool Ejecutar(Unidad victima)
     {
+        SeleccionarResaltoDeCasilla();
         if (NodosAlAlcance.Contains(victima.Nodo)) {
             if (Partida.GetPartidaActual().Jugadores[m_Unidad.IdJugador].PuntosDeAccion - costeAccion >= 0)
             {
