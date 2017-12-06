@@ -31,11 +31,11 @@ public class Explorador : Unidad {
         //Nodo = StageData.currentInstance.GetNodeFromPosition(transform.position);
     }*/
 
-    void Update()
+    /*void Update()
     {
             Nodo = StageData.currentInstance.GetNodeFromPosition(transform.position);
             Nodo.unidad = this;
-    }
+    }*/
 
     public void AccionMover(List<Vector3> camino)
 	{

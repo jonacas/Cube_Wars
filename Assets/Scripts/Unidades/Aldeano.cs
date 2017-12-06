@@ -27,11 +27,11 @@ public class Aldeano : Unidad {
         //FALTA RELLENAR INFLUENCIAS
     }
 
-    void Update()
+    /*void Update()
     {
         Nodo = StageData.currentInstance.GetNodeFromPosition(transform.position);
         Nodo.unidad = this;
-    }
+    }*/
 
     public void AccionMover(List<Vector3> camino)
     {

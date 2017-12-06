@@ -61,7 +61,9 @@ public class MoverUnidad :  Accion{
 
     IEnumerator RecorrerRuta()
     {
-        while(posicionActualRuta < m_Ruta.Count-1)
+        Node Nodo = StageData.currentInstance.GetNodeFromPosition(transform.position);
+        Nodo.unidad = null;
+        while (posicionActualRuta < m_Ruta.Count-1)
         {
 			
 			transform.position = Vector3.MoveTowards(transform.position, m_Ruta[posicionActualRuta + 1], Time.deltaTime * MOVE_SPEED);
@@ -77,6 +79,8 @@ public class MoverUnidad :  Accion{
         print(m_Unidad.Nodo.fil + "  " + m_Unidad.Nodo.col);
         StageData.currentInstance.LimpiarGrafo(StageData.currentInstance.CG.nodeMap);
         NodosAlAlcance = Control.GetNodosAlAlcance(StageData.currentInstance.GetNodeFromPosition(transform.position), 3);
+        Nodo = StageData.currentInstance.GetNodeFromPosition(transform.position);
+        Nodo.unidad = transform.GetComponent<Unidad>();
     }   
 
     public override void CancelarAccion()
