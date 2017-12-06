@@ -13,12 +13,12 @@ public class SaveClickedNode : MonoBehaviour {
         c = GetComponent<Camera>();
     }
 
-    private void Update()
+    /*private void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
             m_Instance.LastClickedNode = m_Instance.GetNodeFromPosition(c.ScreenToViewportPoint(new Vector3 (Input.mousePosition.x, Input.mousePosition.y, c.nearClipPlane)));
         }
-    }
+    }*/
 
 }

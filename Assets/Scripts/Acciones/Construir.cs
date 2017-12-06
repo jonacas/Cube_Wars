@@ -74,47 +74,34 @@ public class Construir : Accion {
         //si el nodo esta al alcance
         if (NodosAlAlcance.Contains(n))
         {
-            if (n.unidad == null)
+            if (n.resourceType == TipoRecurso.NullResourceType)
             {
-                if (n.resourceType == TipoRecurso.NullResourceType)
+                if (Partida.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(costeAccion))
                 {
-                    if (Partida.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(costeAccion))
-                    {
-                        //instanciamos torre de defensa
-                        CancelarAccion();
-                        return true;
-                    }
-                }
-                else
-                {//por si queremos poner costes distintos
-                    if (Partida.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(costeAccion))
-                    {
-                        //instanciamos edificio de recoleccion
-                        CancelarAccion();
-                        return true;
-                    }
+                    Instantiate(StageData.currentInstance.TowerPrefab, NodosAlAlcance[0].position, StageData.currentInstance.TowerPrefab.transform.rotation);
+                    CancelarAccion();
+                    return true;
                 }
             }
+            else
+            {//por si queremos poner costes distintos
+                if (Partida.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(costeAccion))
+                {
+                    Instantiate(StageData.currentInstance.ResourceBuildPrefab, NodosAlAlcance[0].position, StageData.currentInstance.ResourceBuildPrefab.transform.rotation);
+                    CancelarAccion();
+                    return true;
+                }
+            }
+
         }
         CancelarAccion();
         return false;
     }
-
-    /// <summary>
-    /// Esta funcion indica los nodos en los que la accion podria realizarse
-    /// </summary>
-    /// <param name="nodos"> Lista de nodos dentro dle rango de alcance de la accion</param>
-    public void SetAlcance(List<Node> nodos)
-    {
-        NodosAlAlcance = nodos;
-    }
-
+    
     public override void CancelarAccion()
     {
         fantasmaTorre.SetActive(false);
         fantasmaEdificioRecoleccion.SetActive(false);
-        NodosAlAlcance = null;
-        //codigo para des-resaltar las casillas del alcance
         m_Unidad.QuitarResaltoCasillasAlAlcance(NodosAlAlcance);
     }
 

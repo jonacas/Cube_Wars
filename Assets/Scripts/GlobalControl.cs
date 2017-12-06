@@ -128,6 +128,7 @@ public class GlobalControl : MonoBehaviour {
                 break;
             case (AccionID.build):
                 construirAux = (Construir)unidadSeleccionada.Acciones[indiceAccionEncurso];
+                construirAux.Ejecutar(nodo);
                 break;
             case (AccionID.create):
                 print("Intentando ejecutar crear unidad");
