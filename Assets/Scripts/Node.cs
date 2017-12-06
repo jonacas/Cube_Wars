@@ -175,19 +175,37 @@ public class Node
 		int steps;
 		switch (resourceType) 
 		{
-            case TipoUnidad.Warrior:
+		case TipoUnidad.Warrior:
+			{
+				steps = 4;
+				setRecursiveInfluenceView (this, steps, steps);
+				break;
+			}
+		case TipoUnidad.Worker:
+			{
+				steps = 4;
+				setRecursiveInfluenceView (this, steps, steps);
+				break;
+			}
+		case TipoUnidad.Explorer:
+			{
+				steps = 4;
+				setRecursiveInfluenceView (this, steps, steps);
+				break;
+			}
+		case TipoUnidad.Building:
 			{
 				steps = 5;
 				setRecursiveInfluenceView (this, steps, steps);
 				break;
 			}
-            case TipoUnidad.Building:
+		case TipoUnidad.DefensiveBuilding:
 			{
 				steps = 5;
 				setRecursiveInfluenceView (this, steps, steps);
 				break;
 			}
-            case TipoUnidad.Resource:
+		case TipoUnidad.Resource:
 			{
 				steps = 3;
 				setRecursiveInfluenceResource (this, steps, steps);
@@ -252,7 +270,7 @@ public class Node
 		}
 	}
 
-	private void setRecursiveInfluenceEnemy(Node actualNode, float remainingSteps, float totalSteps)
+	public void setRecursiveInfluenceEnemy(Node actualNode, float remainingSteps, float totalSteps)
 	{
         Debug.Log("EntraEne");
         if (remainingSteps == 0) {
@@ -278,7 +296,123 @@ public class Node
 		}
 	}
 
+	public void ClearInfluence(TipoUnidad resourceType)
+	{
+		int steps;
+		switch (resourceType) 
+		{
+		case TipoUnidad.Warrior:
+			{
+				steps = 4;
+				clearRecursiveInfluenceView (this, steps, steps);
+				break;
+			}
+		case TipoUnidad.Worker:
+			{
+				steps = 4;
+				clearRecursiveInfluenceView (this, steps, steps);
+				break;
+			}
+		case TipoUnidad.Explorer:
+			{
+				steps = 4;
+				clearRecursiveInfluenceView (this, steps, steps);
+				break;
+			}
+		case TipoUnidad.Building:
+			{
+				steps = 5;
+				clearRecursiveInfluenceView (this, steps, steps);
+				break;
+			}
+		case TipoUnidad.DefensiveBuilding:
+			{
+				steps = 5;
+				clearRecursiveInfluenceView (this, steps, steps);
+				break;
+			}
+		case TipoUnidad.Resource:
+			{
+				steps = 3;
+				clearRecursiveInfluenceResource (this, steps, steps);
+				break;
+			}
+		}
+	}
+
+	private void clearRecursiveInfluenceView(Node actualNode, float remainingSteps, float totalSteps)
+	{
+		//Debug.Log("EntraVie");
+		if (remainingSteps == 0) {
+			return;
+		} 
+		else if (actualNode == null) 
+		{
+			//Debug.Log ("Deberia haber un null aqui?");
+			return;
+		}
+		else
+		{
+				actualNode.influenceView = 0f;
+				//Debug.Log("Conseguido");
+
+			for (int i = 0; i < arrayVecinos.Count; i++) 
+			{
+
+				clearRecursiveInfluenceView (actualNode.arrayVecinos[i].nodo, remainingSteps - 1, totalSteps);
+				//Debug.Log("Entra");
+			}
+		}
+	}
+
+	private void clearRecursiveInfluenceResource(Node actualNode, float remainingSteps, float totalSteps)
+	{
+		//Debug.Log("EntraRes");
+		if (remainingSteps == 0) {
+			return;
+		} 
+		else if (actualNode == null) 
+		{
+			//Debug.Log ("Deberia haber un null aqui?");
+			return;
+		}
+		else
+		{
+				actualNode.influenceResources = 0f;
+				//Debug.Log("Conseguido");
+
+			for (int i = 0; i < arrayVecinos.Count; i++) 
+			{
+				setRecursiveInfluenceView (actualNode.arrayVecinos[i].nodo, remainingSteps - 1, totalSteps);		
+			}
+		}
+	}
+
+	public void clearRecursiveInfluenceEnemy(Node actualNode, float remainingSteps, float totalSteps)
+	{
+		//Debug.Log("EntraEne");
+		if (remainingSteps == 0) {
+			return;
+		} 
+		else if (actualNode == null) 
+		{
+			//Debug.Log ("Deberia haber un null aqui?");
+			return;
+		}
+		else
+		{
+			
+			actualNode.influenceEnemy = 0f;
+
+			for (int i = 0; i < arrayVecinos.Count; i++) 
+			{
+				clearRecursiveInfluenceView (actualNode.arrayVecinos[i].nodo, remainingSteps - 1, totalSteps);		
+			}
+		}
+	}
 
 
 
 }
+
+
