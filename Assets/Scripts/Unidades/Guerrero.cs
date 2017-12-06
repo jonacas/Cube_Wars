@@ -24,6 +24,7 @@ public class Guerrero : Unidad {
         Vida = SALUD_MAX_GUERRERO;
         defensaMaxima = DEFENSA_MAX_GUERRERO;
         Defensa = DEFENSA_MAX_GUERRERO;
+        danyo = ATAQUE_GUERRERO;
         idUnidad = TipoUnidad.Warrior;
         IdJugador = 2;
     }
@@ -35,11 +36,8 @@ public class Guerrero : Unidad {
 
     void Update()
     {
-        if (Nodo == null)
-        {
             Nodo = StageData.currentInstance.GetNodeFromPosition(transform.position);
             Nodo.unidad = this;
-        }
     }
 
 

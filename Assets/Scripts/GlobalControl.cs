@@ -124,6 +124,7 @@ public class GlobalControl : MonoBehaviour {
             {
                 case(AccionID.attack):
                     atacarAux = (Atacar) unidadSeleccionada.Acciones[indiceAccionEncurso];
+                    atacarAux.Ejecutar(nodo);
                     break;
                 case (AccionID.build):
                     construirAux = (Construir)unidadSeleccionada.Acciones[indiceAccionEncurso];

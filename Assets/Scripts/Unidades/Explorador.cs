@@ -33,11 +33,8 @@ public class Explorador : Unidad {
 
     void Update()
     {
-        if (Nodo == null)
-        {
             Nodo = StageData.currentInstance.GetNodeFromPosition(transform.position);
             Nodo.unidad = this;
-        }
     }
 
     public void AccionMover(List<Vector3> camino)

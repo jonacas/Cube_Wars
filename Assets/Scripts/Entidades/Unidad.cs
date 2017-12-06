@@ -37,7 +37,7 @@ public abstract class Unidad : MonoBehaviour {
         get { return saludMaxima; }
     }
 
-    int danyo;
+    protected int danyo;
     public int Danyo
     {
         get { return danyo; }
@@ -133,7 +133,8 @@ public abstract class Unidad : MonoBehaviour {
 
     public virtual bool RecibirAtaque(int danoBruto)
     {
-        int dano = danoBruto - (int) (danoBruto * defensa / 100);
+        int dano = danoBruto /*- (int) (danoBruto * defensa / 100)*/;
+        vida -= dano;
         if (vida <= 0)
         {
             vida = 0;

@@ -14,12 +14,13 @@ public class Atacar : Accion {
         switch (m_Unidad.IdUnidad)
         {
             case TipoUnidad.Warrior: //en caso de que al final se añadan otras unidades, pues ya sabes loko
-                Alcance = 2;
+                Alcance = 3;
                 break;
             case TipoUnidad.DefensiveBuilding:
                 Alcance = 4;
                 break;
         }
+        print("Alcance " + alcance);
     }
 
     public bool Ejecutar(Node victima)
@@ -27,18 +28,20 @@ public class Atacar : Accion {
         print("entra");
         SeleccionarResaltoDeCasilla();
         if (NodosAlAlcance.Contains(victima)) {
-            if (Partida.GetPartidaActual().Jugadores[m_Unidad.IdJugador].PuntosDeAccion - costeAccion >= 0)
+            if (true/*Partida.GetPartidaActual().Jugadores[m_Unidad.IdJugador].PuntosDeAccion - costeAccion >= 0*/)
             {
                 //Hay que controlar si el objetivo está al alcance de la unidad que ataca cuando se llama a esta funcion.
                 try
                 {
-                    Unidad atacante = gameObject.GetComponent<Unidad>();
+                    Unidad atacante = m_Unidad;
 
                     victima.unidad.RecibirAtaque(m_Unidad.Danyo);
+                    print(victima.unidad.name);
+                    print(victima.unidad.Vida);
 
                     atacante.RecibirAtaque(victima.unidad.DanyoContraataque);
 
-                    Partida.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(costeAccion);
+                    //Partida.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(costeAccion);
 
                     //Ejecutar alguna animacion en caso de que se hiciera, para ver que se está atacando y no que haya solo dos cubos quietos.
                     //Des-resaltar casillas
