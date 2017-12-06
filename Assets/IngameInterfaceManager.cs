@@ -135,6 +135,7 @@ public class IngameInterfaceManager : MonoBehaviour {
                 }
         }
         currentHudState = HUDState.actionSelected;
+        print(currentHudState);
         StopCoroutine("CloseAnim_unitInfo");
         StartCoroutine("CloseAnim_unitInfo");
     }

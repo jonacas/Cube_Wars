@@ -34,7 +34,7 @@ public class Explorador : Unidad {
 	{
 		MoverUnidad mv = (MoverUnidad)acciones [ACCION_MOVER];
         print(mv == null);
-		mv.Ejecutar (StageData.currentInstance.GetNodeFromPosition(camino[camino.Count-1]), camino);
+		//mv.Ejecutar (StageData.currentInstance.GetNodeFromPosition(camino[camino.Count-1]), camino);
 	}
 
     public override void SolicitarYRecorrerCamino(Vector3 final)

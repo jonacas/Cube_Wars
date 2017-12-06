@@ -103,6 +103,7 @@ public class GlobalControl : MonoBehaviour {
             if (Input.GetButtonDown("ClickIzq"))
             {
                 Node nodo = LanzaRaycast();
+                print("Click en: " + nodo.fil + "//" + nodo.col);
                 IntentarEjecutarAccion(nodo);
             }
 
@@ -130,8 +131,9 @@ public class GlobalControl : MonoBehaviour {
                     crearAux = (CrearUnidad)unidadSeleccionada.Acciones[indiceAccionEncurso];
                     break;
                 case (AccionID.move):
+                    print("Intentando ejecutar mover");
                     moverAux = (MoverUnidad)unidadSeleccionada.Acciones[indiceAccionEncurso];
-                    //moverAux.Ejecutar(nodo);
+                    moverAux.Ejecutar(nodo);
                     break;
             }
 

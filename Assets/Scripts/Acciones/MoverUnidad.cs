@@ -87,7 +87,7 @@ public class MoverUnidad :  Accion{
 
     public override void SeleccionarResaltoDeCasilla()
     {
-        print("SeleccionarResaltoCasilla");
+        print("SeleccionarResaltoCasilla" + Alcance);
         NodosAlAlcance = Control.GetNodosAlAlcance(m_Unidad.Nodo, Alcance);
         foreach (Node n in NodosAlAlcance)
         {

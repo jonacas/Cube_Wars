@@ -47,6 +47,7 @@ public class Control : MonoBehaviour {
         }
         cerrados.Remove(nodoIncicial);
         //CheckNodeList(cerrados);
+        StageData.currentInstance.LimpiarGrafo(StageData.currentInstance.grafoTotal);
         return cerrados;
 
     }
