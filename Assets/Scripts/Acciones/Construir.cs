@@ -16,8 +16,8 @@ public class Construir : Accion {
         //aqui se deben coger los fantasmas que se mostraran para no instanciarlos mas tarde
         costeAccion = 50;
         m_Unidad = GetComponent<Unidad>();
-        Alcance = 1;
-        NodosAlAlcance = Control.GetNodosAlAlcance(m_Unidad.Nodo, Alcance);
+        Alcance = 3;
+        //NodosAlAlcance = Control.GetNodosAlAlcance(m_Unidad.Nodo, Alcance);
         idAccion = AccionID.build;
     }
 
@@ -69,7 +69,8 @@ public class Construir : Accion {
     /// <returns></returns>
     public bool Ejecutar(Node n)
     {
-        SeleccionarResaltoDeCasilla();
+        NodosAlAlcance = Control.GetNodosAlAlcance(m_Unidad.Nodo, Alcance);
+        //SeleccionarResaltoDeCasilla();
         //si el nodo esta al alcance
         if (NodosAlAlcance.Contains(n))
         {
@@ -128,7 +129,7 @@ public class Construir : Accion {
         NodosAlAlcance = Control.GetNodosAlAlcance(m_Unidad.Nodo, Alcance);
         for (int i = NodosAlAlcance.Count - 1; i >= 0; i--)
         {
-            if (NodosAlAlcance[i].unidad != null &&
+            if (NodosAlAlcance[i].unidad != null ||
                 NodosAlAlcance[i].resourceType != TipoRecurso.NullResourceType)
             {
                 NodosAlAlcance.Remove(NodosAlAlcance[i]);

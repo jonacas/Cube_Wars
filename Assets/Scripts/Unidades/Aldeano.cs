@@ -15,15 +15,22 @@ public class Aldeano : Unidad {
 
     void Awake()
     {
-        Nodo = StageData.currentInstance.GetNodeFromPosition(transform.position);
+        //Nodo = StageData.currentInstance.GetNodeFromPosition(transform.position);
         saludMaxima = SALUD_MAX_ALDEANO;
         Vida = SALUD_MAX_ALDEANO;
         vision = VISION_ALDEANO;
         acciones = new List<Accion>();
         acciones.Add(this.GetComponent<MoverUnidad>());
+        acciones.Add(this.GetComponent<Construir>());
         idUnidad = TipoUnidad.Worker;
 
         //FALTA RELLENAR INFLUENCIAS
+    }
+
+    void Update()
+    {
+        Nodo = StageData.currentInstance.GetNodeFromPosition(transform.position);
+        Nodo.unidad = this;
     }
 
     public void AccionMover(List<Vector3> camino)
