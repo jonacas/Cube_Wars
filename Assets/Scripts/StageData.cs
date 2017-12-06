@@ -74,6 +74,7 @@ public class StageData : MonoBehaviour
 		{
 			return null;
 		}
+        LastClickedNode = grafoTotal[initZ, initX];
 		return grafoTotal [initZ, initX];
 
 
