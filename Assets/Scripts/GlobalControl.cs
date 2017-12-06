@@ -12,6 +12,7 @@ public class GlobalControl : MonoBehaviour {
     private HUDState estado;
     private IngameInterfaceManager managerInterfaz;
     private AccionID accionEnCurso;
+    private int indiceAccionEncurso;
     
 
     void Awake()
@@ -87,6 +88,7 @@ public class GlobalControl : MonoBehaviour {
             if (unidadSeleccionada.Acciones[i].IDAccion == accion)
             {
                 accionEnCurso = accion;
+                indiceAccionEncurso = i;
                 unidadSeleccionada.Acciones[i].EmpezarAccion();
                 return true;
             }
@@ -94,5 +96,60 @@ public class GlobalControl : MonoBehaviour {
         return false;
     }
 
+    void Update()
+    {
+        if (IngameInterfaceManager.currentInstance.currentHudState == HUDState.actionSelected)
+        {
+            if (Input.GetButtonDown("ClickIzq"))
+            {
+                Node nodo = LanzaRaycast();
+                IntentarEjecutarAccion(nodo);
+            }
+
+
+        }
+    }
+
+
+    private void IntentarEjecutarAccion(Node nodo)
+    {
+        Atacar atacarAux;
+        MoverUnidad moverAux;
+        CrearUnidad crearAux;
+        Construir construirAux;
+
+        switch(unidadSeleccionada.Acciones[indiceAccionEncurso].IDAccion)
+            {
+                case(AccionID.attack):
+                    atacarAux = (Atacar) unidadSeleccionada.Acciones[indiceAccionEncurso];
+                    break;
+                case (AccionID.build):
+                    construirAux = (Construir)unidadSeleccionada.Acciones[indiceAccionEncurso];
+                    break;
+                case (AccionID.create):
+                    crearAux = (CrearUnidad)unidadSeleccionada.Acciones[indiceAccionEncurso];
+                    break;
+                case (AccionID.move):
+                    moverAux = (MoverUnidad)unidadSeleccionada.Acciones[indiceAccionEncurso];
+                    //moverAux.Ejecutar(nodo);
+                    break;
+            }
+
+    }
+
+    private Node LanzaRaycast()
+    {
+        RaycastHit hit;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Physics.Raycast(ray, out hit);
+
+        if (hit.collider != null)
+        {
+
+            return  StageData.currentInstance.GetNodeFromPosition(hit.point);
+        }
+        else
+            return null;
+    }
 
 }
