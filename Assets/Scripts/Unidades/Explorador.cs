@@ -23,10 +23,10 @@ public class Explorador : Unidad {
         //FALTA RELLENAR INFLUENCIAS
 	}
 
-    private void Start()
+    /*private void Start()
     {
-        Nodo = StageData.currentInstance.GetNodeFromPosition(transform.position);
-    }
+        //Nodo = StageData.currentInstance.GetNodeFromPosition(transform.position);
+    }*/
 
     public void AccionMover(List<Vector3> camino)
 	{
