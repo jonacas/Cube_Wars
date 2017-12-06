@@ -186,6 +186,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraReference: {fileID: 20869540120878636}
   angleForce: 0
+  cameraTraslationSpeed: 20
   limitPositionMinimumXZ: {fileID: 1868173346115496}
   limitPositionMaximumXZ: {fileID: 1305751373159758}
 --- !u!114 &114435760067801752
