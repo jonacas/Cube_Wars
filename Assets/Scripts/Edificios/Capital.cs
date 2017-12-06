@@ -10,23 +10,7 @@ public class Capital : Unidad {
 
     int nivel;
     bool posicionAsignada;
-
-    void Awake()
-    {
-        SetPosicion(transform.position);
-    }
-
-    public void SetPosicion(Vector3 pos)    
-    {
-        if (!posicionAsignada)
-        {
-            base.Posicion = pos;
-            posicionAsignada = true;
-        }
-        else
-            Debug.LogError("Se ha intentado modificar la posicion de la capital: " + IdJugador);
-    }
-
+    
     public override bool RecibirAtaque(int danoBruto)
     {
  	    bool destruido = base.RecibirAtaque(danoBruto);

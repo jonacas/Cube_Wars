@@ -20,13 +20,7 @@ public abstract class Unidad : MonoBehaviour {
         get { return nodo; }
         set { nodo = value; }
     }
-
-    Vector3 posicion;
-    public Vector3 Posicion
-    {
-        get { return posicion; }
-        set { posicion = value; }
-    }
+    
     private void Start()
     {
         piscina = new GameObject("Piscina");
