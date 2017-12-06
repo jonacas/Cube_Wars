@@ -15,7 +15,6 @@ public abstract class Accion : MonoBehaviour
     protected AccionID idAccion;
 	public AccionID IDAccion{ get{return 0; }}
     protected Unidad m_Unidad;
-    protected GameObject lucesResaltarCasillas;
 
     protected int costeAccion;
 	public int CosteAccion { get{ return costeAccion;} } //coste en puntosDeAccion
