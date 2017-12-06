@@ -61,8 +61,8 @@ public abstract class Unidad : MonoBehaviour {
 
     protected float defensaMaxima;
 
-    protected List<Vector3> caminoActual;
-    protected bool caminoListo;
+    public List<Vector3> caminoActual;
+    public bool caminoListo;
 
     internal void ResultadoAEstrella(List<Vector3> aux)
     {

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MoverUnidad :  Accion{
 
-    List<Vector3> ruta;
+    List<Vector3> m_Ruta;
     int posicionActualRuta = 0;
 	private const float MOVE_SPEED = 10f;
     public List<Node> NodosAlAlcance;
@@ -37,48 +37,39 @@ public class MoverUnidad :  Accion{
         StageData.currentInstance.LimpiarGrafo(StageData.currentInstance.CG.nodeMap);
     }
 
-    public bool Ejecutar(Node destino, List<Vector3> ruta)
+    public void Ejecutar(Node destino)
     {
+        
         SeleccionarResaltoDeCasilla();
         print("Ejecutar entrado");
         print(NodosAlAlcance.Count);
         //print(destino == null);
         if (NodosAlAlcance.Contains(destino))
         {
-            StageData.currentInstance.GetNodeFromPosition(ruta[ruta.Count - 1]).unidad = null;
-            print("Mover Unidad");
-            //Debug.LogError("ERROR EN ACCION MOVER: Falta que las unidades sobre los nodos se actualicen");
-            Unidad unidadActual = GetComponent<Unidad>();
-            /*if (Partida.GetPartidaActual().Jugadores[unidadActual.IdJugador].RestarPuntosDeAccion(costeAccion))
-            {*/
-            this.ruta = ruta; //IMPORTANTE CONTROLAR DESDE FUERA QUE LLEGUE UNA RUTA VIABLE, ES DECIR, QUE EL OBJETIVO ESTÉ AL ALCANCE DE LA UNIDAD QUE SE QUIERE MOVER. AQUI NO SE CONTROLA ESE ERROR.
-            StartCoroutine("RecorrerRuta");
-
-            CancelarAccion();
-
-            m_Unidad.Nodo = StageData.currentInstance.GetNodeFromPosition(ruta[ruta.Count - 1]);
-            StageData.currentInstance.GetNodeFromPosition(ruta[ruta.Count - 1]).unidad = this.m_Unidad;
-            return true;
-            /*}
-            else
-                return false;*/
+            SolicitarYRecorrerCamino(destino.position);            
         }
-        return false;
+    }
+
+    void Mover()
+    {
+        m_Ruta = m_Unidad.caminoActual;
+        StartCoroutine("RecorrerRuta");
+        CancelarAccion();
     }
 
     IEnumerator RecorrerRuta()
     {
-        while(posicionActualRuta < ruta.Count-1)
+        while(posicionActualRuta < m_Ruta.Count-1)
         {
 			
-			transform.position = Vector3.MoveTowards(transform.position, ruta[posicionActualRuta + 1], Time.deltaTime * MOVE_SPEED);
-			if (Vector3.Distance(transform.position, ruta[posicionActualRuta + 1]) < margen)
+			transform.position = Vector3.MoveTowards(transform.position, m_Ruta[posicionActualRuta + 1], Time.deltaTime * MOVE_SPEED);
+			if (Vector3.Distance(transform.position, m_Ruta[posicionActualRuta + 1]) < margen)
 				posicionActualRuta++;
 			else
-				yield return null;
-        
+				yield return null;        
         }
         posicionActualRuta = 0;
+        m_Unidad.Nodo = StageData.currentInstance.GetNodeFromPosition(m_Unidad.Posicion);
         StageData.currentInstance.LimpiarGrafo(StageData.currentInstance.CG.nodeMap);
         NodosAlAlcance = Control.GetNodosAlAlcance(StageData.currentInstance.GetNodeFromPosition(transform.position), 3);
     }   
@@ -111,6 +102,18 @@ public class MoverUnidad :  Accion{
         m_Unidad.ResaltarCasillasAlAlcance(NodosAlAlcance);
     }
 
+    public void SolicitarYRecorrerCamino(Vector3 final)
+    {
+        StageData.currentInstance.GetPathToTarget(this.transform.position, final, m_Unidad);
+        StartCoroutine("EsperarCamino");
+    }
 
+    public IEnumerator EsperarCamino()
+    {
+        while (!m_Unidad.caminoListo)
+            yield return null;
+        print("Espera camino terminada");
+        Mover();
+    }
 
 }
