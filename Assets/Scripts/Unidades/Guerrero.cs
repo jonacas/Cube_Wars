@@ -15,17 +15,21 @@ public class Guerrero : Unidad {
     private const int ACCION_ATACAR = 1;
 
     void Awake()
-    {
-        Nodo = StageData.currentInstance.GetNodeFromPosition(transform.position);
+    {        
         acciones = new List<Accion>();
-        acciones.Add(GetComponent<Atacar>());
         acciones.Add(GetComponent<MoverUnidad>());
+        acciones.Add(GetComponent<Atacar>());
         vision = VISION_GUERRERO;
         saludMaxima = SALUD_MAX_GUERRERO;
         Vida = SALUD_MAX_GUERRERO;
         defensaMaxima = DEFENSA_MAX_GUERRERO;
         Defensa = DEFENSA_MAX_GUERRERO;
         idUnidad = TipoUnidad.Warrior;
+    }
+
+    private void Start()
+    {
+        Nodo = StageData.currentInstance.GetNodeFromPosition(transform.position);
     }
 
     public void AccionMover(List<Vector3> camino)

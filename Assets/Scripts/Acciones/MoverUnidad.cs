@@ -100,6 +100,7 @@ public class MoverUnidad :  Accion{
             if (n.unidad != null ||
                 n.resourceType != TipoRecurso.NullResourceType)
             {
+                print(n.unidad + "   " + n.resourceType + "  Eliminado");
                 NodosAlAlcance.Remove(n);
             }
         }

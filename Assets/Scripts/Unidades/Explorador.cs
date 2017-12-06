@@ -13,7 +13,6 @@ public class Explorador : Unidad {
 
 	// Use this for initialization
 	void Awake () {
-        Nodo = StageData.currentInstance.GetNodeFromPosition(transform.position);
         saludMaxima = SALUD_MAX_EXPLORADOR;
         Vida = SALUD_MAX_EXPLORADOR;
         vision = VISION_EXPLORADOR;
@@ -24,7 +23,12 @@ public class Explorador : Unidad {
         //FALTA RELLENAR INFLUENCIAS
 	}
 
-	public void AccionMover(List<Vector3> camino)
+    private void Start()
+    {
+        Nodo = StageData.currentInstance.GetNodeFromPosition(transform.position);
+    }
+
+    public void AccionMover(List<Vector3> camino)
 	{
 		MoverUnidad mv = (MoverUnidad)acciones [ACCION_MOVER];
         print(mv == null);
