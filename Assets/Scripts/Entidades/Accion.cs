@@ -2,13 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum AccionID
+{
+    move, attack, create, build
+}
+
 public abstract class Accion : MonoBehaviour
 {
 
     /// ID DE LA ACCION
     /// especifica el tipo de accion para no hacer castings con todos los tipos posibles
-    protected int idAccion;
-	public int IDAccion{ get{return 0; }}
+    protected AccionID idAccion;
+	public AccionID IDAccion{ get{return 0; }}
+    protected Unidad m_Unidad;
+    protected GameObject lucesResaltarCasillas;
 
     protected int costeAccion;
 	public int CosteAccion { get{ return costeAccion;} } //coste en puntosDeAccion

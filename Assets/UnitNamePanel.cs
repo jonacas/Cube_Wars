@@ -11,6 +11,8 @@ public class UnitNamePanel : MonoBehaviour {
 	private bool mouseOver = false;
 	private bool selected = false;
 	private float animationSpeed = 6f;
+
+    private GlobalControl globalControl;
 	private CanvasGroup CG;
     public Unidad unitReferenced;
 
@@ -26,7 +28,11 @@ public class UnitNamePanel : MonoBehaviour {
 
 	void Start ()
 	{
+        globalControl = GameObject.Find("Control").GetComponent<GlobalControl>();
+
 		CG = this.GetComponent<CanvasGroup> ();
+       /* unitReferenced = this.gameObject.GetComponent<Unidad>();
+        this.gameObject.transform.parent = GameObject.Find("Canvas").transform;*/
 	}
 	void Update () {
 		if (mouseOver || selected) {
@@ -68,8 +74,9 @@ public class UnitNamePanel : MonoBehaviour {
 	{
         if (IngameInterfaceManager.currentInstance == null)
             return;
-        if (IngameInterfaceManager.currentInstance.currentHudState == IngameInterfaceManager.HUDState.actionSelected)
+        if (IngameInterfaceManager.currentInstance.currentHudState == HUDState.actionSelected)
             return;
+        globalControl.UnidadSeleccionada(unitReferenced);
         IngameInterfaceManager.currentInstance.OpenUnitInfo(this);
         selected = true;
 		StopCoroutine ("SelectedAnimation");
@@ -77,6 +84,7 @@ public class UnitNamePanel : MonoBehaviour {
 	}
 	public void DeSelect()
 	{
+        globalControl.Deseleccionar(unitReferenced);
 		selected = false;
 	}
 	IEnumerator SelectedAnimation()

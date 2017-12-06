@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour {
 
-    private float EDGE_PANNING_MAX_X = 50;
-    private float EDGE_PANNING_MIN_X = -50;
-    private float EDGE_PANNING_MAX_Y = 50;
-    private float EDGE_PANNING_MIN_Y = -50;
+    private float EDGE_PANNING_MAX_X = 290;
+    private float EDGE_PANNING_MIN_X = -20;
+    private float EDGE_PANNING_MAX_Y = 290;
+    private float EDGE_PANNING_MIN_Y = -20;
 
     private float EDGE_PANNING_LIMIT_ABSOLUTE_Y = 30;
     private const float EDGE_PANNING_SPEED = 90f;                           // Velocidad del edge panning

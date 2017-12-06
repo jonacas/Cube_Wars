@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Recolectar : Accion {
 
-    Unidad m_Unidad;
     public List<Node> NodosAlAlcance;
 
     private void Awake()

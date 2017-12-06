@@ -5,7 +5,6 @@ using System;
 
 public class Atacar : Accion {
 
-    Unidad m_Unidad;
     public List<Node> NodosAlAlcance;
     
     private void Awake()
@@ -20,6 +19,7 @@ public class Atacar : Accion {
                 Alcance = 4;
                 break;
         }
+        idAccion = AccionID.attack;
     }
 
     bool Ejecutar(Unidad victima)
