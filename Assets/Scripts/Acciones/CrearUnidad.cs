@@ -56,12 +56,12 @@ public class CrearUnidad : Accion
         //se debe coger el jugador de la instancia de partida del stageData
         //Jugador jug = SGetComponent<Unidad>().IdJugador
 
-        Instantiate(StageData.currentInstance.WarriorPrefab, NodosAlAlcance[0].position, StageData.currentInstance.WarriorPrefab.transform.rotation);
-        CancelarAccion();
-        /*
+
+        
         if (NodosAlAlcance.Contains(destino))
         {
-            switch (tipo)
+            Instantiate(StageData.currentInstance.WarriorPrefab, destino.position, StageData.currentInstance.WarriorPrefab.transform.rotation);
+           /* switch (tipo)
             {
                 case TipoUnidad.Warrior:
                     Instantiate(StageData.currentInstance.WarriorPrefab, destino.position, StageData.currentInstance.WarriorPrefab.transform.rotation);
@@ -72,10 +72,10 @@ public class CrearUnidad : Accion
                 case TipoUnidad.Explorer:
                     Instantiate(StageData.currentInstance.ExplorerPrefab, destino.position, StageData.currentInstance.ExplorerPrefab.transform.rotation);
                     break;
-            }
-            
+            }*/
+            CancelarAccion();
             return true;
-        }*/
+        }
         return false;
     }
 

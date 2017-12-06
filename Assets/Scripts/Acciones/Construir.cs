@@ -78,7 +78,7 @@ public class Construir : Accion {
             {
                 if (true/*Partida.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(costeAccion)*/)
                 {
-                    Instantiate(StageData.currentInstance.TowerPrefab, NodosAlAlcance[0].position, StageData.currentInstance.TowerPrefab.transform.rotation);
+                    Instantiate(StageData.currentInstance.TowerPrefab, n.position, StageData.currentInstance.TowerPrefab.transform.rotation);
                     CancelarAccion();
                     return true;
                 }
@@ -87,7 +87,7 @@ public class Construir : Accion {
             {//por si queremos poner costes distintos
                 if (Partida.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(costeAccion))
                 {
-                    Instantiate(StageData.currentInstance.ResourceBuildPrefab, NodosAlAlcance[0].position, StageData.currentInstance.ResourceBuildPrefab.transform.rotation);
+                    Instantiate(StageData.currentInstance.ResourceBuildPrefab, n.position, StageData.currentInstance.ResourceBuildPrefab.transform.rotation);
                     CancelarAccion();
                     return true;
                 }
