@@ -1,11 +1,15 @@
 fileFormatVersion: 2
 guid: e9251ea245c707047b435be50defe547
-timeCreated: 1512128892
+timeCreated: 1512563192
 licenseType: Free
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - unitPanelPrefab: {instanceID: 0}
+  - UNP: {instanceID: 0}
+  - CasillaMarcada: {fileID: 1745308983168744, guid: e6e44451835e6574a8b69876b952e584,
+      type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

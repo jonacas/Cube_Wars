@@ -37,7 +37,7 @@ public class MoverUnidad :  Accion{
         StageData.currentInstance.LimpiarGrafo(StageData.currentInstance.CG.nodeMap);
     }
 
-    public void Ejecutar(Node destino)
+    public bool Ejecutar(Node destino)
     {
         
         SeleccionarResaltoDeCasilla();
@@ -46,15 +46,17 @@ public class MoverUnidad :  Accion{
         //print(destino == null);
         if (NodosAlAlcance.Contains(destino))
         {
-            SolicitarYRecorrerCamino(destino.position);            
+            SolicitarYRecorrerCamino(destino.position);
+            return true;
         }
+        else
+            return false;
     }
 
     void Mover()
     {
         m_Ruta = m_Unidad.caminoActual;
         StartCoroutine("RecorrerRuta");
-        CancelarAccion();
     }
 
     IEnumerator RecorrerRuta()
@@ -68,8 +70,11 @@ public class MoverUnidad :  Accion{
 			else
 				yield return null;        
         }
+        print("me cago en dios");
         posicionActualRuta = 0;
-        m_Unidad.Nodo = StageData.currentInstance.GetNodeFromPosition(m_Unidad.Posicion);
+        CancelarAccion();
+        m_Unidad.Nodo = StageData.currentInstance.GetNodeFromPosition(m_Unidad.gameObject.transform.position);
+        print(m_Unidad.Nodo.fil + "  " + m_Unidad.Nodo.col);
         StageData.currentInstance.LimpiarGrafo(StageData.currentInstance.CG.nodeMap);
         NodosAlAlcance = Control.GetNodosAlAlcance(StageData.currentInstance.GetNodeFromPosition(transform.position), 3);
     }   

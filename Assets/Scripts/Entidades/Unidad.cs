@@ -10,6 +10,8 @@ public abstract class Unidad : MonoBehaviour {
 
 	public GameObject CasillaMarcada;
 
+    GameObject piscina;
+
 	List<GameObject> casillasMarcadas;
 
     Node nodo; //el nodo sobre el que se situa la unidad;
@@ -27,6 +29,7 @@ public abstract class Unidad : MonoBehaviour {
     }
     private void Start()
     {
+        piscina = new GameObject("Piscina");
         if (IngameInterfaceManager.currentInstance != null)
         {
             GameObject panelCreated = Instantiate(unitPanelPrefab, IngameInterfaceManager.currentInstance.unitPanels_Parent) as GameObject;
@@ -152,7 +155,7 @@ public abstract class Unidad : MonoBehaviour {
         //este codigo debe resaltar las casillas del tablero que entran dentro del rango de una de las acciones
 		casillasMarcadas = new List<GameObject>();
 		foreach (Node n in alcance) {
-			GameObject newCasillaMarcada = Instantiate (CasillaMarcada, new Vector3 (n.position.x, CasillaMarcada.transform.position.y, n.position.z), CasillaMarcada.transform.rotation);
+			GameObject newCasillaMarcada = Instantiate (CasillaMarcada, new Vector3 (n.position.x, CasillaMarcada.transform.position.y, n.position.z), CasillaMarcada.transform.rotation, piscina.transform);
 			casillasMarcadas.Add (newCasillaMarcada);
 		}
 
@@ -160,11 +163,8 @@ public abstract class Unidad : MonoBehaviour {
 
     public void QuitarResaltoCasillasAlAlcance(List<Node> alcance)
     {
-        //este codigo debe des-resaltar las casillas del tablero que entran dentro del rango de una de las acciones
-		for(int i = casillasMarcadas.Count - 1; i > 0; i--)
-		{
-			Destroy (casillasMarcadas [i]);
-		}
+        Destroy(piscina);
+        piscina = new GameObject("Piscina");
 		casillasMarcadas.Clear();
     }
 
