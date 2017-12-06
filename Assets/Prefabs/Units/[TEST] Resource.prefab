@@ -96,7 +96,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ac0e11e13f93cf46b47ee647555c739, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CasillaMarcada: {fileID: 0}
+  unitPanelPrefab: {fileID: 1177745714050020, guid: d3fc6c15b5c5a9f48860ccb506009f92,
+    type: 2}
+  UNP: {fileID: 0}
+  CasillaMarcada: {fileID: 1745308983168744, guid: e6e44451835e6574a8b69876b952e584,
+    type: 2}
+  caminoActual: []
+  caminoListo: 0
 --- !u!114 &114779093584657950
 MonoBehaviour:
   m_ObjectHideFlags: 1
