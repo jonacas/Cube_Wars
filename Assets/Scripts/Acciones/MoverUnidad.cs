@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MoverUnidad :  Accion{
 
-    Unidad m_Unidad;
     List<Vector3> ruta;
     int posicionActualRuta = 0;
 	private const float MOVE_SPEED = 10f;
@@ -25,7 +24,7 @@ public class MoverUnidad :  Accion{
                 Alcance = 6;
                 break;
         }
-       
+        idAccion = AccionID.move;
     }
 
     private void Start()

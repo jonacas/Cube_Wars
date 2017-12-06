@@ -8,7 +8,6 @@ public class Construir : Accion {
 
     public List<Node> NodosAlAlcance;
 
-    Unidad m_Unidad;
     GameObject fantasmaTorre;
     GameObject fantasmaEdificioRecoleccion;
 
@@ -19,6 +18,7 @@ public class Construir : Accion {
         m_Unidad = GetComponent<Unidad>();
         Alcance = 1;
         NodosAlAlcance = Control.GetNodosAlAlcance(m_Unidad.Nodo, Alcance);
+        idAccion = AccionID.build;
     }
 
     /// <summary>

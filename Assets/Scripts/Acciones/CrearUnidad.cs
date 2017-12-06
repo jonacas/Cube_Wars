@@ -32,6 +32,19 @@ public class CrearUnidad : Accion
     //dado que solo pueden crear unidades los edificios, el alcance es siempre el mismo
     List<Node> alcance;
 
+
+    private void Awake()
+    {
+        m_Unidad = GetComponent<Unidad>();
+        switch (m_Unidad.IdUnidad)
+        {
+            case TipoUnidad.Building:
+                break;
+        }
+        idAccion = AccionID.create;
+    }
+
+
     /// <summary>
     /// Crea una unidad y hace que aparezca en una posicion al azar alrededor del edificio
     /// </summary>

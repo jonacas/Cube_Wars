@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+public enum HUDState
+{
+    nothingSelected, unitSelected, actionSelected
+}
+
 public class IngameInterfaceManager : MonoBehaviour {
 
     [Header("Unit Panels Parent")]
@@ -29,10 +35,6 @@ public class IngameInterfaceManager : MonoBehaviour {
     public Transform actionInProgress_panel;
     public Text actionInProgress_info;
 
-    public enum HUDState
-    {
-        nothingSelected, unitSelected, actionSelected
-    }
     public enum ActionInProgressMode
     {
         move, attack, build, create, gather
@@ -138,10 +140,26 @@ public class IngameInterfaceManager : MonoBehaviour {
     }
 
     // Si no se hace asi, no se puede referenciar la accion del script al boton desde el inspector, hashtag unity
-    public void OnButtonClick_Create() { OpenActionInProgress(ActionInProgressMode.create); }
-    public void OnButtonClick_Move() { OpenActionInProgress(ActionInProgressMode.move); }
-    public void OnButtonClick_Attack() { OpenActionInProgress(ActionInProgressMode.attack); }
-    public void OnButtonClick_Build() { OpenActionInProgress(ActionInProgressMode.build); }
+    public void OnButtonClick_Create()
+    {
+        if(GlobalControl.currentInstance.SeleccionarAccion(AccionID.create))
+            OpenActionInProgress(ActionInProgressMode.create);
+    }
+    public void OnButtonClick_Move()
+    { 
+        if(GlobalControl.currentInstance.SeleccionarAccion(AccionID.move))
+            OpenActionInProgress(ActionInProgressMode.move);
+    }
+    public void OnButtonClick_Attack() 
+    { 
+        if(GlobalControl.currentInstance.SeleccionarAccion(AccionID.attack))
+            OpenActionInProgress(ActionInProgressMode.attack); 
+    }
+    public void OnButtonClick_Build() 
+    { 
+        if(GlobalControl.currentInstance.SeleccionarAccion(AccionID.build))
+            OpenActionInProgress(ActionInProgressMode.build); 
+    }
     public void OnButtonClick_Gather() { OpenActionInProgress(ActionInProgressMode.gather); }
     // En serio que cojones colega.
 

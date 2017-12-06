@@ -120,7 +120,7 @@ public abstract class Unidad : MonoBehaviour {
     protected List<Accion> acciones;
     public List<Accion> Acciones
     {
-		get{ return null;}
+		get{ return acciones;}
     }
     //abstract public void llenarListaAccione(); 
 
