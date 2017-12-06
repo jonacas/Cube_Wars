@@ -76,7 +76,7 @@ public class Construir : Accion {
         {
             if (n.resourceType == TipoRecurso.NullResourceType)
             {
-                if (Partida.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(costeAccion))
+                if (true/*Partida.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(costeAccion)*/)
                 {
                     Instantiate(StageData.currentInstance.TowerPrefab, NodosAlAlcance[0].position, StageData.currentInstance.TowerPrefab.transform.rotation);
                     CancelarAccion();

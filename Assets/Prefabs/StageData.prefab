@@ -72,7 +72,8 @@ MonoBehaviour:
     type: 2}
   TowerPrefab: {fileID: 1328622908967992, guid: 81a8ab0b0ae7afd48a6eb1e77d6d1f5f,
     type: 2}
-  ResourceBuildPrefab: {fileID: 0}
+  ResourceBuildPrefab: {fileID: 1133215434081162, guid: 244e7ef30648da0408c677d9f65f543d,
+    type: 2}
   enemiesInStage: []
   CG: {fileID: 0}
   tobeInteractedList: []
