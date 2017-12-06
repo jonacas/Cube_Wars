@@ -82,11 +82,12 @@ public class GlobalControl : MonoBehaviour {
     /// <returns>True si la accion puede ejecutarse, false si no</returns>
     public bool SeleccionarAccion(AccionID accion)
     {
-        foreach (Accion a in unidadSeleccionada.Acciones)
+        for(int i = 0; i < unidadSeleccionada.Acciones.Count; i++)
         {
-            if (a.IDAccion == accion)
+            if (unidadSeleccionada.Acciones[i].IDAccion == accion)
             {
                 accionEnCurso = accion;
+                unidadSeleccionada.Acciones[i].SeleccionarResaltoDeCasilla();
                 return true;
             }
         }

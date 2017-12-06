@@ -46,7 +46,7 @@ public class Control : MonoBehaviour {
                 cerrados.Add(nodoActual);
         }
         cerrados.Remove(nodoIncicial);
-        CheckNodeList(cerrados);
+        //CheckNodeList(cerrados);
         return cerrados;
 
     }

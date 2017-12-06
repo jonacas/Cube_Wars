@@ -12,8 +12,7 @@ public class MoverUnidad :  Accion{
     float margen = 1.0f; //Margen para indicar que se está lo suficientemente cerca de un punto.
 
     private void Awake()
-    {
-       
+    {       
         m_Unidad = GetComponent<Unidad>();
         switch (m_Unidad.IdUnidad)
         {
@@ -22,6 +21,9 @@ public class MoverUnidad :  Accion{
                 break;
             case TipoUnidad.Worker:
                 Alcance = 6;
+                break;
+            case TipoUnidad.Explorer:
+                Alcance = 2;
                 break;
         }
         idAccion = AccionID.move;
@@ -94,6 +96,7 @@ public class MoverUnidad :  Accion{
 
     public override void SeleccionarResaltoDeCasilla()
     {
+        print("SeleccionarResaltoCasilla");
         NodosAlAlcance = Control.GetNodosAlAlcance(m_Unidad.Nodo, Alcance);
         foreach (Node n in NodosAlAlcance)
         {
@@ -104,6 +107,8 @@ public class MoverUnidad :  Accion{
                 NodosAlAlcance.Remove(n);
             }
         }
+
+        m_Unidad.ResaltarCasillasAlAlcance(NodosAlAlcance);
     }
 
 
