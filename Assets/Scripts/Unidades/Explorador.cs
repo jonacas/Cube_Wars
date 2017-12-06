@@ -21,6 +21,7 @@ public class Explorador : Unidad {
         acciones = new List<Accion>();
         acciones.Add(this.GetComponent<MoverUnidad>());
         idUnidad = TipoUnidad.Explorer;
+        IdJugador = 0;
 
         //FALTA RELLENAR INFLUENCIAS
 	}
@@ -29,6 +30,15 @@ public class Explorador : Unidad {
     {
         //Nodo = StageData.currentInstance.GetNodeFromPosition(transform.position);
     }*/
+
+    void Update()
+    {
+        if (Nodo == null)
+        {
+            Nodo = StageData.currentInstance.GetNodeFromPosition(transform.position);
+            Nodo.unidad = this;
+        }
+    }
 
     public void AccionMover(List<Vector3> camino)
 	{

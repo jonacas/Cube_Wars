@@ -12,7 +12,7 @@ public class Control : MonoBehaviour {
     /// <returns></returns>
     public static List<Node> GetNodosAlAlcance(Node nodoIncicial, int alcance)
     {
-        print("GetNodosAlcance");
+        //print("GetNodosAlcance");
         List<Node> cerrados = new List<Node>();
         List<Node> pendientes = new List<Node>();
         Node nodoActual;

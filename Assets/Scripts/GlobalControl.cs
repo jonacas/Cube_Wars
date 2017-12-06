@@ -87,6 +87,7 @@ public class GlobalControl : MonoBehaviour {
         {
             if (unidadSeleccionada.Acciones[i].IDAccion == accion)
             {
+                print("acc");
                 accionEnCurso = accion;
                 indiceAccionEncurso = i;
                 unidadSeleccionada.Acciones[i].EmpezarAccion();

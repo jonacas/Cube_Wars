@@ -25,12 +25,23 @@ public class Guerrero : Unidad {
         defensaMaxima = DEFENSA_MAX_GUERRERO;
         Defensa = DEFENSA_MAX_GUERRERO;
         idUnidad = TipoUnidad.Warrior;
+        IdJugador = 2;
     }
 
-    private void Start()
+    /*private void Start()
     {
         Nodo = StageData.currentInstance.GetNodeFromPosition(transform.position);
+    }*/
+
+    void Update()
+    {
+        if (Nodo == null)
+        {
+            Nodo = StageData.currentInstance.GetNodeFromPosition(transform.position);
+            Nodo.unidad = this;
+        }
     }
+
 
     public void AccionMover(List<Vector3> camino)
     {

@@ -9,21 +9,22 @@ public class Atacar : Accion {
     
     private void Awake()
     {
+        idAccion = AccionID.attack;
         m_Unidad = GetComponent<Unidad>();
         switch (m_Unidad.IdUnidad)
         {
             case TipoUnidad.Warrior: //en caso de que al final se añadan otras unidades, pues ya sabes loko
-                Alcance = 1;
+                Alcance = 2;
                 break;
             case TipoUnidad.DefensiveBuilding:
                 Alcance = 4;
                 break;
         }
-        idAccion = AccionID.attack;
     }
 
     public bool Ejecutar(Node victima)
     {
+        print("entra");
         SeleccionarResaltoDeCasilla();
         if (NodosAlAlcance.Contains(victima)) {
             if (Partida.GetPartidaActual().Jugadores[m_Unidad.IdJugador].PuntosDeAccion - costeAccion >= 0)
