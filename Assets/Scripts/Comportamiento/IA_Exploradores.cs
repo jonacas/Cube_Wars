@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class IA_Exploradores : MonoBehaviour {
-
+	/*
 	const int CREAR_UNIDAD_INDEX = 0;
 
 	List<Explorador> exploradores;
@@ -36,5 +36,5 @@ public class IA_Exploradores : MonoBehaviour {
 		edificiosCreadoresDeunidades.Add (partidaActual.JugadorActual.Capital);
 		//Decidir cual es el mejor para crearlo
 		return edificiosCreadoresDeunidades [0];
-	}
+	}*/
 }
