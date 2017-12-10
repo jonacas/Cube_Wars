@@ -34,6 +34,44 @@ public abstract class Jugador
     int comida;
     #endregion
 
+
+    #region UNIDADES
+    private int exploradores;
+    public int Exploradores
+    {
+        get { return exploradores; }
+        set { exploradores = value; }
+    }
+
+    private int guerreros;
+    public int Guerreros
+    {
+        get { return guerreros; }
+        set { guerreros = value; }
+    }
+
+    private int aldeanos;
+    public int Aldeanos
+    {
+        get { return aldeanos; }
+        set { aldeanos = value; }
+    }
+
+    private int edificiosRecoleccion;
+    public int EdificiosRecoleccion
+    {
+        get { return edificiosRecoleccion; }
+        set { edificiosRecoleccion = value; }
+    }
+
+    private int torresDefensa;
+    public int TorresDefensa
+    {
+        get { return torresDefensa; }
+        set { torresDefensa = value; }
+    }
+    #endregion
+
     bool activo = true; //indica si el jugador ha perdido o si sigue jugando
 
     //mapa influencias del jugador

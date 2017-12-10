@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MoverUnidad :  Accion{
 
+    public const int COSTE_MOVER_EXPLORADOR = 10;   
+
     List<Vector3> m_Ruta;
     int posicionActualRuta = 0;
 	private const float MOVE_SPEED = 10f;

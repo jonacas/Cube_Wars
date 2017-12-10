@@ -52,6 +52,8 @@ public class StageData : MonoBehaviour
 	//0 == recursos, 1 == jugador humano, 2 == IA 1
 	public int numberOfPlayers = 3;
 
+    private Partida partidaActual;
+
 
     void Awake()
     {
@@ -388,5 +390,10 @@ public class StageData : MonoBehaviour
                 n.Cost = float.PositiveInfinity;
         }
 
+    }
+
+    public Partida GetPartidaActual()
+    {
+        return partidaActual;
     }
 }

@@ -102,36 +102,38 @@ public struct OrdenPreparacion
 
 public struct Ordenes
 {
-    OrdenAtaque oa;
-    OrdenDefensa od;
-    OrdenPreparacion op;
-    OrdenRecoleccion or;
+    float exploracion;
+    float oa;
+    float od;
+    float op;
+    float or;
 
-    public Ordenes(OrdenAtaque a, OrdenDefensa d, OrdenRecoleccion r, OrdenPreparacion p)
+    public Ordenes(float exploracion, float a, float d, float r, float p)
     {
+        this.exploracion = exploracion;
         oa = a;
         op = p;
         od = d;
         or = r;
     }
 
-    public OrdenAtaque GetOrdenAtaque()
+    public float GetOrdenAtaque()
     {
         return oa;
     }
 
-        public OrdenDefensa GetOrdenDefensa()
+        public float GetOrdenDefensa()
     {
         return od;
     }
 
 
-        public OrdenPreparacion GetOrdenPreparacion()
+        public float GetOrdenPreparacion()
     {
         return op;
     }
 
-        public OrdenRecoleccion GetOrdenRecoleccion()
+        public float GetOrdenRecoleccion()
     {
         return or;
     }

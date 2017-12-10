@@ -29,16 +29,33 @@ using UnityEngine;
 
 public class ArbolMaestro {
 
-    private const int RECOLECTOR = 0;
-    private const int PROTECTOR = 1;
-    private const int LATENTE = 2;
-    private const int DESTRUCTOR = 3;
+    private const int EXPLORADOR = 0;
+    private const int RECOLECTOR = 1;
+    private const int PROTECTOR = 2;
+    private const int LATENTE = 3;
+    private const int DESTRUCTOR = 4;
+
+    //estas variables deciden a partir de cuantos puntos de accion un rol es viable
+
+    //coste de over un explorador
+    private const int MINIMO_VIABLE_EXPLORACION = 10;
 
     /// <summary>
     /// Esta lista contiene los comportamientos en el orden en el que seran "comprobados"
     /// </summary>
     List<int> personalidad;
     Node[] mapaInfluencias;
+    Jugador jug;
+    Partida partidaActual;
+
+
+
+    //VARIABLES AUXILIARES PARA CONTROL DE ROLES
+    int puntosAccionIniciales;
+    //EXPLORACION
+    int recursosConocidos;
+    int capitalesConocidas;
+
 
     /// <summary>
     /// Constructor
@@ -46,7 +63,21 @@ public class ArbolMaestro {
     /// <param name="jugador">REFERENCIA al jugador que controla</param>
     public ArbolMaestro(ref Jugador jugador)
     {
-        personalidad = new List<int> { 0, 1, 2, 3 };
+        List<int> aux = new List<int> { 2, 3, 4 };
+        personalidad = new List<int> { 0, 1};
+        int seleccion;
+        partidaActual = StageData.currentInstance.GetPartidaActual();
+
+        //se genera el comportamiento del jugador
+        //explorador y recolector siempre van delante porque son necesario para que el personaje pueda realizar el resto dse tareas
+        while (aux.Count > 0)
+        {
+            seleccion = Random.Range(0, aux.Count);
+            personalidad.Add(aux[seleccion]);
+            aux.Remove(seleccion);
+        }
+
+        jug = jugador;
     }
 
     /// <summary>
@@ -54,15 +85,19 @@ public class ArbolMaestro {
     /// </summary>
     /// <param name="puntosAccion">PA de los que se dispone al INICIO del turno</param>
     /// <returns></returns>
-    public int[] AsignarRecursos(int puntosAccion)
+    public Ordenes AsignarRecursos()
     {
-        int puntosRestantes = puntosAccion;
-        int[] resultado = new int[4];
+        puntosAccionIniciales = jug.PuntosDeAccion;
+        int puntosRestantes = jug.PuntosDeAccion;
+        float explo, reco, prote, late, atac;
 
         for(int i = 0; i < personalidad.Count; i++)
         {
             switch (personalidad[i])
             {
+                case EXPLORADOR:
+                    explo = decidirRecursosExploracion(ref puntosRestantes);
+                    break;
                 case RECOLECTOR:
                    // resultado[i] = 
                 break;
@@ -78,13 +113,56 @@ public class ArbolMaestro {
             }
 
         }
-        return new int[1];
+        return new Ordenes(0,0,0,0,0);
     }
 
 
+    private float decidirRecursosExploracion(ref int puntosDisponibles)
+    {
+        if (puntosDisponibles <= MINIMO_VIABLE_EXPLORACION)
+            return 0;
+
+        int asignacion = 0;
+        //este rol se ocupara de explorar
+        //su prioridad se basa en el numero de recursos que conoce y la localizacion de las capitales enemigas
+        //si las conoce, movera poco y no empleara todos los recursos
+
+        //si no hay exploradores, creamos uno
+        if (jug.Exploradores <= 0 && CrearUnidad.COSTE_PA_CREACION_EXPLORADOR <= puntosDisponibles)
+        {
+            if (partidaActual.GetTurnos() <= 2)
+            {
+                puntosDisponibles -= CrearUnidad.COSTE_PA_CREACION_EXPLORADOR * 3;
+                asignacion += CrearUnidad.COSTE_PA_CREACION_EXPLORADOR * 3;
+            }
+            puntosDisponibles -= CrearUnidad.COSTE_PA_CREACION_EXPLORADOR;
+            asignacion += CrearUnidad.COSTE_PA_CREACION_EXPLORADOR;
+        }
+
+        if (recursosConocidos >= 5 && capitalesConocidas == partidaActual.numJugadores)
+        {
+            puntosDisponibles -= MoverUnidad.COSTE_MOVER_EXPLORADOR * ((5 - recursosConocidos) + (partidaActual.numJugadores - capitalesConocidas));
+            asignacion += MoverUnidad.COSTE_MOVER_EXPLORADOR * ((5 - recursosConocidos) + (partidaActual.numJugadores - capitalesConocidas));
+        }
+
+        //ajuste de la asignacion, la exploracion no debe superar el 50% despues del segundo turno
+        float definitivo = asignacion / (float)puntosAccionIniciales;
+        if (partidaActual.GetTurnos() < 2)
+        {
+            if (definitivo > 1)
+                definitivo = 1f;
+        }
+        else
+        {
+            if (definitivo > 0.5f)
+                definitivo = 0.5f;
+        }
+        return definitivo;
+    }
+
     private int decidirRecursosRecoleccion(int puntosDisponibles)
     {
-        if (puntosDisponibles <= 0)
+        if (puntosDisponibles <= MINIMO_VIABLE_EXPLORACION)
             return 0;
 
         //se debe recorrrer la lista de unidades y comprobar que entrada de recursos se percibe

@@ -9,6 +9,10 @@ public class Partida : MonoBehaviour{
     private static Partida partidaActual;
 
     int turnos; //turnos totales de la partida
+    public int GetTurnos()
+    {
+        return turnos;
+    }
     int jugadorActual; //jugador que esta jugando ahora
     Jugador ganador;
 
