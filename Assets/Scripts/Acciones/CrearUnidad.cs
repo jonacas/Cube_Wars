@@ -102,4 +102,12 @@ public class CrearUnidad : Accion
             }
         }
     }
+
+	public List<Node> GetNodosAlAlcance()
+	{
+		if (NodosAlAlcance.Count == 0) {
+			SeleccionarResaltoDeCasilla ();
+		}
+		return NodosAlAlcance;
+	}
 }

@@ -18,7 +18,14 @@ public abstract class Jugador
     List<Unidad> unidadesDisponibles;
     List<Unidad> edificios;
 
-    Unidad capital = null; //unidad que hay que destruir para ganar la partida
+	Unidad capital = null;
+	public Unidad Capital {
+		get {
+			return capital;
+		}
+	}
+
+ //unidad que hay que destruir para ganar la partida
 
     int puntosDeAccion;
     public int PuntosDeAccion
@@ -226,8 +233,5 @@ public abstract class Jugador
 		IMPORTANTE:
 		ANTES DE SETTEAR NADA, DEBEMOS AÑADIR EL NUMERO DE JUGADORES A LA PARTIDA USANDO 		ADDPLAYERTOINFLUENCES();
 		ESTA LLAMADA SE ESTA HACIENDO ACTUALMENTE EN CREACIONGRAFO.CS
-
-
-
 	*/
 }

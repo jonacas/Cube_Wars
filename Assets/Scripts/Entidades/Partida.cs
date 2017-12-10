@@ -13,12 +13,23 @@ public class Partida : MonoBehaviour{
     {
         return turnos;
     }
-    int jugadorActual; //jugador que esta jugando ahora
+    Jugador jugadorActual; //jugador que esta jugando ahora
+
+    public Jugador JugadorActual
+    {
+        get
+        {
+            return jugadorActual;
+        }
+    }
+
     Jugador ganador;
 
     Jugador[] jugadores;
 
     public Jugador[] Jugadores { get { return jugadores; } }
+
+    
 
     void Awake()
     {
