@@ -54,7 +54,7 @@ public class UnitNamePanel : MonoBehaviour {
 	}
 	public void UpdateDisplayedInfo()
 	{
-		HealthFill.fillAmount = unitReferenced.Vida/unitReferenced.SaludMaxima * 0.5f;
+		HealthFill.fillAmount = (float) unitReferenced.Vida/ (float) unitReferenced.SaludMaxima * 0.5f;
 		HealthNum.text = unitReferenced.Vida + "/" + unitReferenced.SaludMaxima;
 		UnitName.text = unitReferenced.name;
 	}

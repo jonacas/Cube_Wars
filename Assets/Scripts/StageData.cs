@@ -49,6 +49,9 @@ public class StageData : MonoBehaviour
 	public Node[,] grafoJugador1;
 	public Node[,] grafoJugador2;
 
+	//0 == recursos, 1 == jugador humano, 2 == IA 1
+	public int numberOfPlayers = 3;
+
 
     void Awake()
     {

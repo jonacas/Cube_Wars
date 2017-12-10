@@ -127,6 +127,10 @@ public class CreacionGrafo : MonoBehaviour {
                 aux.col = j;
                 nodeMap[i, j] = aux;
 
+				for (int K = 0; K < StageData.currentInstance.numberOfPlayers; K++)
+				{
+					nodeMap [i, j].AddPlayerToInfluences ();
+				}
 				//testGameObjectMap [i, j] = testInstance;
 				//tablero[i,j] = casillaNueva;
             }
