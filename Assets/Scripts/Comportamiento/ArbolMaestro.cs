@@ -48,6 +48,11 @@ public class ArbolMaestro {
     Jugador jug;
     Partida partidaActual;
 
+    //variables para controlar ataques
+    int objetivoActual;
+    float debilidadObjetivo;
+    bool ataqueEnCurso;
+
 
 
     //VARIABLES AUXILIARES PARA CONTROL DE ROLES
@@ -90,6 +95,7 @@ public class ArbolMaestro {
         puntosAccionIniciales = jug.PuntosDeAccion;
         int puntosRestantes = jug.PuntosDeAccion;
         float explo, reco, prote, late, atac;
+        explo = reco = prote = late = atac = 0;
 
         for(int i = 0; i < personalidad.Count; i++)
         {
@@ -98,29 +104,103 @@ public class ArbolMaestro {
                 case EXPLORADOR:
                     explo = decidirRecursosExploracion(ref puntosRestantes);
                     break;
+
                 case RECOLECTOR:
-                   // resultado[i] = 
+                    reco = decidirRecursosRecoleccion(ref puntosRestantes);
                 break;
 
                 case PROTECTOR:
+                prote = decidirRecursosProteccion(ref puntosRestantes);
                 break;
 
                 case LATENTE:
+                late = dcidirRecursosLatente(ref puntosRestantes);
                 break;
 
                 case DESTRUCTOR:
+                    //si es el ultimo, recibira los puntos restantes, si no, el 80%
+                if (i == personalidad.Count)
+                    atac = puntosRestantes / puntosAccionIniciales;
+
+                else
+                {
+                    atac = 0.8f * puntosRestantes / puntosAccionIniciales;
+                    puntosRestantes = Mathf.RoundToInt( 0.2f * puntosRestantes);
+                }
                 break;
             }
 
         }
-        return new Ordenes(0,0,0,0,0);
+        return new Ordenes(explo,reco,prote,late, atac);
+    }
+
+    private float dcidirRecursosLatente(ref int puntosRestantes)
+    {
+        //se decide un objetivo (el jugador mas debil) y se prepara el ataque
+
+        elegirObjetivo();
+
+        //el aaque se preparara emplenado todos los recursos disponibles mientras la fuerza del jugador sea inferior a la del oponente
+        int asignacion;
+        if (debilidadObjetivo > 1)
+        {
+            asignacion = puntosRestantes;
+            puntosRestantes -= asignacion;
+        }
+        else
+        {
+            asignacion = Mathf.RoundToInt (0.5f * puntosRestantes * debilidadObjetivo);
+            puntosRestantes -= asignacion;
+        }
+        return asignacion / puntosAccionIniciales;
+    }
+
+
+    private float decidirRecursosProteccion(ref int puntosRestantes)
+    {
+        //se calcula la influencia media del jugador alrededor de sus edificios
+        //si no supera una media, se dedican recursos
+        if (puntosRestantes < Construir.COSTE_PA_TORRE_DEFENSA)
+            return 0f;
+
+        int suma;
+        int asignacion =0 ;
+        foreach (Unidad un in jug.edificios)
+        {
+            List<Node> cercanias;
+            cercanias = Control.GetNodosAlAlcance(un.Nodo, 5);
+            suma = 0;
+            foreach (Node n in cercanias)
+            {
+                suma += n.GetMaxInfluenceFromPlayer(jug.idJugador);
+            }
+
+            float media = suma / cercanias.Count;
+
+            //si la media no llega al minimo, se proporcionan recursos para construir una torre
+            if (media < 2.5f)
+            {
+                if (puntosRestantes >= Construir.COSTE_PA_TORRE_DEFENSA)
+                {
+                    puntosRestantes -= Construir.COSTE_PA_TORRE_DEFENSA;
+                    asignacion += Construir.COSTE_PA_TORRE_DEFENSA;
+                }
+                else
+                {
+                    asignacion += puntosRestantes;
+                    puntosRestantes -= asignacion;
+                }
+            }
+        }
+
+        return (float)asignacion / (float)puntosAccionIniciales;
     }
 
 
     private float decidirRecursosExploracion(ref int puntosDisponibles)
     {
         if (puntosDisponibles <= MINIMO_VIABLE_EXPLORACION)
-            return 0;
+            return 0f;
 
         int asignacion = 0;
         //este rol se ocupara de explorar
@@ -160,14 +240,91 @@ public class ArbolMaestro {
         return definitivo;
     }
 
-    private int decidirRecursosRecoleccion(int puntosDisponibles)
+    private float decidirRecursosRecoleccion(ref int puntosDisponibles)
     {
-        if (puntosDisponibles <= MINIMO_VIABLE_EXPLORACION)
-            return 0;
+        //la recoleccion se mantendra al maximo hasta que se tengan tres recursos bajo control del jugador
+        if (puntosDisponibles <= Construir.COSTE_PA_EDIFICIO_RECOLECCION)
+            return 0f;
 
+        int asignacion = 0;
+        int aux;
+        //si hay menos de tres edificios y son los primeros turnos, se asignan todos los puntos
+        if (jug.EdificiosRecoleccion < 3 && partidaActual.GetTurnos() < 6)
+        {
+            asignacion = puntosDisponibles;
+            puntosDisponibles -= asignacion;
+        }
+
+
+        //si la partida esta mas avanzada, se ajustaran los recursos
+        else if (jug.EdificiosRecoleccion < 3)
+        {
+            aux = 3 - jug.EdificiosRecoleccion;
+            while (aux > 0)
+            {
+                puntosDisponibles -= Construir.COSTE_PA_EDIFICIO_RECOLECCION;
+                if (puntosDisponibles < 0)
+                {
+                    puntosDisponibles += Construir.COSTE_PA_EDIFICIO_RECOLECCION;
+                    aux = -1;
+                }
+                else
+                {
+                    asignacion += Construir.COSTE_PA_EDIFICIO_RECOLECCION;
+                }
+            }
+        }
+
+        float definitivo = asignacion / puntosAccionIniciales;
+        if (definitivo > 1)
+            definitivo = 1f;
+        return definitivo;
         //se debe recorrrer la lista de unidades y comprobar que entrada de recursos se percibe
         //si hay carencias, se debe generar una orden con las prioiridades de acorde a estas
 
         return 0;
     }
+    
+    private void elegirObjetivo()
+    {
+        int[] influenciasJugadores = new int[partidaActual.numJugadores];
+        int[] guerrerosEnemigo = new int[partidaActual.numJugadores];
+        for (int k = 0; k < partidaActual.numJugadores; k++)
+        {
+            influenciasJugadores[k] = 0;
+            guerrerosEnemigo[k] = 0;
+        }
+
+        for (int i = 0; i < StageData.currentInstance.CG.filas; i++)
+        {
+            for (int j = 0; j < StageData.currentInstance.CG.columnas; j++)
+            {
+                //for (int k = 0; k < partidaActual.numJugadores; k++) //se suma la influencia en el nodo del jugador
+                    //influenciasJugadores[k] += jug.influencias[i, j].GetMaxInfluenceFromPlayer(k);
+                //acceder a unidad y si es un guerrero sumarlo al array
+            }
+        }
+
+        //calculamos cual es el mas debil
+        //debilidad = (unidadesEnemigas * 2 / influenciaEnem) * (influenciaEnem / influenciaJug)
+        //               esta division calcula la diferencia de fuerzas                                    esta division calcula lo dispersas que estan sus fuerzas
+        float debilidad = float.PositiveInfinity;
+        float aux;
+        int seleccion = 0;
+        for (int k = 0; k < partidaActual.numJugadores; k++)
+        {
+            if (k == jug.idJugador)
+                continue;
+            aux = (guerrerosEnemigo[k] * 2 / guerrerosEnemigo[jug.idJugador]) / ((float)influenciasJugadores[k] / (float)influenciasJugadores[jug.idJugador]);
+            if (debilidad > aux)
+            {
+                debilidad = aux;
+                seleccion = k;
+            }
+        }
+
+        objetivoActual = seleccion;
+        debilidadObjetivo = debilidad;
+    }
+
 }
