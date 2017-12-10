@@ -6,6 +6,18 @@ public class Construir : Accion {
 
     private const float OFFSET_Y = 2F;
 
+
+    #region COSTES
+    public const int COSTE_PA_EDIFICIO_RECOLECCION = 30;
+    public const int COSTE_MADERA_EDIFICIO_RECOLECCION = 100;
+    public const int COSTE_ROCA_EDIFICIO_RECOLECCION = 30;
+
+    public const int COSTE_PA_TORRE_DEFENSA = 30;
+    public const int COSTE_MADERA_TORRE_DEFENSA = 20;
+    public const int COSTE_ROCA_TORRE_DEFENSA = 20;
+    public const int COSTE_METAL_TORRE_DEFENSA = 50;
+    #endregion
+
     public List<Node> NodosAlAlcance;
 
     GameObject fantasmaTorre;

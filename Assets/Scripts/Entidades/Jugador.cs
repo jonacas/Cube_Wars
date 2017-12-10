@@ -15,8 +15,8 @@ public abstract class Jugador
     #endregion
 
 
-    List<Unidad> unidadesDisponibles;
-    List<Unidad> edificios;
+    public List<Unidad> unidadesDisponibles;
+    public List<Unidad> edificios;
 
 	Unidad capital = null;
 	public Unidad Capital {
@@ -32,7 +32,7 @@ public abstract class Jugador
     {
         get { return puntosDeAccion; }
     }
-    int idJugador;
+    public int idJugador;
 
     #region RECURSOS
     int madera;
@@ -82,7 +82,7 @@ public abstract class Jugador
     bool activo = true; //indica si el jugador ha perdido o si sigue jugando
 
     //mapa influencias del jugador
-    Node[] influencias;
+    public Node[] influencias;
 
     public Jugador(int id, Unidad capital)
     {
