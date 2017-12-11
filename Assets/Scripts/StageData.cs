@@ -19,7 +19,8 @@ public enum TipoRecurso
     Wood,
     Steel,
     Rock,
-    NullResourceType
+    NullResourceType,
+	AllTypeResource
 };
 
 
@@ -46,8 +47,6 @@ public class StageData : MonoBehaviour
 
     public Node LastClickedNode;
 	public Node[,] grafoTotal;
-	public Node[,] grafoJugador1;
-	public Node[,] grafoJugador2;
 
 	//0 == recursos, 1 == jugador humano, 2 == IA 1
 	public int numberOfPlayers = 3;
@@ -61,8 +60,6 @@ public class StageData : MonoBehaviour
         ComunicationsEnabeled = true;
         aStar = this.GetComponent<AEstrella>();
 		grafoTotal = CG.nodeMap;
-		grafoJugador1 = grafoTotal;
-		grafoJugador2 = grafoTotal;
     }
     public GameObject GetPlayer()
     {
@@ -380,6 +377,75 @@ public class StageData : MonoBehaviour
 	public void SetResourceTypeToNode (TipoRecurso type, Vector3 resourcePosition)
 	{
 		GetNodeFromPosition (resourcePosition).resourceType = type;
+	}
+
+
+	//USA ESTA FUNCION PARA SETTEAR LA INFLUENCIA DESDE EL CENTRO DEL NODO, PARA UN JUGADOR.
+	public void SetInfluenceToNode(int numberOfSteps, Node center, int player, Node[,] grafo)
+	{
+		int posX;
+		int posY;
+
+		center.SetPlayerInfluence (player, numberOfSteps);
+
+		for (int i = -numberOfSteps / 2; i < numberOfSteps / 2; i++) 
+		{
+			for (int j = -numberOfSteps / 2; j < numberOfSteps / 2; j++) 
+			{
+				posX = center.fil + i;
+				posY = center.col + j;
+
+				if (posX < 0 || posX >= CG.filas) {	continue;	}
+				else if (posY < 0 || posY >= CG.columnas) {	continue;}
+				else
+				{	//posicion legal, ahora viene la paja.
+					int difX = (int)Mathf.Abs(center.fil - posX); 
+					int difY = (int)Mathf.Abs (center.col - posY);
+					if (difX <= difY) 
+					{
+						grafo [posX, posY].SetPlayerInfluence (player, numberOfSteps - difY);
+					}
+					else 
+					{
+						grafo [posX, posY].SetPlayerInfluence (player, numberOfSteps - difX);
+					}
+				}
+			}
+		}
+	}
+
+	//USA ESTA FUNCION PARA LIMPIAR LA INFLUENCIA DEL JUGADOR DESDE EL CENTRO DEL NODO.
+	public void ClearInfluenceToNode(int numberOfSteps, Node center, int player, Node[,] grafo)
+	{
+		int posX;
+		int posY;
+
+		center.ClearPlayerInfluence (player);
+
+		for (int i = -numberOfSteps / 2; i < numberOfSteps / 2; i++) 
+		{
+			for (int j = -numberOfSteps / 2; j < numberOfSteps / 2; j++) 
+			{
+				posX = center.fil + i;
+				posY = center.col + j;
+
+				if (posX < 0 || posX >= CG.filas) {	continue;	}
+				else if (posY < 0 || posY >= CG.columnas) {	continue;}
+				else
+				{	//posicion legal, ahora viene la paja.
+					int difX = (int)Mathf.Abs(center.fil - posX); 
+					int difY = (int)Mathf.Abs (center.col - posY);
+					if (difX <= difY) 
+					{
+						grafo [posX, posY].ClearPlayerInfluence (player);
+					}
+					else 
+					{
+						grafo [posX, posY].ClearPlayerInfluence (player);
+					}
+				}
+			}
+		}
 	}
 
     public void LimpiarGrafo(Node[,] nodeMap)

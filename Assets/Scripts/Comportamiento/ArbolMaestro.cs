@@ -172,7 +172,7 @@ public class ArbolMaestro {
             suma = 0;
             foreach (Node n in cercanias)
             {
-                suma += n.GetMaxInfluenceFromPlayer(jug.idJugador);
+				suma += n.GetPlayerInfluence(jug.idJugador);
             }
 
             float media = suma / cercanias.Count;

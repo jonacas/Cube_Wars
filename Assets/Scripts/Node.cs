@@ -34,6 +34,7 @@ public class Node
 
 	public Unidad unidad;
 	public TipoRecurso resourceType;
+	public bool visitado;
 
 	public int stepsInfluenceExplorer = 4;
 	public int stepsInfluenceWarrior = 4;
@@ -144,7 +145,11 @@ public class Node
         route = null;
 
 		influencePlayers = new List<List<int>> ();
-		currentResources = new List<TipoRecurso> ();
+		currentResources = new List<TipoRecurso> (1);
+		for (int i = 0; i < StageData.currentInstance.numberOfPlayers; i++) 
+		{
+			influencePlayers.Add (new List<int> (1));
+		}
 
     }
 
@@ -187,97 +192,7 @@ public class Node
 		influencePlayers.Add (new List<int> ());
 		Debug.Log ("Player " + influencePlayers.Count + " added to estimated influences");
 	}
-
-	//Usa este para poner la influencia de las unidades a sus vecinos, por cada jugador.
-	public void SetInfluence(TipoUnidad resourceType, int player)
-	{
-		switch (resourceType) 
-		{
-		case TipoUnidad.Warrior:
-			{
-				setRecursiveInfluenceView (this,player, 0, stepsInfluenceWarrior);
-				break;
-			}
-		case TipoUnidad.Worker:
-			{
-				setRecursiveInfluenceView (this, player, 0, stepsInfluenceWorker);
-				break;
-			}
-		case TipoUnidad.Explorer:
-			{
-				setRecursiveInfluenceView (this,player, 0, stepsInfluenceExplorer);
-				break;
-			}
-		case TipoUnidad.Building:
-			{
-				setRecursiveInfluenceView (this,player, 0, stepsInfluenceBuilding);
-				break;
-			}
-		case TipoUnidad.DefensiveBuilding:
-			{
-				setRecursiveInfluenceView (this,player, 0, stepsInfluenceDefensiveBuilding);
-				break;
-			}
-		case TipoUnidad.Resource:
-			{
-				Debug.Log ("Funcion para settear resources equivocada, usa setResourceInfluence()");
-				break;
-			}
-		}
-	}
-
-	//Usa este para poner la influencia de los recursos a sus vecinos, por cada uno de ellos.
-	public void SetResourceInfluence(TipoRecurso resource)
-	{
-		setRecursiveInfluenceResource (this, resource, 0, stepsInfluenceResource);
-	}
-
-	private void setRecursiveInfluenceResource(Node actualNode, TipoRecurso resource, int remainingSteps, int totalSteps)
-	{
-		Debug.Log("EntraVie");
-		if (remainingSteps == totalSteps) {
-			return;
-		} 
-		else if (actualNode == null) 
-		{
-			Debug.Log ("Deberia haber un null aqui?");
-			return;
-		}
-		else
-		{
-			int newInfluence = totalSteps - remainingSteps;
-			AddRecourseInfluence (resource, newInfluence);
-			for (int i = 0; i < arrayVecinos.Count; i++) 
-			{
-				setRecursiveInfluenceResource(actualNode.arrayVecinos[i].nodo, resource, remainingSteps + 1, totalSteps);
-				Debug.Log("Entra");
-			}
-		}
-	}
-
-	private void setRecursiveInfluenceView(Node actualNode, int player, int remainingSteps, int totalSteps)
-	{
-        Debug.Log("EntraVie");
-		if (remainingSteps == totalSteps) {
-			return;
-		} 
-		else if (actualNode == null) 
-		{
-			Debug.Log ("Deberia haber un null aqui?");
-			return;
-		}
-		else
-		{
-			int newInfluence = totalSteps - remainingSteps;
-			SetPlayerInfluence (player, newInfluence);
-			for (int i = 0; i < arrayVecinos.Count; i++) 
-			{
-				setRecursiveInfluenceView (actualNode.arrayVecinos[i].nodo,player, remainingSteps + 1, totalSteps);
-                Debug.Log("Entra");
-			}
-		}
-	}
-		
+				
 	public void SetPlayerInfluence(int player, int influence)
 	{
 		//RECUERDA: LA POSICION 0 ESTÁ RESERVADA A LOS RECURSOS, Y LA POSICION 1 ESTÁ RESERVADA AL JUGADOR HUMANO
@@ -288,108 +203,24 @@ public class Node
 		}
 		else
 		{
-			influencePlayers [player].Add (influence);
-		}
-	}
-
-	//Usa esto para limpiar la influencia de las unidades a sus vecinos, por cada jugador.
-	public void ClearInfluence(TipoUnidad resourceType, int player)
-	{
-		switch (resourceType) 
-		{
-		case TipoUnidad.Warrior:
+			if (player == 0) 
 			{
-				clearRecursiveInfluenceView (this, player, stepsInfluenceWarrior, stepsInfluenceWarrior);
-				break;
+				AddRecourseInfluence (TipoRecurso.AllTypeResource, influence);
 			}
-		case TipoUnidad.Worker:
+			if (influencePlayers [player] [0] < influence) 
 			{
-				clearRecursiveInfluenceView (this,player, stepsInfluenceWorker, stepsInfluenceWorker);
-				break;
-			}
-		case TipoUnidad.Explorer:
-			{
-				clearRecursiveInfluenceView (this,player, stepsInfluenceExplorer, stepsInfluenceExplorer);
-				break;
-			}
-		case TipoUnidad.Building:
-			{
-				clearRecursiveInfluenceView (this,player, stepsInfluenceBuilding, stepsInfluenceBuilding);
-				break;
-			}
-		case TipoUnidad.DefensiveBuilding:
-			{
-				clearRecursiveInfluenceView (this,player, stepsInfluenceDefensiveBuilding, stepsInfluenceDefensiveBuilding);
-				break;
-			}
-		case TipoUnidad.Resource:
-			{
-				Debug.Log ("Funcion para settear resources equivocada, usa clearResourceInfluence()");
-				break;
+				influencePlayers [player] [0] = influence;
 			}
 		}
 	}
 
-	//Usa esto para limpiar la influencia de TODOS LOS RECURSOS a sus vecinos.
-	public void ClearAllResourceInfluence()
+	public int GetPlayerInfluence(int player)
 	{
-		clearRecursiveInfluenceResource (this, 0, stepsInfluenceResource);
-	}
-
-	private void clearRecursiveInfluenceResource(Node actualNode, int remainingSteps, int totalSteps)
-	{
-		Debug.Log("EntraVie");
-		if (remainingSteps == totalSteps) {
-			return;
-		} 
-		else if (actualNode == null) 
-		{
-			Debug.Log ("Deberia haber un null aqui?");
-			return;
-		}
-		else
-		{
-			ClearAllPlayerInfluence (0);
-			for (int i = 0; i < arrayVecinos.Count; i++) 
-			{
-				if (influencePlayers [0].Count != 0) 
-				{
-					clearRecursiveInfluenceResource(actualNode.arrayVecinos[i].nodo, remainingSteps + 1, totalSteps);
-					Debug.Log("Entra");
-				}
-			}
-		}
-	}
-
-	private void clearRecursiveInfluenceView(Node actualNode, int player, int remainingSteps, int totalSteps)
-	{
-		//Debug.Log("EntraVie");
-		if (remainingSteps == 0) {
-			return;
-		} 
-		else if (actualNode == null) 
-		{
-			//Debug.Log ("Deberia haber un null aqui?");
-			return;
-		}
-		else
-		{
-			ClearAllPlayerInfluence (player);
-				//Debug.Log("Conseguido");
-
-			for (int i = 0; i < arrayVecinos.Count; i++) 
-			{
-				if (actualNode.arrayVecinos [i].nodo.influencePlayers [player].Count != 0) 
-				{
-					clearRecursiveInfluenceView (actualNode.arrayVecinos[i].nodo,player, remainingSteps - 1, totalSteps);
-					//Debug.Log("Entra");
-				}
-			}
-		}
+		return influencePlayers [player] [0];
 	}
 
 	//Usa esto para limpiar TODAS LAS INFLUENCIAS de un jugador, en este nodo.
-	public void ClearAllPlayerInfluence(int player)
+	public void ClearPlayerInfluence(int player)
 	{
 		if (player >= influencePlayers.Count) 
 		{
@@ -403,45 +234,7 @@ public class Node
 		//Guardamos las del entorno, para ponerlas despues de borrar.
 		influencePlayers [player].Clear ();
 	}
-
-	//Usa esto para limpiar un tipo concreto de recurso en sus vecinos. (p ej, cuando el recurso se acaba).
-	//CUIDADO: al eliminarse, todos los recursos del mismo tipo de su alrededor deben actualizar sus influencias.
-	public void ClearSpecificResource(TipoRecurso recourseType)
-	{
-		clearSpecificRecursiveResource (this,resourceType, 0, stepsInfluenceResource);
-	}
-
-	private void clearSpecificRecursiveResource(Node actualNode, TipoRecurso recourse, int remainingSteps, int totalSteps)
-	{
-		Debug.Log("EntraVie");
-		if (remainingSteps == totalSteps) {
-			return;
-		} 
-		else if (actualNode == null) 
-		{
-			Debug.Log ("Deberia haber un null aqui?");
-			return;
-		}
-		else
-		{
-			if (currentResources.Contains (recourse))  // Tiene recurso que buscamos.
-			{
-				//Miramos si es necesario quitarlo: de haber más de uno disponible, this is bad!
-				int currentInfluence = totalSteps - remainingSteps;
-				int resourceIndex = currentResources.IndexOf (recourse);
-				if (influencePlayers [0] [resourceIndex] == currentInfluence) 
-				{
-					ClearResourceInfluence (recourse);
-				}
-			}
-			for (int i = 0; i < arrayVecinos.Count; i++) 
-			{
-					clearSpecificRecursiveResource(actualNode.arrayVecinos[i].nodo, recourse, remainingSteps + 1, totalSteps);
-					Debug.Log("Entra");
-			}
-		}
-	}
-
+		
 	//Usa esto para limpiar la influencia de UN SOLO Recurso, en este nodo.
 	private void ClearResourceInfluence(TipoRecurso recourseType)
 	{
@@ -452,55 +245,8 @@ public class Node
 			currentResources.Remove (recourseType);
 		}
 	}
-
-	//usa esto para obtener la influencia máxima de un jugador en este nodo.
-	//Sirve también para saber la influencia máxima de los recursos, 
-	//Pero para ello necesitarás encontrar según su resultado el tipo de recurso si quieres que sea util.
-	public int GetMaxInfluenceFromPlayer(int player)
-	{
-		if (player >= influencePlayers.Count) 
-		{
-			Debug.Log ("INCORRECTO: JUGADOR NO AÑADIDO ANTERIORMENTE");
-			return -1;
-		}
-		else
-		{
-			int resultado = 0;
-			for (int i = 0; i < influencePlayers [player].Count; i++) 
-			{
-				if (resultado < influencePlayers [player] [i]) 
-				{
-					resultado = influencePlayers [player] [i];
-				}
-			}
-			return resultado;
-		}
-	}
-
+		
 	//Usa esto para limpiar una influencia específica de un jugador, en este nodo.
-	public void ClearSpecificInfluenceFromPlayer(int player, int influence)
-	{
-		if (player >= influencePlayers.Count) 
-		{
-			Debug.Log ("INCORRECTO: JUGADOR NO AÑADIDO ANTERIORMENTE");
-			return;
-		}
-		else
-		{
-			for (int i = 0; i < influencePlayers [player].Count; i++) 
-			{
-				if (influencePlayers [player].Remove (influence)) 
-				{
-					Debug.Log ("Borrado de influencia de " +
-					"unidad con influencia " + influence + " de jugador " + player);
-				}
-				else
-				{
-					Debug.Log ("BORRADO NO EXITOSO: Valor no correcto?");	
-				}
-			}
-		}
-	}
 
 	public void AddRecourseInfluence(TipoRecurso recourseType, int influence)
 	{
@@ -520,12 +266,6 @@ public class Node
 			currentResources.Add (recourseType);
 		}
 	}
-		
-	public List<int> GetAllInfluencesFromPlayer(int player)
-	{
-		return influencePlayers [player];
-	}
-
 
 }
 
