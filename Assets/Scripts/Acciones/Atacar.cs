@@ -6,6 +6,8 @@ using System;
 public class Atacar : Accion {
 
     public List<Node> NodosAlAlcance;
+
+    public const int COSTE_ATACAR = 20;
     
     private void Awake()
     {
@@ -46,7 +48,7 @@ public class Atacar : Accion {
                     if (atacanteMuerto)
                         Destroy(atacante.gameObject);
 
-                    //Partida.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(costeAccion);
+                    Partida.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(costeAccion);
 
                     //Ejecutar alguna animacion en caso de que se hiciera, para ver que se está atacando y no que haya solo dos cubos quietos.
                     //Des-resaltar casillas

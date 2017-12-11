@@ -10,7 +10,8 @@ public enum TipoUnidad
     Explorer,
     Resource,
     Building,
-    DefensiveBuilding
+    DefensiveBuilding,
+    Capital
 };
 
 public enum TipoRecurso

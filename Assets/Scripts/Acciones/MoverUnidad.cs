@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MoverUnidad :  Accion{
 
-    public const int COSTE_MOVER_EXPLORADOR = 10;   
+    public const int COSTE_MOVER = 10;   
 
     List<Vector3> m_Ruta;
     int posicionActualRuta = 0;

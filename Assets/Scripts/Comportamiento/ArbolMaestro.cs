@@ -221,8 +221,8 @@ public class ArbolMaestro {
 
         if (recursosConocidos >= 5 && capitalesConocidas == partidaActual.numJugadores)
         {
-            puntosDisponibles -= MoverUnidad.COSTE_MOVER_EXPLORADOR * ((5 - recursosConocidos) + (partidaActual.numJugadores - capitalesConocidas));
-            asignacion += MoverUnidad.COSTE_MOVER_EXPLORADOR * ((5 - recursosConocidos) + (partidaActual.numJugadores - capitalesConocidas));
+            puntosDisponibles -= MoverUnidad.COSTE_MOVER * ((5 - recursosConocidos) + (partidaActual.numJugadores - capitalesConocidas));
+            asignacion += MoverUnidad.COSTE_MOVER * ((5 - recursosConocidos) + (partidaActual.numJugadores - capitalesConocidas));
         }
 
         //ajuste de la asignacion, la exploracion no debe superar el 50% despues del segundo turno
