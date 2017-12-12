@@ -144,12 +144,12 @@ public class Node
         Water = water;
         route = null;
 
-		influencePlayers = new List<List<int>> ();
+		/*influencePlayers = new List<List<int>> ();
 		currentResources = new List<TipoRecurso> (1);
 		for (int i = 0; i < StageData.currentInstance.numberOfPlayers; i++) 
 		{
 			influencePlayers.Add (new List<int> (1));
-		}
+		}*/
 
     }
 

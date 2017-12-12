@@ -32,6 +32,7 @@ public class StageData : MonoBehaviour
     public static StageData currentInstance;
     public List<EnemyMovement> enemiesInStage;
     public CreacionGrafo CG;
+    public TipoUnidad unidadACrear;
 
     private int obstacleLayerMask = 1 << 8;
     //private bool cmunicationsEnabeled;

@@ -9,7 +9,7 @@ public class Capital : Unidad {
     private const int COMIDA_POR_TURNO = 20;
 
     int nivel;
-    bool posicionAsignada;
+    bool posicionAsignada,primerUpdate;
 
     private void Awake()
     {
@@ -19,10 +19,34 @@ public class Capital : Unidad {
         acciones.Add(GetComponent<CrearUnidad>());
     }
 
+
+
     void Update()
     {
+        if (!primerUpdate)
+        {
+            this.Nodo = StageData.currentInstance.GetNodeFromPosition(this.transform.position);
+            Nodo.unidad = this;
+            primerUpdate = true;
+        }
+
         Nodo = StageData.currentInstance.GetNodeFromPosition(transform.position);
         Nodo.unidad = this;
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            List<Node> destinos = Control.GetNodosAlAlcance(this.Nodo, 2);
+            CrearUnidad cr = (CrearUnidad)acciones[0];
+
+            for (int i = 0; i < destinos.Count; i++)
+            {
+                if(destinos[i].unidad == null && destinos[i].resourceType == TipoRecurso.NullResourceType)
+                {
+                    cr.Ejecutar(destinos[i], TipoUnidad.Warrior);
+                    break;
+                }
+            }
+        }
     }
 
     public override bool RecibirAtaque(int danoBruto)

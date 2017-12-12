@@ -29,6 +29,10 @@ public class IngameInterfaceManager : MonoBehaviour {
     public GameObject unitActions_gather;
     public GameObject unitActions_create;
     public GameObject unitActions_build;
+    public GameObject createUnits_panel;
+    public GameObject unitActions_create_villager;
+    public GameObject unitActions_create_warriord;
+    public GameObject unitActions_create_explorer;
     [Header("ActionInProgress")]
     public CanvasGroup actionInProgress_CG;
     public CanvasGroup actionInProgress_highlight;
@@ -54,6 +58,7 @@ public class IngameInterfaceManager : MonoBehaviour {
 
     private Vector3 initPos_unitActions_name;
     private Vector3 initPos_unitActions_panel;
+    private Vector3 initPos_buildUnit_panel;
 
 
     private Vector3 initPos_cityInfo;
@@ -72,6 +77,10 @@ public class IngameInterfaceManager : MonoBehaviour {
 	{
 		SaveInterfaceBasePositions ();
 		StartCoroutine ("OpenAnim_alwaysOnDisplay");
+
+        unitActions_create_warriord.SetActive(false);
+        unitActions_create_explorer.SetActive(false);
+        unitActions_create_villager.SetActive(false);
 	}
 
 	void Update()
@@ -97,6 +106,8 @@ public class IngameInterfaceManager : MonoBehaviour {
         initPos_unitActions_panel = unitActions_Panel.transform.localPosition;
 
 		initPos_buildingInfo = CG_buildingInfo.transform.localPosition;
+
+        initPos_buildUnit_panel = createUnits_panel.transform.localPosition;
 	}
     void OpenActionInProgress(ActionInProgressMode mode)
     {
@@ -143,24 +154,57 @@ public class IngameInterfaceManager : MonoBehaviour {
     // Si no se hace asi, no se puede referenciar la accion del script al boton desde el inspector, hashtag unity
     public void OnButtonClick_Create()
     {
-        if(GlobalControl.currentInstance.SeleccionarAccion(AccionID.create))
-            OpenActionInProgress(ActionInProgressMode.create);
+        if(GlobalControl.currentInstance.SeleccionarAccion(AccionID.create, false))
+        {
+            createUnits_panel.transform.localPosition = initPos_buildUnit_panel;
+            unitActions_create_explorer.SetActive(true);
+            unitActions_create_villager.SetActive(true);
+            unitActions_create_warriord.SetActive(true);
+        }
     }
     public void OnButtonClick_Move()
-    { 
+    {
+        StartCoroutine("HideCreateUnitButtons");
         if(GlobalControl.currentInstance.SeleccionarAccion(AccionID.move))
             OpenActionInProgress(ActionInProgressMode.move);
     }
     public void OnButtonClick_Attack() 
-    { 
+    {
+        StartCoroutine("HideCreateUnitButtons");
         if(GlobalControl.currentInstance.SeleccionarAccion(AccionID.attack))
             OpenActionInProgress(ActionInProgressMode.attack); 
     }
     public void OnButtonClick_Build() 
-    { 
-        if(GlobalControl.currentInstance.SeleccionarAccion(AccionID.build))
-            OpenActionInProgress(ActionInProgressMode.build); 
+    {
+        StartCoroutine("HideCreateUnitButtons");
+        if (GlobalControl.currentInstance.SeleccionarAccion(AccionID.build))
+            OpenActionInProgress(ActionInProgressMode.build);
     }
+
+    public void OnButtonClick_CreateExplorer()
+    {
+        StartCoroutine("HideCreateUnitButtons");
+        StageData.currentInstance.unidadACrear = TipoUnidad.Explorer;
+        if (GlobalControl.currentInstance.SeleccionarAccion(AccionID.create))
+            OpenActionInProgress(ActionInProgressMode.create);
+    }
+
+    public void OnButtonClick_CreateVillager()
+    {
+        StartCoroutine("HideCreateUnitButtons");
+        StageData.currentInstance.unidadACrear = TipoUnidad.Worker;
+        if (GlobalControl.currentInstance.SeleccionarAccion(AccionID.create))
+            OpenActionInProgress(ActionInProgressMode.create);
+    }
+
+    public void OnButtonClick_CreateWarrior()
+    {
+        StartCoroutine("HideCreateUnitButtons");
+        StageData.currentInstance.unidadACrear = TipoUnidad.Warrior;
+        if (GlobalControl.currentInstance.SeleccionarAccion(AccionID.create))
+            OpenActionInProgress(ActionInProgressMode.create);
+    }
+
     public void OnButtonClick_Gather() { OpenActionInProgress(ActionInProgressMode.gather); }
     // En serio que cojones colega.
 
@@ -260,6 +304,7 @@ public class IngameInterfaceManager : MonoBehaviour {
         highlightFlash.alpha = 0;
         StopCoroutine("UnitCommandsHighlightFlash");
 
+        StartCoroutine("HideCreateUnitButtons");
         float t = 1;
 		float animSpeed = 6f;
 
@@ -356,6 +401,23 @@ public class IngameInterfaceManager : MonoBehaviour {
             yield return new WaitForSeconds(delayBetweenFlashes);
             t = 0;
         }
+    }
+
+    IEnumerator HideCreateUnitButtons()
+    {
+        float t = 1;
+        float animSpeed = 6f;
+
+        while (t > 0)
+        {
+            t = Mathf.MoveTowards(t, 0, Time.deltaTime * animSpeed * ((1 - t) + 0.05f));
+            createUnits_panel.transform.localPosition = initPos_buildUnit_panel + Vector3.right * 200 * (1 - t);
+            yield return null;
+        }
+
+        unitActions_create_warriord.SetActive(false);
+        unitActions_create_explorer.SetActive(false);
+        unitActions_create_villager.SetActive(false);
     }
 
 }

@@ -81,16 +81,19 @@ public class GlobalControl : MonoBehaviour {
     /// </summary>
     /// <param name="accion">Tipo de la accion que se comprueba</param>
     /// <returns>True si la accion puede ejecutarse, false si no</returns>
-    public bool SeleccionarAccion(AccionID accion)
+    public bool SeleccionarAccion(AccionID accion, bool empezar = true)
     {
         for(int i = 0; i < unidadSeleccionada.Acciones.Count; i++)
         {
             if (unidadSeleccionada.Acciones[i].IDAccion == accion)
             {
-                print("acc");
-                accionEnCurso = accion;
-                indiceAccionEncurso = i;
-                unidadSeleccionada.Acciones[i].EmpezarAccion();
+                if (empezar)
+                {
+                    print("acc");
+                    accionEnCurso = accion;
+                    indiceAccionEncurso = i;
+                    unidadSeleccionada.Acciones[i].EmpezarAccion();
+                }
                 return true;
             }
         }

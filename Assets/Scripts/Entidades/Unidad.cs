@@ -160,7 +160,9 @@ public abstract class Unidad : MonoBehaviour {
     {
         Destroy(piscina);
         piscina = new GameObject("Piscina");
-		casillasMarcadas.Clear();
+
+        if(casillasMarcadas != null)
+		    casillasMarcadas.Clear();
     }
 
 

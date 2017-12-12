@@ -27,6 +27,8 @@ public class Guerrero : Unidad {
         danyo = ATAQUE_GUERRERO;
         idUnidad = TipoUnidad.Warrior;
         IdJugador = 2;
+        Nodo = StageData.currentInstance.GetNodeFromPosition(this.transform.position);
+        Nodo.unidad = this;
     }
 
     /*private void Start()

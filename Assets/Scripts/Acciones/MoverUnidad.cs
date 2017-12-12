@@ -49,6 +49,8 @@ public class MoverUnidad :  Accion{
         if (NodosAlAlcance.Contains(destino))
         {
             SolicitarYRecorrerCamino(destino.position);
+            this.m_Unidad.Nodo.unidad = null;
+            this.m_Unidad.Nodo = null;
             return true;
         }
         else

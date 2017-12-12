@@ -10,6 +10,8 @@ public class RolGuerrero : MonoBehaviour {
     }
 
     private int DISTANCIA_PREPARACION_CAPITAL = 5;
+    public const int COSTE_ATACAR = 20;
+    private const int MINIMO_GUERREROS = 3;
 
     private Jugador jug;
     private List<IA_Guerrero> guerrerosDisponibles;
@@ -177,23 +179,26 @@ public class RolGuerrero : MonoBehaviour {
     {
         int guerrerosEnCapital = 0;
 
-        for (int i = guerrerosDisponibles.Count - 1; i >= 0; i--)
+        while (puntosDispAux > COSTE_ATACAR)
         {
+            for (int i = guerrerosDisponibles.Count - 1; i >= 0; i--)
+            {
 
-            if (guerrerosDisponibles[i] == null)
-            {
-                guerrerosDisponibles.Remove(guerrerosDisponibles[i]);
-            }
-            else
-            {
-                if (!guerrerosDisponibles[i].HaLlegado())
+                if (guerrerosDisponibles[i] == null)
+                {
+                    guerrerosDisponibles.Remove(guerrerosDisponibles[i]);
+                }
+                else
                 {
                     guerrerosDisponibles[i].AvanzarHaciaDestino(ref puntosDispAux);
                     while (!guerrerosDisponibles[i].AccionTerminada())
                         yield return null;
                 }
-                else
-                    guerrerosEnCapital++;
+            }
+
+            if (guerrerosDisponibles.Count <= MINIMO_GUERREROS)
+            {
+                estado = EstadoAtaque.Preparacion;
             }
         }
         fin = true;
