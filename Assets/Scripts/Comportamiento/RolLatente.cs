@@ -70,7 +70,7 @@ public class RolLatente : MonoBehaviour {
 			edificiosCreadoresDeunidades.Remove (aux);
 		}
 
-		return edificiosCreadoresDeunidades;
+		return edificiosOrdenadosPorPrioridad;
 	}
 
 }
