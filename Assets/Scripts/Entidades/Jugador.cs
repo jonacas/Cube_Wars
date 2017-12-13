@@ -19,6 +19,8 @@ public abstract class Jugador
     public List<Unidad> edificios;
     public Unidad[] capitalesEnemigas;
 
+	public int IndexPlayerObjetivoActual;
+
     public RolGuerrero rolGuerrero;
 
 	Unidad capital = null;

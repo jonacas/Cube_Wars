@@ -8,11 +8,9 @@ public class Construir : Accion {
 
 
     #region COSTES
-    public const int COSTE_PA_EDIFICIO_RECOLECCION = 30;
     public const int COSTE_MADERA_EDIFICIO_RECOLECCION = 100;
     public const int COSTE_ROCA_EDIFICIO_RECOLECCION = 30;
 
-    public const int COSTE_PA_TORRE_DEFENSA = 30;
     public const int COSTE_MADERA_TORRE_DEFENSA = 20;
     public const int COSTE_ROCA_TORRE_DEFENSA = 20;
     public const int COSTE_METAL_TORRE_DEFENSA = 50;
@@ -26,7 +24,6 @@ public class Construir : Accion {
     void Awake()
     {
         //aqui se deben coger los fantasmas que se mostraran para no instanciarlos mas tarde
-        costeAccion = 50;
         m_Unidad = GetComponent<Unidad>();
         Alcance = 3;
         //NodosAlAlcance = Control.GetNodosAlAlcance(m_Unidad.Nodo, Alcance);
@@ -88,7 +85,7 @@ public class Construir : Accion {
         {
             if (n.resourceType == TipoRecurso.NullResourceType)
             {
-                if (true/*Partida.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(costeAccion)*/)
+				if (Partida.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(StageData.COSTE_PA_CONSTRUIR_TORRE))
                 {
                     Instantiate(StageData.currentInstance.TowerPrefab, n.position, StageData.currentInstance.TowerPrefab.transform.rotation);
                     CancelarAccion();
@@ -97,7 +94,7 @@ public class Construir : Accion {
             }
             else
             {//por si queremos poner costes distintos
-                if (Partida.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(costeAccion))
+				if (Partida.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(StageData.COSTE_PA_CONSTRUIR_RECURSOS))
                 {
                     Instantiate(StageData.currentInstance.ResourceBuildPrefab, n.position, StageData.currentInstance.ResourceBuildPrefab.transform.rotation);
                     CancelarAccion();

@@ -6,9 +6,7 @@ using System;
 public class Atacar : Accion {
 
     public List<Node> NodosAlAlcance;
-
-    public const int COSTE_ATACAR = 20;
-    
+	    
     private void Awake()
     {
         idAccion = AccionID.attack;
@@ -22,6 +20,7 @@ public class Atacar : Accion {
                 Alcance = 4;
                 break;
         }
+		costeAccion = StageData.COSTE_PA_ATACAR;
         print("Alcance " + alcance);
     }
 

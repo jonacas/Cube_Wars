@@ -160,7 +160,7 @@ public class ArbolMaestro {
     {
         //se calcula la influencia media del jugador alrededor de sus edificios
         //si no supera una media, se dedican recursos
-        if (puntosRestantes < Construir.COSTE_PA_TORRE_DEFENSA)
+		if (puntosRestantes < StageData.COSTE_PA_CONSTRUIR_TORRE)
             return 0f;
 
         int suma;
@@ -180,10 +180,10 @@ public class ArbolMaestro {
             //si la media no llega al minimo, se proporcionan recursos para construir una torre
             if (media < 2.5f)
             {
-                if (puntosRestantes >= Construir.COSTE_PA_TORRE_DEFENSA)
+				if (puntosRestantes >= StageData.COSTE_PA_CONSTRUIR_TORRE)
                 {
-                    puntosRestantes -= Construir.COSTE_PA_TORRE_DEFENSA;
-                    asignacion += Construir.COSTE_PA_TORRE_DEFENSA;
+					puntosRestantes -= StageData.COSTE_PA_CONSTRUIR_TORRE;
+					asignacion += StageData.COSTE_PA_CONSTRUIR_TORRE;
                 }
                 else
                 {
@@ -243,7 +243,7 @@ public class ArbolMaestro {
     private float decidirRecursosRecoleccion(ref int puntosDisponibles)
     {
         //la recoleccion se mantendra al maximo hasta que se tengan tres recursos bajo control del jugador
-        if (puntosDisponibles <= Construir.COSTE_PA_EDIFICIO_RECOLECCION)
+		if (puntosDisponibles <= StageData.COSTE_PA_CONSTRUIR_RECURSOS)
             return 0f;
 
         int asignacion = 0;
@@ -262,15 +262,15 @@ public class ArbolMaestro {
             aux = 3 - jug.EdificiosRecoleccion;
             while (aux > 0)
             {
-                puntosDisponibles -= Construir.COSTE_PA_EDIFICIO_RECOLECCION;
+				puntosDisponibles -= StageData.COSTE_PA_CONSTRUIR_RECURSOS;
                 if (puntosDisponibles < 0)
                 {
-                    puntosDisponibles += Construir.COSTE_PA_EDIFICIO_RECOLECCION;
+					puntosDisponibles += StageData.COSTE_PA_CONSTRUIR_RECURSOS;
                     aux = -1;
                 }
                 else
                 {
-                    asignacion += Construir.COSTE_PA_EDIFICIO_RECOLECCION;
+					asignacion += StageData.COSTE_PA_CONSTRUIR_RECURSOS;
                 }
             }
         }

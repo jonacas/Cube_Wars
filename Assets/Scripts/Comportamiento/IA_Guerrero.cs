@@ -98,7 +98,7 @@ public class IA_Guerrero : Unidad {
                     Atacar at = (Atacar)acciones[ACCION_ATACAR];
                     if (at.Ejecutar(alcance[i]))
                     {
-                        puntosDisponibles -= Atacar.COSTE_ATACAR;
+						puntosDisponibles -= StageData.COSTE_PA_ATACAR;
                         listo = true;
                         return;
                     }

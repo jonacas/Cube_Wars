@@ -34,6 +34,20 @@ public class StageData : MonoBehaviour
     public CreacionGrafo CG;
     public TipoUnidad unidadACrear;
 
+
+
+	/// <summary>
+	/// COSTE DE LAS ACCIONES, CAMBIADLAS COMO OS SALGA DE LAS PELOTAS PERO SOLO AQUI
+	/// </summary>
+	public const int COSTE_PA_CONSTRUIR_RECURSOS = 20;
+	public const int COSTE_PA_CONSTRUIR_TORRE = 20;
+	public const int COSTE_PA_CREAR_ALDEANO = 20;
+	public const int COSTE_PA_CREAR_GUERRERO = 20;
+	public const int COSTE_PA_MOVER_UNIDAD = 20;
+	public const int COSTE_PA_ATACAR = 20;
+
+
+
     private int obstacleLayerMask = 1 << 8;
     //private bool cmunicationsEnabeled;
     public bool ComunicationsEnabeled

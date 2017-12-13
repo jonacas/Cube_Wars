@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IA_Exploradores : MonoBehaviour {
-	/*
+public class RolExplorador : MonoBehaviour {
+	
 	const int CREAR_UNIDAD_INDEX = 0;
 
 	List<Explorador> exploradores;
@@ -14,15 +14,16 @@ public class IA_Exploradores : MonoBehaviour {
 		partidaActual = StageData.currentInstance.GetPartidaActual ();
 	}
 
-	public bool ComenzarTurno(float prioridadExploracion)
+	public bool ComenzarTurno(int puntosAsignados)
 	{
 		if (partidaActual.JugadorActual.Exploradores < 3)
-			CrearAldeano ();
+			CrearExplorador ();
 		//Decidir cual mover y cuanto moverlo
+
         return false;
 	}
 
-	void CrearAldeano()
+	void CrearExplorador()
 	{
 		CrearUnidad creadorActual = (CrearUnidad) GetCreadorDeUnidadesAdecuado ().Acciones [CREAR_UNIDAD_INDEX];
 		List<Node> nodosAlAlcance = creadorActual.GetNodosAlAlcance ();
@@ -32,9 +33,13 @@ public class IA_Exploradores : MonoBehaviour {
 
 	Unidad GetCreadorDeUnidadesAdecuado()
 	{
-		List<Unidad> edificiosCreadoresDeunidades = partidaActual.JugadorActual.EdificiosRecoleccion;
+		List<Unidad> edificiosCreadoresDeunidades = partidaActual.JugadorActual.edificios;
+		for (int i = edificiosCreadoresDeunidades.Count - 1; i >= 0; i--) {
+			if (edificiosCreadoresDeunidades [i].IdUnidad != TipoUnidad.Resource)
+				edificiosCreadoresDeunidades.Remove (edificiosCreadoresDeunidades [i]);
+		}
 		edificiosCreadoresDeunidades.Add (partidaActual.JugadorActual.Capital);
 		//Decidir cual es el mejor para crearlo
 		return edificiosCreadoresDeunidades [0];
-	}*/
+	}
 }
