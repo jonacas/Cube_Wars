@@ -13,14 +13,14 @@ public class Recolectar : Accion {
         NodosAlAlcance = Control.GetNodosAlAlcance(m_Unidad.Nodo, Alcance);
     }
 
-    bool Ejecutar(TipoRecurso tipo, int cantidad)
+	bool Ejecutar(Node n)
     {
         Unidad unidadActual = GetComponent<Unidad>();
         Jugador jugador = Partida.GetPartidaActual().Jugadores[unidadActual.IdJugador];
 
-        jugador.SumarRecursos(tipo, cantidad);
-
-        return true;        
+		if(NodosAlAlcance.Contains(n))
+			jugador.SumarRecursos(n.resourceType, /*n.cantidadRecolectada*/);
+		return true;        
     }
 
 	public override void CancelarAccion()
