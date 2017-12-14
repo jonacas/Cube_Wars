@@ -31,11 +31,45 @@ public class RolProtector : MonoBehaviour {
 
         List<Unidad> aldeanosCreadores = GetCreadoresDeTorres();
         int aldeanoActual = 0;
-        while (numeroCreaciones > 0 && aldeanoActual < aldeanosCreadores.Count) {
-           //Continuar desde aquí
+        Construir contructor = new Construir();
+        while (numeroCreaciones > 0 && aldeanoActual < aldeanosCreadores.Count) { //Proceso para crear
+            List<Node> NodosAlAlcance = OrdenarNodos(Control.GetNodosAlAlcance(StageData.currentInstance.GetNodeFromPosition(aldeanosCreadores[aldeanoActual].transform.position), 2));//Obtenemos los nodos en los que podemos crear
+            foreach (Node n in NodosAlAlcance) { //RecorremosEsos nodos ahora que estan ordenados por distancia
+                if (contructor.Ejecutar(n)) {//Si hemos conseguido crear pasamos al siguiente nodo
+                    numeroCreaciones--;
+                    break;
+
+                }
+
+            }
+            aldeanoActual++;
+            if (aldeanoActual >= aldeanosCreadores.Count) {
+                print("NO SE PUEDEN CREAR MAS TORRES  PORQUE NO CABEN MAS UNIDADES");
+
+            }
         }
 
 
+    }
+
+    List<Node> OrdenarNodos(List<Node> Nodos) {
+
+        List<Node> NodosOrdenados = new List<Node>();
+        Unidad objetivo = partidaActual.Jugadores[partidaActual.JugadorActual.IndexPlayerObjetivoActual].Capital;
+        Node aux;
+        while (Nodos.Count > 0) {
+            aux = Nodos[0];
+            foreach (Node n in Nodos)
+            {
+                if(Vector3.Distance(n.position,objetivo.transform.position) < Vector3.Distance(aux.position,objetivo.transform.position)){
+
+                    aux = n;
+                }
+            }
+            NodosOrdenados.Add(aux);
+            Nodos.Remove(aux);
+        }
+        return NodosOrdenados;
     }
 
     List<Unidad> GetCreadoresDeTorres() {
