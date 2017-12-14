@@ -23,18 +23,32 @@ public class Recolectar : Accion {
         return true;        
     }
 
-    public override void CancelarAccion()
-    {
-        
-    }
+	public override void CancelarAccion()
+	{
+		m_Unidad.QuitarResaltoCasillasAlAlcance(NodosAlAlcance);
+	}
 
-    public override void EmpezarAccion()
-    {
-        
-    }
 
-    public override void SeleccionarResaltoDeCasilla()
-    {
-        
-    }
+	public override void EmpezarAccion()
+	{
+		SeleccionarResaltoDeCasilla();
+		m_Unidad.ResaltarCasillasAlAlcance(NodosAlAlcance);
+	}
+
+	public override void SeleccionarResaltoDeCasilla()
+	{
+		print("SeleccionarResaltoCasilla" + Alcance);
+		NodosAlAlcance = Control.GetNodosAlAlcance(m_Unidad.Nodo, Alcance);
+		for (int i = NodosAlAlcance.Count - 1; i >= 0; i--)
+		{
+			if (NodosAlAlcance[i].unidad != null ||
+				NodosAlAlcance[i].resourceType == TipoRecurso.NullResourceType)
+			{
+				print(NodosAlAlcance[i].unidad + "   " + NodosAlAlcance[i].resourceType + "  Eliminado");
+				NodosAlAlcance.Remove(NodosAlAlcance[i]);
+			}
+		}
+
+		m_Unidad.ResaltarCasillasAlAlcance(NodosAlAlcance);
+	}
 }

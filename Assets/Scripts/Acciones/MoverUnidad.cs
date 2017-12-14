@@ -104,7 +104,7 @@ public class MoverUnidad :  Accion{
         NodosAlAlcance = Control.GetNodosAlAlcance(m_Unidad.Nodo, Alcance);
         for (int i = NodosAlAlcance.Count - 1; i >= 0; i--)
         {
-            if (NodosAlAlcance[i].unidad != null ||
+			if (NodosAlAlcance[i].unidad != null ||
                 NodosAlAlcance[i].resourceType != TipoRecurso.NullResourceType)
             {
                 print(NodosAlAlcance[i].unidad + "   " + NodosAlAlcance[i].resourceType + "  Eliminado");
