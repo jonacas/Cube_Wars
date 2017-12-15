@@ -36,12 +36,12 @@ public class Node
 	public TipoRecurso resourceType;
 	public bool visitado;
 
-	public int stepsInfluenceExplorer = 4;
-	public int stepsInfluenceWarrior = 4;
-	public int stepsInfluenceWorker = 4;
-	public int stepsInfluenceDefensiveBuilding = 5;
-	public int stepsInfluenceBuilding = 5;
-	public int stepsInfluenceResource = 3;
+	public const int stepsInfluenceExplorer = 4;
+	public const int stepsInfluenceWarrior = 4;
+	public const int stepsInfluenceWorker = 4;
+	public const int stepsInfluenceDefensiveBuilding = 5;
+	public const int stepsInfluenceBuilding = 5;
+	public const int stepsInfluenceResource = 3;
 
     //variables para cola prioridad
     private float _prioridad;
@@ -144,12 +144,9 @@ public class Node
         Water = water;
         route = null;
 
-		/*influencePlayers = new List<List<int>> ();
+		influencePlayers = new List<List<int>> ();
 		currentResources = new List<TipoRecurso> (1);
-		for (int i = 0; i < StageData.currentInstance.numberOfPlayers; i++) 
-		{
-			influencePlayers.Add (new List<int> (1));
-		}*/
+	
 
     }
 
@@ -187,10 +184,13 @@ public class Node
 	//==============PARTE DE LAS INFLUENCIAS ========================
 
 	//Usa esto CADA VEZ que quieras añadir a un jugador más a las tablas de influencias. 
-	public void AddPlayerToInfluences()
+	public void AddAllPlayersToInfluences()
 	{
-		influencePlayers.Add (new List<int> ());
-		Debug.Log ("Player " + influencePlayers.Count + " added to estimated influences");
+		//for (int i = 0; i < StageData.currentInstance.GetPartidaActual().numJugadores; i++) 
+		for (int i = 0; i < 3; i++)
+		{
+			influencePlayers.Add (new List<int> (1));
+		}
 	}
 				
 	public void SetPlayerInfluence(int player, int influence)

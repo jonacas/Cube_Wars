@@ -16,7 +16,7 @@ public class Recolectar : Accion {
 	public bool Ejecutar()
     {
 		Jugador jugador = Partida.GetPartidaActual().Jugadores[m_Unidad.IdJugador];
-		jugador.SumarRecursos(n.resourceType, /*n.cantidadRecolectada*/);
+		//jugador.SumarRecursos(n.resourceType, /*n.cantidadRecolectada*/);
 		return true;        
     }
 

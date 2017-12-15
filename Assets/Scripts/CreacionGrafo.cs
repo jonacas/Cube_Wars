@@ -133,6 +133,11 @@ public class CreacionGrafo : MonoBehaviour {
 				}*/
 				//testGameObjectMap [i, j] = testInstance;
 				//tablero[i,j] = casillaNueva;
+
+				//Aqui añadimos que tenga a todos los jugadores en su lista de influencias.
+				nodeMap[i,j].AddAllPlayersToInfluences();
+
+
             }
         }
 
