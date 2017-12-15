@@ -55,7 +55,7 @@ public class RolProtector : MonoBehaviour {
     List<Node> OrdenarNodos(List<Node> Nodos) {
 
         List<Node> NodosOrdenados = new List<Node>();
-        Unidad objetivo = partidaActual.Jugadores[partidaActual.JugadorActual.IndexPlayerObjetivoActual].Capital;
+        Unidad objetivo = partidaActual.Jugadores[partidaActual.JugadorActual.idJugador].Capital;
         Node aux;
         while (Nodos.Count > 0) {
             aux = Nodos[0];
@@ -81,7 +81,7 @@ public class RolProtector : MonoBehaviour {
             }
         }
         List<Unidad> creadoresOrdenados = new List<Unidad>();
-        Unidad objetivo = partidaActual.Jugadores[partidaActual.JugadorActual.IndexPlayerObjetivoActual].Capital;
+        Unidad objetivo = partidaActual.Jugadores[partidaActual.JugadorActual.idJugador].Capital;
         Unidad aux;
         while (creadoresDeTorres.Count > 0) { //ORDENACION
             aux = creadoresDeTorres[0];
