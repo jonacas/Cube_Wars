@@ -123,7 +123,10 @@ public abstract class Jugador
     public void DestruirUnidad(Unidad u)
     {
         if(!unidadesDisponibles.Remove(u))
-            Debug.Log("Error al eliminr unidad en jugador " + idJugador);
+            {
+            if(!edificios.Remove(u))
+                Debug.Log("Error al eliminr unidad en jugador " + idJugador);
+        }
 
     }
 

@@ -103,7 +103,7 @@ public class IA_Aldeano : Unidad {
         if (mv.Ejecutar(StageData.currentInstance.GetNodeFromPosition(destino))) {
 
             posActual += incrementoPos;
-            puntosDisponibles -= MoverUnidad.COSTE_MOVER;
+            puntosDisponibles -= StageData.COSTE_PA_MOVER_UNIDAD;
         }
         listo = true;
 

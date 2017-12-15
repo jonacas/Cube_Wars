@@ -136,6 +136,7 @@ public class AEstrella : MonoBehaviour{
             actualNode = actualNode.Route;
         }
 
+        StageData.currentInstance.LimpiarGrafo(StageData.currentInstance.CG.nodeMap);
         solicitante.ResultadoAEstrella(path);
     }
 }

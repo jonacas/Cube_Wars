@@ -136,7 +136,7 @@ public class GlobalControl : MonoBehaviour {
             case (AccionID.create):
                 print("Intentando ejecutar crear unidad");
                 crearAux = (CrearUnidad)unidadSeleccionada.Acciones[indiceAccionEncurso];
-                crearAux.Ejecutar(nodo, TipoUnidad.Warrior);
+                crearAux.Ejecutar(nodo, StageData.currentInstance.unidadACrear);
                 break;
             case (AccionID.move):
                 print("Intentando ejecutar mover");

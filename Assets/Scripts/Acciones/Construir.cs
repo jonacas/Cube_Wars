@@ -6,16 +6,6 @@ public class Construir : Accion {
 
     private const float OFFSET_Y = 2F;
 
-
-    #region COSTES
-    public const int COSTE_MADERA_EDIFICIO_RECOLECCION = 100;
-    public const int COSTE_ROCA_EDIFICIO_RECOLECCION = 30;
-
-    public const int COSTE_MADERA_TORRE_DEFENSA = 20;
-    public const int COSTE_ROCA_TORRE_DEFENSA = 20;
-    public const int COSTE_METAL_TORRE_DEFENSA = 50;
-    #endregion
-
     public List<Node> NodosAlAlcance;
 
     GameObject fantasmaTorre;
@@ -78,7 +68,7 @@ public class Construir : Accion {
     /// <returns></returns>
     public bool Ejecutar(Node n)
     {
-        NodosAlAlcance = Control.GetNodosAlAlcance(m_Unidad.Nodo, Alcance);
+        SeleccionarResaltoDeCasilla();
         //SeleccionarResaltoDeCasilla();
         //si el nodo esta al alcance
         if (NodosAlAlcance.Contains(n))

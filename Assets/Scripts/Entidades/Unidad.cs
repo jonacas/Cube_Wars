@@ -138,6 +138,7 @@ public abstract class Unidad : MonoBehaviour {
         if (vida <= 0)
         {
             vida = 0;
+            StageData.currentInstance.GetPartidaActual().Jugadores[IdJugador].DestruirUnidad(this);
             return true;
         }
         else

@@ -172,7 +172,6 @@ public class RolGuerrero : MonoBehaviour {
         estado = EstadoAtaque.Ataque;
         //al terminar, volvemos a ejecutar para empezar la accion en si
         Ataca(objetivoActual, puntosDispAux);
-        fin = true;
     }
 
     IEnumerator Atacar()

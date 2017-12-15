@@ -208,21 +208,21 @@ public class ArbolMaestro {
         //si las conoce, movera poco y no empleara todos los recursos
 
         //si no hay exploradores, creamos uno
-        if (jug.Exploradores <= 0 && CrearUnidad.COSTE_PA_CREACION_EXPLORADOR <= puntosDisponibles)
+        if (jug.Exploradores <= 0 && GlobalData.COSTE_PA_CREACION_EXPLORADOR <= puntosDisponibles)
         {
             if (partidaActual.GetTurnos() <= 2)
             {
-                puntosDisponibles -= CrearUnidad.COSTE_PA_CREACION_EXPLORADOR * 3;
-                asignacion += CrearUnidad.COSTE_PA_CREACION_EXPLORADOR * 3;
+                puntosDisponibles -= GlobalData.COSTE_PA_CREACION_EXPLORADOR * 3;
+                asignacion += GlobalData.COSTE_PA_CREACION_EXPLORADOR * 3;
             }
-            puntosDisponibles -= CrearUnidad.COSTE_PA_CREACION_EXPLORADOR;
-            asignacion += CrearUnidad.COSTE_PA_CREACION_EXPLORADOR;
+            puntosDisponibles -= GlobalData.COSTE_PA_CREACION_EXPLORADOR;
+            asignacion += GlobalData.COSTE_PA_CREACION_EXPLORADOR;
         }
 
         if (recursosConocidos >= 5 && capitalesConocidas == partidaActual.numJugadores)
         {
-            puntosDisponibles -= MoverUnidad.COSTE_MOVER * ((5 - recursosConocidos) + (partidaActual.numJugadores - capitalesConocidas));
-            asignacion += MoverUnidad.COSTE_MOVER * ((5 - recursosConocidos) + (partidaActual.numJugadores - capitalesConocidas));
+            puntosDisponibles -= StageData.COSTE_PA_MOVER_UNIDAD * ((5 - recursosConocidos) + (partidaActual.numJugadores - capitalesConocidas));
+            asignacion += StageData.COSTE_PA_MOVER_UNIDAD * ((5 - recursosConocidos) + (partidaActual.numJugadores - capitalesConocidas));
         }
 
         //ajuste de la asignacion, la exploracion no debe superar el 50% despues del segundo turno

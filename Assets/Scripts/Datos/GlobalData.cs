@@ -10,6 +10,40 @@ public static class GlobalData
 
     public const int DEFENSA_MAXIMA = 100; //con esta defensa, una unidad es invulnerable al dano
 
+    #region COSTES ALDEANO
+    public const int COSTE_PA_CREACION_ALDEANO = 10;
+    public const int COSTE_MADERA_CREACION_ALDEANO = 0;
+    public const int COSTE_COMIDA_CREACION_ALDEANO = 20;
+    public const int COSTE_METAL_CREACION_ALDEANO = 0;
+    public const int COSTE_PIEDRA_CREACION_ALDEANO = 0;
+    #endregion
+
+    #region COSTES EXPLORADOR
+    public const int COSTE_PA_CREACION_EXPLORADOR = 10;
+    public const int COSTE_MADERA_CREACION_EXPLORADOR = 0;
+    public const int COSTE_COMIDA_CREACION_EXPLORADOR = 10;
+    public const int COSTE_METAL_CREACION_EXPLORADOR = 0;
+    public const int COSTE_PIEDRA_CREACION_EXPLORADOR = 0;
+    #endregion
+
+    #region COSTES GUERRERO
+    public const int COSTE_PA_CREACION_GUERRERO = 20;
+    public const int COSTE_MADERA_CREACION_GUERRERO = 0;
+    public const int COSTE_COMIDA_CREACION_GUERRERO = 40;
+    public const int COSTE_METAL_CREACION_GUERRERO = 10;
+    public const int COSTE_PIEDRA_CREACION_GUERRERO = 0;
+    #endregion
+
+
+    #region COSTES
+    public const int COSTE_MADERA_EDIFICIO_RECOLECCION = 100;
+    public const int COSTE_ROCA_EDIFICIO_RECOLECCION = 30;
+
+    public const int COSTE_MADERA_TORRE_DEFENSA = 20;
+    public const int COSTE_ROCA_TORRE_DEFENSA = 20;
+    public const int COSTE_METAL_TORRE_DEFENSA = 50;
+    #endregion
+
 }
 
 //para facilitar el paso y la comprobacion de costes

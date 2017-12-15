@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class MoverUnidad :  Accion{
 
-    public const int COSTE_MOVER = 10;   
-
     List<Vector3> m_Ruta;
     int posicionActualRuta = 0;
 	private const float MOVE_SPEED = 10f;
@@ -36,7 +34,6 @@ public class MoverUnidad :  Accion{
         StageData.currentInstance.LimpiarGrafo(StageData.currentInstance.CG.nodeMap);
         NodosAlAlcance = Control.GetNodosAlAlcance(StageData.currentInstance.GetNodeFromPosition(transform.position), 3);
         m_Unidad.Nodo = StageData.currentInstance.GetNodeFromPosition(transform.position);
-        StageData.currentInstance.LimpiarGrafo(StageData.currentInstance.CG.nodeMap);
     }
 
     public bool Ejecutar(Node destino)
@@ -81,7 +78,6 @@ public class MoverUnidad :  Accion{
         CancelarAccion();
         m_Unidad.Nodo = StageData.currentInstance.GetNodeFromPosition(m_Unidad.gameObject.transform.position);
         print(m_Unidad.Nodo.fil + "  " + m_Unidad.Nodo.col);
-        StageData.currentInstance.LimpiarGrafo(StageData.currentInstance.CG.nodeMap);
         NodosAlAlcance = Control.GetNodosAlAlcance(StageData.currentInstance.GetNodeFromPosition(transform.position), 3);
         Nodo = StageData.currentInstance.GetNodeFromPosition(transform.position);
         Nodo.unidad = transform.GetComponent<Unidad>();
