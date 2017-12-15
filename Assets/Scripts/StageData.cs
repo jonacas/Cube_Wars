@@ -451,14 +451,23 @@ public class StageData : MonoBehaviour
 		int posX;
 		int posY;
 
-		center.ClearPlayerInfluence (player);
+		int numberOfStepsCuadratic = (numberOfSteps * 2 + 1);
+		int steps1 = (int) numberOfStepsCuadratic / 2;
+		int stepsDif = numberOfStepsCuadratic - steps1;
 
-		for (int i = -numberOfSteps / 2; i < numberOfSteps / 2; i++) 
+		center.ClearPlayerInfluence (player);
+		//Debug.Log ("peso en" + " x: " + 0 + " , " + "y: " + 0 + "==>" +  (numberOfSteps) );
+
+		for (int i = -steps1; i < stepsDif; i++) 
 		{
-			for (int j = -numberOfSteps / 2; j < numberOfSteps / 2; j++) 
+			//Debug.Log ("num ejecuciones bucle fila");
+
+			for (int j = -steps1; j < stepsDif; j++) 
 			{
 				posX = center.fil + i;
 				posY = center.col + j;
+
+				//Debug.Log ("num ejecuciones bucle COLUMNA");
 
 				if (posX < 0 || posX >= CG.filas) {	continue;	}
 				else if (posY < 0 || posY >= CG.columnas) {	continue;}
@@ -466,9 +475,11 @@ public class StageData : MonoBehaviour
 				{	//posicion legal, ahora viene la paja.
 					int difX = (int)Mathf.Abs(center.fil - posX); 
 					int difY = (int)Mathf.Abs (center.col - posY);
+					if (numberOfSteps - difY == 0 || numberOfSteps - difX == 0) {continue;	}
 
-					grafo [posX, posY].ClearPlayerInfluence (player);
-
+						grafo [posX, posY].ClearPlayerInfluence (player);
+						//		Instantiate (testCasillaMarcada, grafo [posX, posY].position, Quaternion.identity);
+						//		Debug.Log ("peso en" + " x: " + difX + " , " + "y: " + difY + "==>" +  (numberOfSteps - difY) 
 				}
 			}
 		}
