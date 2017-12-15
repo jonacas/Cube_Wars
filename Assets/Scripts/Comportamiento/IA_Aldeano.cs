@@ -107,8 +107,12 @@ public class IA_Aldeano : Unidad {
         }
         listo = true;
 
-
+        if (StageData.currentInstance.GetNodeFromPosition(destino).resourceType != TipoRecurso.NullResourceType) {
+            Recolectar recolecion = (Recolectar)acciones[ACCION_RECOLECTAR];
+            puntosDisponibles -= Recolectar.COSTE_RECOLECTAR;
+        }
         //Falta Construir, que no tengo muy claro donde ponerlo
+
     }
 
     public bool HaLlegado()
