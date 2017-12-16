@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Construir : Accion {
+public class Construir : Accion
+{
 
     private const float OFFSET_Y = 2F;
 
@@ -68,14 +69,14 @@ public class Construir : Accion {
     /// <returns></returns>
     public bool Ejecutar(Node n)
     {
-        SeleccionarResaltoDeCasilla();
+        VerNodosAlAlcance();
         //SeleccionarResaltoDeCasilla();
         //si el nodo esta al alcance
         if (NodosAlAlcance.Contains(n))
         {
             if (n.resourceType == TipoRecurso.NullResourceType)
             {
-				if (StageData.currentInstance.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(StageData.COSTE_PA_CONSTRUIR_TORRE))
+                if (StageData.currentInstance.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(StageData.COSTE_PA_CONSTRUIR_TORRE))
                 {
                     Instantiate(StageData.currentInstance.TowerPrefab, n.position, StageData.currentInstance.TowerPrefab.transform.rotation);
                     CancelarAccion();
@@ -84,7 +85,7 @@ public class Construir : Accion {
             }
             else
             {//por si queremos poner costes distintos
-				if (StageData.currentInstance.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(StageData.COSTE_PA_CONSTRUIR_RECURSOS))
+                if (StageData.currentInstance.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(StageData.COSTE_PA_CONSTRUIR_RECURSOS))
                 {
                     Instantiate(StageData.currentInstance.ResourceBuildPrefab, n.position, StageData.currentInstance.ResourceBuildPrefab.transform.rotation);
                     CancelarAccion();
@@ -96,7 +97,7 @@ public class Construir : Accion {
         CancelarAccion();
         return false;
     }
-    
+
     public override void CancelarAccion()
     {
         fantasmaTorre.SetActive(false);
@@ -106,11 +107,11 @@ public class Construir : Accion {
 
     public override void EmpezarAccion()
     {
-        SeleccionarResaltoDeCasilla();
+        VerNodosAlAlcance();
         m_Unidad.ResaltarCasillasAlAlcance(NodosAlAlcance);
     }
 
-    public override void SeleccionarResaltoDeCasilla()
+    public override List<Node> VerNodosAlAlcance()
     {
         NodosAlAlcance = Control.GetNodosAlAlcance(m_Unidad.Nodo, Alcance);
         for (int i = NodosAlAlcance.Count - 1; i >= 0; i--)
@@ -121,5 +122,6 @@ public class Construir : Accion {
                 NodosAlAlcance.Remove(NodosAlAlcance[i]);
             }
         }
+        return NodosAlAlcance;
     }
 }

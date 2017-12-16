@@ -114,7 +114,7 @@ public class ArbolMaestro {
                 break;
 
                 case LATENTE:
-                late = dcidirRecursosLatente(ref puntosRestantes);
+                late = decidirRecursosLatente(ref puntosRestantes);
                 break;
 
                 case DESTRUCTOR:
@@ -134,7 +134,7 @@ public class ArbolMaestro {
         return new Ordenes(explo,reco,prote,late, atac);
     }
 
-    private float dcidirRecursosLatente(ref int puntosRestantes)
+    private float decidirRecursosLatente(ref int puntosRestantes)
     {
         //se decide un objetivo (el jugador mas debil) y se prepara el ataque
 

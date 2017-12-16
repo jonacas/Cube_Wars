@@ -21,13 +21,11 @@ public class Atacar : Accion {
                 break;
         }
 		costeAccion = StageData.COSTE_PA_ATACAR;
-        print("Alcance " + alcance);
     }
 
     public bool Ejecutar(Node victima)
     {
-        print("entra");
-        SeleccionarResaltoDeCasilla();
+        VerNodosAlAlcance();
         if (NodosAlAlcance.Contains(victima)) {
             if (true/*Partida.GetPartidaActual().Jugadores[m_Unidad.IdJugador].PuntosDeAccion - costeAccion >= 0*/)
             {
@@ -50,8 +48,6 @@ public class Atacar : Accion {
                     //Partida.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(costeAccion);
 
                     //Ejecutar alguna animacion en caso de que se hiciera, para ver que se está atacando y no que haya solo dos cubos quietos.
-                    //Des-resaltar casillas
-
                     CancelarAccion();
 
                     return true;
@@ -75,11 +71,11 @@ public class Atacar : Accion {
         
     public override void EmpezarAccion()
     {
-        SeleccionarResaltoDeCasilla();
+        VerNodosAlAlcance();
         m_Unidad.ResaltarCasillasAlAlcance(NodosAlAlcance);
     }
 
-    public override void SeleccionarResaltoDeCasilla()
+    public override List<Node> VerNodosAlAlcance()
     {
         NodosAlAlcance = Control.GetNodosAlAlcance(m_Unidad.Nodo, Alcance);
         for(int i = NodosAlAlcance.Count-1; i >= 0; i--)
@@ -90,5 +86,6 @@ public class Atacar : Accion {
                 NodosAlAlcance.Remove(NodosAlAlcance[i]);
             }
         }
+        return NodosAlAlcance;
     }
 }

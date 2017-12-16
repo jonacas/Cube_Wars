@@ -11,29 +11,28 @@ public class RolLatente : MonoBehaviour {
 
 	void Awake()
 	{
-		partidaActual = StageData.currentInstance.GetPartidaActual ();
+        partidaActual = StageData.currentInstance.GetPartidaActual ();        
 	}
 
 	public bool ComenzarTurno(int puntosAsignados)
 	{
-		//Decidir cual mover y cuanto moverlo
 		numeroCreaciones = puntosAsignados / StageData.COSTE_PA_CREAR_GUERRERO; // CALCULO CUANTAS CREACIONES PUEDO HACER CON LOS PUNTOS ASIGNADOS
 		if (numeroCreaciones > 0) {
-			CrearGuerreros ();
+			StartCoroutine("CrearGuerreros");
 			return true;
 		}
 		else
 			return false;
 	}
 
-	void CrearGuerreros()
+	IEnumerator CrearGuerreros()
 	{
-		List<Unidad> edificiosCreadores = GetCreadorDeUnidadesAdecuado(); // MIRO TODOS LOS EDIFICIOS QUE PUEDEN CONSTRUIR UNIDADES Y LOS ORDENO POR PRIORIDAD
+        List<Unidad> edificiosCreadores = GetCreadorDeUnidadesAdecuado(); // MIRO TODOS LOS EDIFICIOS QUE PUEDEN CONSTRUIR UNIDADES Y LOS ORDENO POR PRIORIDAD
 		int edificioActual = 0; // SE UTILIZA PARA SABER CUAL ES EL EDIFICIO QUE VA A CONSTRUIR, PARA CONTROLAR QUE SI UN EDIFICIO NO PUEDE CREAR MAS, PASE AL SIGUIENTE
 		while(numeroCreaciones > 0 && edificioActual < edificiosCreadores.Count)
 		{
 			CrearUnidad accionCreadorUnidades = (CrearUnidad) edificiosCreadores [edificioActual].Acciones [CREAR_UNIDAD_INDEX];
-			List<Node> nodosAlAlcance = accionCreadorUnidades.GetNodosAlAlcance (); // COJO LOS NODOS AL ALCANCE ACTUALIZADO DEL EDIFICIO DE CREACION
+			List<Node> nodosAlAlcance = GetComponent<CrearUnidad>().VerNodosAlAlcance (); // COJO LOS NODOS AL ALCANCE ACTUALIZADO DEL EDIFICIO DE CREACION
 			if(nodosAlAlcance.Count == 0){ // SI EN ESTE EDIFICIO NO SE PUEDE CREAR MAS GUERREROS, PASO AL SIGUIENTE
 				edificioActual++;
 				if (edificioActual >= edificiosCreadores.Count) // SI HE RECORRIDO TODOS LOS EDIFICIOS, SIGNIFICA QUE ME QUEDAN PUNTOS POR GASTAR PERO NO ME CABE EN NINGUN EDIFICIO MAS GUERREROS
@@ -41,10 +40,15 @@ public class RolLatente : MonoBehaviour {
 			}
 			else if(edificioActual < edificiosCreadores.Count) // EN CASO DE QUE TODO VAYA BIEN, LO CREO
 			{
-				accionCreadorUnidades.Ejecutar (nodosAlAlcance [0], TipoUnidad.Warrior);
-				numeroCreaciones--;
-			}
-		}
+				bool haFuncionado = GetComponent<CrearUnidad>().Ejecutar (nodosAlAlcance [0], TipoUnidad.Warrior);
+                if (haFuncionado)
+                {
+                    numeroCreaciones--;
+                    print(numeroCreaciones);
+                    yield return new WaitForSeconds(0.5f); // DELAY QUE SE TARDA ENTRE CREAR UNA UNIDAD Y OTRA
+                }
+			}            
+        }
 	}
 
 	List<Unidad> GetCreadorDeUnidadesAdecuado()

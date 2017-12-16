@@ -39,7 +39,7 @@ public class MoverUnidad :  Accion{
     public bool Ejecutar(Node destino)
     {
         
-        SeleccionarResaltoDeCasilla();
+        VerNodosAlAlcance();
         print("Ejecutar entrado");
         print(NodosAlAlcance.Count);
         //print(destino == null);
@@ -90,11 +90,11 @@ public class MoverUnidad :  Accion{
 
     public override void EmpezarAccion()
     {
-        SeleccionarResaltoDeCasilla();
+        VerNodosAlAlcance();
         m_Unidad.ResaltarCasillasAlAlcance(NodosAlAlcance);
     }
 
-    public override void SeleccionarResaltoDeCasilla()
+    public override List<Node> VerNodosAlAlcance()
     {
         print("SeleccionarResaltoCasilla" + Alcance);
         NodosAlAlcance = Control.GetNodosAlAlcance(m_Unidad.Nodo, Alcance);
@@ -109,6 +109,7 @@ public class MoverUnidad :  Accion{
         }
 
         m_Unidad.ResaltarCasillasAlAlcance(NodosAlAlcance);
+        return NodosAlAlcance;
     }
 
     public void SolicitarYRecorrerCamino(Vector3 final)

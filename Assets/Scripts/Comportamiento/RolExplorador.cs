@@ -26,7 +26,7 @@ public class RolExplorador : MonoBehaviour {
 	void CrearExplorador()
 	{
 		CrearUnidad creadorActual = (CrearUnidad) GetCreadorDeUnidadesAdecuado ().Acciones [CREAR_UNIDAD_INDEX];
-		List<Node> nodosAlAlcance = creadorActual.GetNodosAlAlcance ();
+		List<Node> nodosAlAlcance = creadorActual.VerNodosAlAlcance ();
 		//Decidir cual es el mejor nodo
 		creadorActual.Ejecutar(nodosAlAlcance[0], TipoUnidad.Explorer);
 	}

@@ -13,6 +13,7 @@ public class CrearUnidad : Accion
         m_Unidad = GetComponent<Unidad>();
         idAccion = AccionID.create;
         Alcance = 2;
+        NodosAlAlcance = new List<Node>();
     }
 
 
@@ -26,27 +27,33 @@ public class CrearUnidad : Accion
         //se debe coger el jugador de la instancia de partida del stageData
         //Jugador jug = SGetComponent<Unidad>().IdJugador
 
-        SeleccionarResaltoDeCasilla();
+        //SeleccionarResaltoDeCasilla();
         
         if (NodosAlAlcance.Contains(destino))
         {
-            //Instantiate(StageData.currentInstance.WarriorPrefab, destino.position, StageData.currentInstance.WarriorPrefab.transform.rotation);
             switch (tipo)
             {
                 case TipoUnidad.Warrior:
-                    Instantiate(StageData.currentInstance.WarriorPrefab, destino.position, StageData.currentInstance.WarriorPrefab.transform.rotation);
+                    SetUnidadANodoYViceversa(Instantiate(StageData.currentInstance.WarriorPrefab, destino.position, StageData.currentInstance.WarriorPrefab.transform.rotation).GetComponent<Unidad>());                    
                     break;
                 case TipoUnidad.Worker:
-                    Instantiate(StageData.currentInstance.WorkerPrefab, destino.position, StageData.currentInstance.WorkerPrefab.transform.rotation);
+                    SetUnidadANodoYViceversa(Instantiate(StageData.currentInstance.WorkerPrefab, destino.position, StageData.currentInstance.WorkerPrefab.transform.rotation).GetComponent<Unidad>());                   
                     break;
                 case TipoUnidad.Explorer:
-                    Instantiate(StageData.currentInstance.ExplorerPrefab, destino.position, StageData.currentInstance.ExplorerPrefab.transform.rotation);
+                    SetUnidadANodoYViceversa(Instantiate(StageData.currentInstance.ExplorerPrefab, destino.position, StageData.currentInstance.ExplorerPrefab.transform.rotation).GetComponent<Unidad>());
                     break;
             }
             CancelarAccion();
             return true;
         }
         return false;
+    }
+
+    void SetUnidadANodoYViceversa(Unidad unidad)
+    {
+        Node nodoActual = StageData.currentInstance.GetNodeFromPosition(unidad.transform.position);
+        unidad.Nodo = nodoActual;
+        nodoActual.unidad = unidad;
     }
 
     public override void CancelarAccion()
@@ -56,11 +63,11 @@ public class CrearUnidad : Accion
 
     public override void EmpezarAccion()
     {
-        SeleccionarResaltoDeCasilla();
+        VerNodosAlAlcance();
         m_Unidad.ResaltarCasillasAlAlcance(NodosAlAlcance);
     }
 
-    public override void SeleccionarResaltoDeCasilla()
+    public override List<Node> VerNodosAlAlcance()
     {
         NodosAlAlcance = Control.GetNodosAlAlcance(m_Unidad.Nodo, Alcance);
         for (int i = NodosAlAlcance.Count - 1; i >= 0; i--)
@@ -71,13 +78,6 @@ public class CrearUnidad : Accion
                 NodosAlAlcance.Remove(NodosAlAlcance[i]);
             }
         }
-    }
-
-	public List<Node> GetNodosAlAlcance()
-	{
-		if (NodosAlAlcance.Count == 0) {
-			SeleccionarResaltoDeCasilla ();
-		}
-		return NodosAlAlcance;
-	}
+        return NodosAlAlcance;
+    }    
 }

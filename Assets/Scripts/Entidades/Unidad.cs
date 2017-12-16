@@ -149,7 +149,8 @@ public abstract class Unidad : MonoBehaviour {
     public void ResaltarCasillasAlAlcance(List<Node> alcance)
     {
         //este codigo debe resaltar las casillas del tablero que entran dentro del rango de una de las acciones
-		casillasMarcadas = new List<GameObject>();
+        piscina = new GameObject("Piscina");
+        casillasMarcadas = new List<GameObject>();
 		foreach (Node n in alcance) {
 			GameObject newCasillaMarcada = Instantiate (CasillaMarcada, new Vector3 (n.position.x, CasillaMarcada.transform.position.y, n.position.z), CasillaMarcada.transform.rotation, piscina.transform);
 			casillasMarcadas.Add (newCasillaMarcada);
@@ -160,7 +161,6 @@ public abstract class Unidad : MonoBehaviour {
     public void QuitarResaltoCasillasAlAlcance(List<Node> alcance)
     {
         Destroy(piscina);
-        piscina = new GameObject("Piscina");
 
         if(casillasMarcadas != null)
 		    casillasMarcadas.Clear();

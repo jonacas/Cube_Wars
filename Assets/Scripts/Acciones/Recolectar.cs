@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Recolectar : Accion {
+public class Recolectar : Accion
+{
 
     public const int COSTE_RECOLECTAR = 100;
 
@@ -13,26 +14,26 @@ public class Recolectar : Accion {
         m_Unidad = GetComponent<Unidad>();
     }
 
-	public bool Ejecutar()
+    public bool Ejecutar()
     {
-		Jugador jugador = StageData.currentInstance.GetPartidaActual().Jugadores[m_Unidad.IdJugador];
-		//jugador.SumarRecursos(n.resourceType, /*n.cantidadRecolectada*/);
-		return true;        
+        Jugador jugador = StageData.currentInstance.GetPartidaActual().Jugadores[m_Unidad.IdJugador];
+        //jugador.SumarRecursos(n.resourceType, /*n.cantidadRecolectada*/);
+        return true;
     }
 
-	public override void CancelarAccion()
-	{
-		
-	}
+    public override void CancelarAccion()
+    {
+
+    }
 
 
-	public override void EmpezarAccion()
-	{
-		
-	}
+    public override void EmpezarAccion()
+    {
 
-	public override void SeleccionarResaltoDeCasilla()
-	{
-		
-	}
+    }
+
+    public override List<Node> VerNodosAlAlcance()
+    {
+        return null;
+    }
 }
