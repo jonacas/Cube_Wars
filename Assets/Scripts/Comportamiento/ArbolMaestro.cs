@@ -27,7 +27,7 @@ using UnityEngine;
  *si se ha garantizado su cumplimiento (se recogen suficientes recursos o hay bastantes defensas).
  */
 
-public class ArbolMaestro {
+public class ArbolMaestro : MonoBehaviour{
 
     private const int EXPLORADOR = 0;
     private const int RECOLECTOR = 1;
@@ -228,7 +228,7 @@ public class ArbolMaestro {
 
         //ajuste de la asignacion, la exploracion no debe superar el 50% despues del segundo turno
         float definitivo = asignacion;// / (float)puntosAccionIniciales;
-       /* if (partidaActual.GetTurnos() < 2)
+        if (partidaActual.GetTurnos() < 2)
         {
             if (definitivo > 1)
                 definitivo = 1f;
@@ -237,7 +237,7 @@ public class ArbolMaestro {
         {
             if (definitivo > 0.5f)
                 definitivo = 0.5f;
-        }*/
+        }
         return definitivo;
     }
 

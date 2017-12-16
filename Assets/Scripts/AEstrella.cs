@@ -68,6 +68,10 @@ public class AEstrella : MonoBehaviour{
 
             foreach (Pareja value in actualNode.ArrayVecinos)
             {
+                //si el nodo esta ocupado, se descarta
+                if (value.nodo.resourceType != TipoRecurso.NullResourceType || value.nodo.unidad != null)
+                    continue;
+
                 //si se llega al nodo con un coste mejor
                 if (actualNode.Cost + value.distancia < value.nodo.Cost)
                 {

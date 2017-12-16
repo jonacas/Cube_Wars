@@ -41,6 +41,7 @@ public class Partida : MonoBehaviour{
     {
         turnos = 0;
         //cargarEscenario()
+        StageData.currentInstance.SetInitialResourcesOnMap();
         crearJugadores();
 
         //comenzarBuclePrincipal

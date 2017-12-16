@@ -30,11 +30,20 @@ public class JugadorIA : Jugador {
 
     public override void Turno()
     {
+        puntosDeAccion = 100 + 20 * edificios.Count;
         print("TURNO DE " + idJugador);
         Ordenes reparto = arbol.AsignarRecursos();
         turnoAcabado = true;
 
         print("ORDEN JUGADOR " + idJugador + ": Ataque-" + reparto.GetOrdenAtaque() + ": Defensa-" + reparto.GetOrdenDefensa() + ": Recoleccion-" + reparto.GetOrdenRecoleccion() + ": Exploracion-" + reparto.GetOrdenExploracion());
+
+        int asignacion;
+
+        //ejecutamos rol explorador
+        asignacion = Mathf.RoundToInt(puntosDeAccion * reparto.GetOrdenExploracion());
+        puntosDeAccion -= asignacion;
+        //rolExplo.
+
 
     }
 }
