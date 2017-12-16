@@ -24,7 +24,7 @@ public class RolRecolector : MonoBehaviour {
 
 
 	//RECUERDA: ESTE SCRIPTE DEBE IR EN EL MISMO GAMEOBJECT QUE EL JUGADOR.
-	void Awake()
+	void Start()
 	{
 		aldeanos = new List<IA_Aldeano> ();
 		partidaActual = StageData.currentInstance.GetPartidaActual ();

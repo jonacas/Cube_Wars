@@ -9,7 +9,7 @@ public class RolExplorador : MonoBehaviour {
 	List<Explorador> exploradores;
 	Partida partidaActual;
 
-	void Awake()
+	void Start()
 	{
 		partidaActual = StageData.currentInstance.GetPartidaActual ();
 	}

@@ -9,7 +9,7 @@ public class RolLatente : MonoBehaviour {
 	Partida partidaActual;
 	int numeroCreaciones;
 
-	void Awake()
+	void Start()
 	{
         partidaActual = StageData.currentInstance.GetPartidaActual ();        
 	}
