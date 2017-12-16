@@ -1,25 +1,24 @@
-﻿using System.Collections;
+﻿/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class IA_Explorador : Unidad {
 
+    const int ACCION_MOVER = 0;
+
     private bool heLlegado, listo;
-    private List<Vector3> caminoTotalACapital;
+    private List<Vector3> caminoTotalANodoDestino;
     int posActual;
 
     void Awake()
     {        
         acciones = new List<Accion>();
         acciones.Add(GetComponent<MoverUnidad>());
-        acciones.Add(GetComponent<Atacar>());
-        vision = VISION_GUERRERO;
-        saludMaxima = SALUD_MAX_GUERRERO;
-        Vida = SALUD_MAX_GUERRERO;
-        defensaMaxima = DEFENSA_MAX_GUERRERO;
-        Defensa = DEFENSA_MAX_GUERRERO;
-        danyo = ATAQUE_GUERRERO;
-        idUnidad = TipoUnidad.Warrior;
+        saludMaxima = StageData.SALUD_MAX_ALDEANO;
+        Vida = StageData.SALUD_MAX_ALDEANO;
+        defensaMaxima = StageData.DEFENSA_MAX_ALDEANO;
+        Defensa = StageData.DEFENSA_MAX_ALDEANO;
+        idUnidad = TipoUnidad.Explorer;
         IdJugador = 2;
     }
 
@@ -34,7 +33,7 @@ public class IA_Explorador : Unidad {
             Nodo.unidad = this;
     }*/
 
-
+    /*
     public void AccionMover(List<Vector3> camino)
     {
         MoverUnidad mv = (MoverUnidad)acciones[ACCION_MOVER];
@@ -141,3 +140,4 @@ public class IA_Explorador : Unidad {
     }
 
 }
+*/

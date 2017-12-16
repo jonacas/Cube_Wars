@@ -177,7 +177,7 @@ public class RolGuerrero : MonoBehaviour {
     {
         int guerrerosEnCapital = 0;
 
-        while (puntosDispAux > COSTE_ATACAR)
+        while (puntosDispAux > StageData.COSTE_PA_ATACAR)
         {
             for (int i = guerrerosDisponibles.Count - 1; i >= 0; i--)
             {

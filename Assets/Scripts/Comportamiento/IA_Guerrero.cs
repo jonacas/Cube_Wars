@@ -78,7 +78,7 @@ public class IA_Guerrero : Unidad {
         //si hay unidades enemigas al alcance (guerreros y torres de defensa), las ataca si son del objetivo
         listo = false;
         List<Node> alcance;
-        alcance = Control.GetNodosAlAlcance(StageData.currentInstance.GetNodeFromPosition(this.transform.position), ALCANCE_GUERRERO);
+        alcance = Control.GetNodosAlAlcance(StageData.currentInstance.GetNodeFromPosition(this.transform.position), acciones[ACCION_MOVER].Alcance);
 
         for (int i = 0; i < alcance.Count; i++)
         {

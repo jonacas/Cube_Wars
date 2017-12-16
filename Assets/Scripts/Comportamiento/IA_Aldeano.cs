@@ -67,7 +67,7 @@ public class IA_Aldeano : Unidad {
     {
         listo = false;
         List<Node> alcance;
-        alcance = Control.GetNodosAlAlcance(StageData.currentInstance.GetNodeFromPosition(this.transform.position), VISION_ALDEANO);
+        alcance = Control.GetNodosAlAlcance(StageData.currentInstance.GetNodeFromPosition(this.transform.position), acciones[ACCION_MOVER].Alcance);
         //Codigo de recolectar
 
         caminoActual = caminoAObjetivo.GetRange(posActual, acciones[ACCION_MOVER].Alcance - 1);

@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RolLatente : MonoBehaviour {
-    
-	Partida partidaActual;
+
+    const int CREAR_UNIDAD_INDEX = 0;
+
+
+    Partida partidaActual;
 	int numeroCreaciones;
 
 	void Start()

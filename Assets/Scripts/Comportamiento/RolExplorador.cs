@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RolExplorador : MonoBehaviour {
-	 
+
+    const int CREAR_UNIDAD_INDEX = 0;
+
 	Partida partidaActual;
     bool exploradoresSuficientes, coroutineActive;
 
