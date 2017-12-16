@@ -4,27 +4,19 @@ using UnityEngine;
 
 public class Guerrero : Unidad {
 
-    public const int ALCANCE_GUERRERO = 2;
-    public const int VISION_GUERRERO = 3;
-    public const int ATAQUE_GUERRERO = 10;
-    public const int SALUD_MAX_GUERRERO = 50;
-    public const int DEFENSA_MAX_GUERRERO = 10;
-
-    //ACCIONES DE LA UNIDAD
-    private const int ACCION_MOVER = 0;
-    private const int ACCION_ATACAR = 1;
+    const int ACCION_MOVER = 0;
+    const int ACCION_ATACAR = 1;
 
     void Awake()
     {        
         acciones = new List<Accion>();
         acciones.Add(GetComponent<MoverUnidad>());
         acciones.Add(GetComponent<Atacar>());
-        vision = VISION_GUERRERO;
-        saludMaxima = SALUD_MAX_GUERRERO;
-        Vida = SALUD_MAX_GUERRERO;
-        defensaMaxima = DEFENSA_MAX_GUERRERO;
-        Defensa = DEFENSA_MAX_GUERRERO;
-        danyo = ATAQUE_GUERRERO;
+        saludMaxima = StageData.SALUD_MAX_GUERRERO;
+        Vida = StageData.SALUD_MAX_GUERRERO;
+        defensaMaxima = StageData.DEFENSA_MAX_GUERRERO;
+        Defensa = StageData.DEFENSA_MAX_GUERRERO;
+        danyo = StageData.ATAQUE_GUERRERO;
         idUnidad = TipoUnidad.Warrior;
         IdJugador = 2;
         Nodo = StageData.currentInstance.GetNodeFromPosition(this.transform.position);

@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class Recolectar : Accion
 {
-
-    public const int COSTE_RECOLECTAR = 100;
-
     public List<Node> NodosAlAlcance;
 
     private void Awake()

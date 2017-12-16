@@ -4,15 +4,7 @@ using UnityEngine;
 
 public class IA_Aldeano : Unidad {
 
-    private int SALUD_MAX_ALDEANO = 100;
-    private int VISION_ALDEANO = 4;
-    private int CASILLAS_MOVIMIENTO_ALDEANO = 4;
-
-    //ACCIONES DE LA UNIDAD
-    private const int ACCION_MOVER = 0;
-    private const int ACCION_RECOLECTAR = 1;
-    private const int ACCION_CONSTRUIR = 2;
-
+    const int ACCION_MOVER = 0, ACCION_CONSTRUIR = 1;
 
     private bool heLlegado, listo;
     private List<Vector3> caminoAObjetivo;
@@ -21,9 +13,8 @@ public class IA_Aldeano : Unidad {
     void Awake()
     {
         //Nodo = StageData.currentInstance.GetNodeFromPosition(transform.position);
-        saludMaxima = SALUD_MAX_ALDEANO;
-        Vida = SALUD_MAX_ALDEANO;
-        vision = VISION_ALDEANO;
+        saludMaxima = StageData.SALUD_MAX_ALDEANO;
+        Vida = StageData.SALUD_MAX_ALDEANO;
         acciones = new List<Accion>();
         acciones.Add(this.GetComponent<MoverUnidad>());
         acciones.Add(this.GetComponent<Construir>());
@@ -79,7 +70,7 @@ public class IA_Aldeano : Unidad {
         alcance = Control.GetNodosAlAlcance(StageData.currentInstance.GetNodeFromPosition(this.transform.position), VISION_ALDEANO);
         //Codigo de recolectar
 
-        caminoActual = caminoAObjetivo.GetRange(posActual, VISION_ALDEANO - 1);
+        caminoActual = caminoAObjetivo.GetRange(posActual, acciones[ACCION_MOVER].Alcance - 1);
 
 
         Vector3 destino = Vector3.zero;

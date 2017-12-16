@@ -4,21 +4,14 @@ using UnityEngine;
 
 public class Aldeano : Unidad {
 
-    private int SALUD_MAX_ALDEANO = 100;
-    private int VISION_ALDEANO = 4;
-    private int CASILLAS_MOVIMIENTO_ALDEANO = 4;
-
-    //ACCIONES DE LA UNIDAD
-    private const int ACCION_MOVER = 0;
-    private const int ACCION_RECOLECTAR = 1;
-    private const int ACCION_CONSTRUIR = 2;
+    const int ACCION_MOVER = 0;
+    const int ACCION_CONSTRUIR = 1;
 
     void Awake()
     {
         //Nodo = StageData.currentInstance.GetNodeFromPosition(transform.position);
-        saludMaxima = SALUD_MAX_ALDEANO;
-        Vida = SALUD_MAX_ALDEANO;
-        vision = VISION_ALDEANO;
+        saludMaxima = StageData.SALUD_MAX_ALDEANO;
+        Vida = StageData.SALUD_MAX_ALDEANO;
         acciones = new List<Accion>();
         acciones.Add(this.GetComponent<MoverUnidad>());
         acciones.Add(this.GetComponent<Construir>());

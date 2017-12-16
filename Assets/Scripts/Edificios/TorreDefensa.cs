@@ -4,35 +4,31 @@ using UnityEngine;
 
 public class TorreDefensa : Unidad{
 
-    public const int ALCANCE_TORRE_DEFENSA = 3;
-    public const int VISION_TORRE_DEFENSA = 5;
-    public const int ATAQUE_TORRE_DEFENSA = 20;
-    public const int SALUD_MAX_TORRE_DEFENSA = 200;
-    public const int DEFENSA_MAX_TORRE_DEFENSA = 100;
+    const int ACCION_ATACAR = 0;
 
     Node nodo;
 
     void Awake()
     {
         nodo = StageData.currentInstance.GetNodeFromPosition(transform.position);
-        acciones = null;
-        vision = VISION_TORRE_DEFENSA;
-        saludMaxima = SALUD_MAX_TORRE_DEFENSA;
-        Vida = SALUD_MAX_TORRE_DEFENSA;
-        defensaMaxima = DEFENSA_MAX_TORRE_DEFENSA;
-        Defensa = DEFENSA_MAX_TORRE_DEFENSA;
+        acciones = new List<Accion>();
+        acciones.Add(GetComponent<Atacar>());
+        saludMaxima = StageData.SALUD_MAX_TORRE_DEFENSIVA;
+        Vida = StageData.SALUD_MAX_TORRE_DEFENSIVA;
+        defensaMaxima = StageData.DEFENSA_MAX_TORRE_DEFENSIVA;
+        Defensa = StageData.DEFENSA_MAX_TORRE_DEFENSIVA;
         idUnidad = TipoUnidad.DefensiveBuilding;
     }
 
     public void AtacarAlInicioTurno()
     {
-        List<Node> nodos =  Control.GetNodosAlAlcance(nodo, ALCANCE_TORRE_DEFENSA);
+        List<Node> nodos =  Control.GetNodosAlAlcance(nodo, acciones[ACCION_ATACAR].Alcance);
 
         foreach (Node n in nodos)
         {
             if (n.unidad != null && n.unidad.IdJugador == IdJugador)
             {
-                n.unidad.RecibirAtaque(ATAQUE_TORRE_DEFENSA);
+                n.unidad.RecibirAtaque(StageData.ATAQUE_TORRE_DEFENSIVA);
             }
         }
 

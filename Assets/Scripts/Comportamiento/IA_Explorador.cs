@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IA_Guerrero : Unidad {
-
-    const int ACCION_MOVER = 0, ACCION_ATACAR = 1;
+public class IA_Explorador : Unidad {
 
     private bool heLlegado, listo;
     private List<Vector3> caminoTotalACapital;
@@ -15,11 +13,12 @@ public class IA_Guerrero : Unidad {
         acciones = new List<Accion>();
         acciones.Add(GetComponent<MoverUnidad>());
         acciones.Add(GetComponent<Atacar>());
-        saludMaxima = StageData.SALUD_MAX_GUERRERO;
-        Vida = StageData.SALUD_MAX_GUERRERO;
-        defensaMaxima = StageData.DEFENSA_MAX_GUERRERO;
-        Defensa = StageData.DEFENSA_MAX_GUERRERO;
-        danyo = StageData.ATAQUE_GUERRERO;
+        vision = VISION_GUERRERO;
+        saludMaxima = SALUD_MAX_GUERRERO;
+        Vida = SALUD_MAX_GUERRERO;
+        defensaMaxima = DEFENSA_MAX_GUERRERO;
+        Defensa = DEFENSA_MAX_GUERRERO;
+        danyo = ATAQUE_GUERRERO;
         idUnidad = TipoUnidad.Warrior;
         IdJugador = 2;
     }
@@ -98,7 +97,7 @@ public class IA_Guerrero : Unidad {
         }
 
         //si no atacamos, movemos
-        caminoActual = caminoTotalACapital.GetRange(posActual, acciones[ACCION_ATACAR].Alcance - 1);
+        caminoActual = caminoTotalACapital.GetRange(posActual, ALCANCE_GUERRERO - 1);
 
         //comprobamos a que posiciones podemos movernos
         Vector3 destino = Vector3.zero;

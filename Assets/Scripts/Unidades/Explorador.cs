@@ -4,20 +4,12 @@ using UnityEngine;
 
 public class Explorador : Unidad {
 
-    private int SALUD_MAX_EXPLORADOR = 100;
-    private int VISION_EXPLORADOR = 7;
-    //private int CASILLAS_MOVIMIENTO_EXPLORADOR = 4;
-
-    //ACCIONES DE LA UNIDAD
-    private const int ACCION_MOVER = 0;
-
-
+    const int ACCION_MOVER = 0;
 
 	// Use this for initialization
 	void Awake () {
-        saludMaxima = SALUD_MAX_EXPLORADOR;
-        Vida = SALUD_MAX_EXPLORADOR;
-        vision = VISION_EXPLORADOR;
+        saludMaxima = StageData.SALUD_MAX_EXPLORADOR;
+        Vida = StageData.SALUD_MAX_EXPLORADOR;
         acciones = new List<Accion>();
         acciones.Add(this.GetComponent<MoverUnidad>());
         idUnidad = TipoUnidad.Explorer;

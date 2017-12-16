@@ -9,8 +9,7 @@ public class RolGuerrero : MonoBehaviour {
         Planificacion, Preparacion, Ataque, Retirada
     }
 
-    private int DISTANCIA_PREPARACION_CAPITAL = 5;
-    public const int COSTE_ATACAR = 20;
+    private int DISTANCIA_PREPARACION_CAPITAL = 5;   
     private const int MINIMO_GUERREROS = 3;
 
     private Jugador jug;

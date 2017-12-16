@@ -38,17 +38,48 @@ public class StageData : MonoBehaviour
 
 	public List<GameObject> mapResourceReference;
 
-	/// <summary>
-	/// COSTE DE LAS ACCIONES, CAMBIADLAS COMO OS SALGA DE LAS PELOTAS PERO SOLO AQUI
-	/// </summary>
-	public const int COSTE_PA_CONSTRUIR_RECURSOS = 20;
+    #region COSTES_PA
+    public const int COSTE_PA_CONSTRUIR_RECURSOS = 20;
 	public const int COSTE_PA_CONSTRUIR_TORRE = 20;
 	public const int COSTE_PA_CREAR_ALDEANO = 20;
 	public const int COSTE_PA_CREAR_GUERRERO = 20;
 	public const int COSTE_PA_MOVER_UNIDAD = 20;
 	public const int COSTE_PA_ATACAR = 20;
+    #endregion
 
-	public const int CANTIDAD_RECOLECTADA = 50;
+    #region SALUDES
+    public const int SALUD_MAX_GUERRERO = 100;
+    public const int SALUD_MAX_EXPLORADOR = 100;
+    public const int SALUD_MAX_ALDEANO = 100;
+    public const int SALUD_MAX_TORRE_DEFENSIVA = 100;
+    public const int SALUD_MAX_CAPITAL = 500;
+    public const int SALUD_MAX_RECOLECTOR = 50;
+    #endregion
+
+    #region DEFENSAS
+    public const int DEFENSA_MAX_GUERRERO = 50;
+    public const int DEFENSA_MAX_EXPLORADOR = 20;
+    public const int DEFENSA_MAX_ALDEANO = 20;
+    public const int DEFENSA_MAX_TORRE_DEFENSIVA = 20;
+    public const int DEFENSA_MAX_CAPITAL = 20;
+    public const int DEFENSA_MAX_RECOLECTOR = 20;
+    #endregion
+
+    #region ATAQUES
+    public const int ATAQUE_GUERRERO = 50;
+    public const int ATAQUE_TORRE_DEFENSIVA = 80;
+    #endregion
+
+    #region RECURSOS_INICIALES
+    public const int MADERA_INICIAL = 50;
+    public const int METAL_INICIAL = 80;
+    public const int PIEDRA_INICIAL = 50;
+    public const int COMIDA_INICIAL = 80;
+    #endregion
+
+    public const int ID_JUGADOR_HUMANO = 0;
+
+    public const int CANTIDAD_RECOLECTADA = 50;
 
 	public const int CANTIDAD_RECURSOS_MAPA = 150;
 

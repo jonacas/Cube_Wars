@@ -3,18 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Capital : Unidad {
-
-    private const int SALUD_MAX = 500;
-    private const int DEFENSA_MAX = 100;
-    private const int COMIDA_POR_TURNO = 20;
-
-    int nivel;
-    bool posicionAsignada,primerUpdate;
+       
+    bool posicionAsignada, primerUpdate;
 
     private void Awake()
     {
-        saludMaxima = SALUD_MAX;
-        Vida = SALUD_MAX;
+        saludMaxima = StageData.SALUD_MAX_CAPITAL;
+        Vida = StageData.SALUD_MAX_CAPITAL;
         acciones = new List<Accion>();
         acciones.Add(GetComponent<CrearUnidad>());
     }

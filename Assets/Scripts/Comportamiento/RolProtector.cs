@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RolProtector : MonoBehaviour {
-
-    const int CREAR_UNIDAD_INDEX = 3;
-
+    
     Partida partidaActual;
     int numeroCreaciones;
 
