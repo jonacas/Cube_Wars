@@ -66,7 +66,9 @@ public class MapResource : MonoBehaviour {
 
 	public void SetInfluenceToAllMaps()
 	{
-		stageDataReference.SetInfluenceToNode (Node.stepsInfluenceExplorer, actualNode, numJugadorOcupador,
+		actualNode = stageDataReference.GetNodeFromPosition (this.transform.position);
+
+		stageDataReference.SetInfluenceToNode (3, actualNode, numJugadorOcupador,
 			stageDataReference.grafoTotal);
 
 		/*if (jugadorOcupador != null) {
@@ -74,6 +76,21 @@ public class MapResource : MonoBehaviour {
 				jugadorOcupador.influencias);
 		}*/
 	}
+
+	public void ClearInfluenceToAllMaps()
+	{
+		actualNode = stageDataReference.GetNodeFromPosition (this.transform.position);
+
+		stageDataReference.ClearInfluenceToNode (3, actualNode, numJugadorOcupador,
+			stageDataReference.grafoTotal);
+
+		/*if (jugadorOcupador != null) {
+			stageDataReference.SetInfluenceToNode (Node.stepsInfluenceResource, actualNode, numJugadorOcupador,
+				jugadorOcupador.influencias);
+		}*/
+	}
+
+
 
 	// Update is called once per frame
 	void Update () {
@@ -101,10 +118,10 @@ public class MapResource : MonoBehaviour {
 			this.gameObject.GetComponent<Explorador> ().AccionMover ();
         }*/
 
-		if (Input.GetKeyDown (KeyCode.A)) 
-		{
-			SetInfluenceToAllMaps ();
-		}
+		//if (Input.GetKeyDown (KeyCode.A)) 
+		//{
+		//	SetInfluenceToAllMaps ();
+		//}
 
 
 

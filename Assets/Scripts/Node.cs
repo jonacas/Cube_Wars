@@ -189,28 +189,42 @@ public class Node
 		//for (int i = 0; i < StageData.currentInstance.GetPartidaActual().numJugadores; i++) 
 		for (int i = 0; i < 3; i++)
 		{
-			influencePlayers.Add (new List<int> (1));
+			influencePlayers.Add (new List<int> (1){-1});
 		}
 	}
 				
-	public void SetPlayerInfluence(int player, int influence)
+	public bool SetPlayerInfluence(int player, int influence)
 	{
 		//RECUERDA: LA POSICION 0 ESTÁ RESERVADA A LOS RECURSOS, Y LA POSICION 1 ESTÁ RESERVADA AL JUGADOR HUMANO
 		if (player >= influencePlayers.Count) 
 		{
-			Debug.Log ("INCORRECTO: JUGADOR NO AÑADIDO ANTERIORMENTE");
-			return;
+			//Debug.Log ("INCORRECTO: JUGADOR NO AÑADIDO ANTERIORMENTE");
+			return false;
 		}
 		else
 		{
-			if (player == 0) 
+			/*if (player == 0) 
 			{
 				AddRecourseInfluence (TipoRecurso.AllTypeResource, influence);
 			}
-			if (influencePlayers [player] [0] < influence) 
+			*/
+			//if (influencePlayers [player] [0] < influence) 
+			//{
+			if (influencePlayers [player] [0] == -1)
 			{
+				//Debug.Log ("Metemos en nodo desconocido!!");
 				influencePlayers [player] [0] = influence;
-			}
+				return true;
+			} 
+			else
+			{
+				//Debug.Log ("Metemos en nodo conocido!!");
+				influencePlayers [player] [0]  = influencePlayers [player] [0] + influence;
+				return true;
+			}			
+				
+			//}
+			//return false;
 		}
 	}
 
@@ -248,6 +262,7 @@ public class Node
 		
 	//Usa esto para limpiar una influencia específica de un jugador, en este nodo.
 
+	//ARREGLAR
 	public void AddRecourseInfluence(TipoRecurso recourseType, int influence)
 	{
 		//Hay tipo, miramos de encontrar el máximo.

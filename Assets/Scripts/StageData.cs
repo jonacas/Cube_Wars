@@ -34,6 +34,7 @@ public class StageData : MonoBehaviour
     public CreacionGrafo CG;
     public TipoUnidad unidadACrear;
 
+	public List<MapResource> testResourceList;
 
 
 	/// <summary>
@@ -407,7 +408,7 @@ public class StageData : MonoBehaviour
 		int steps1 = (int) numberOfStepsCuadratic / 2;
 		int stepsDif = numberOfStepsCuadratic - steps1;
 
-		center.SetPlayerInfluence (player, numberOfSteps);
+		//center.SetPlayerInfluence (player, numberOfSteps);
 		//Debug.Log ("peso en" + " x: " + 0 + " , " + "y: " + 0 + "==>" +  (numberOfSteps) );
 
 		for (int i = -steps1; i < stepsDif; i++) 
@@ -431,14 +432,12 @@ public class StageData : MonoBehaviour
 					if (difX <= difY) 
 					{
 						grafo [posX, posY].SetPlayerInfluence (player, numberOfSteps - difY);
-				//		Instantiate (testCasillaMarcada, grafo [posX, posY].position, Quaternion.identity);
-				//		Debug.Log ("peso en" + " x: " + difX + " , " + "y: " + difY + "==>" +  (numberOfSteps - difY) );
+						//Debug.Log ("peso en" + " x: " + difX + " , " + "y: " + difY + "==>" +  grafo[posX, posY].GetPlayerInfluence(player));
 					}
 					else 
 					{
 						grafo [posX, posY].SetPlayerInfluence (player, numberOfSteps - difX);
-				//		Instantiate (testCasillaMarcada, grafo [posX, posY].position, Quaternion.identity);
-				//		Debug.Log ("peso en" + " x: " + difX + " , " + "y: " + difY + "==>" +  (numberOfSteps - difX) );
+						//Debug.Log ("peso en" + " x: " + difX + " , " + "y: " + difY + "==>" +  grafo[posX, posY].GetPlayerInfluence(player));
 					}
 				}
 			}
@@ -477,13 +476,53 @@ public class StageData : MonoBehaviour
 					int difY = (int)Mathf.Abs (center.col - posY);
 					if (numberOfSteps - difY == 0 || numberOfSteps - difX == 0) {continue;	}
 
-						grafo [posX, posY].ClearPlayerInfluence (player);
-						//		Instantiate (testCasillaMarcada, grafo [posX, posY].position, Quaternion.identity);
-						//		Debug.Log ("peso en" + " x: " + difX + " , " + "y: " + difY + "==>" +  (numberOfSteps - difY) 
+					grafo [posX, posY].ClearPlayerInfluence (player);
+					//		Instantiate (testCasillaMarcada, grafo [posX, posY].position, Quaternion.identity);
+					//		Debug.Log ("peso en" + " x: " + difX + " , " + "y: " + difY + "==>" +  (numberOfSteps - difY) 
 				}
 			}
 		}
 	}
+
+	public void ClearAllResourceInfluence()
+	{
+		for (int i = 0; i < testResourceList.Count; i++) 
+		{
+			testResourceList [i].ClearInfluenceToAllMaps();
+		}
+	}
+	public void SetAllResourceInfluence()
+	{
+		for (int i = 0; i < testResourceList.Count; i++) 
+		{
+			testResourceList [i].SetInfluenceToAllMaps ();
+		}
+
+		foreach (Node n in grafoTotal) 
+		{
+			if (n.GetPlayerInfluence(0) != -1) 
+			{
+				GameObject nuevo = Instantiate (testCasillaMarcada,  grafoTotal [n.fil, n.col].position, Quaternion.identity);
+				if (nuevo.GetComponent<TextMesh> () != null) 
+				{
+					nuevo.GetComponent<TextMesh> ().text = (n.GetPlayerInfluence(0)).ToString();
+				}
+			}
+		}
+	}
+
+	void Update()
+	{
+		if (Input.GetKeyDown (KeyCode.A)) 
+		{
+			SetAllResourceInfluence ();
+		}
+		if (Input.GetKeyDown (KeyCode.C)) 
+		{
+			ClearAllResourceInfluence ();
+		}
+	}
+
 
     public void LimpiarGrafo(Node[,] nodeMap)
     {
