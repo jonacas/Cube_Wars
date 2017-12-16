@@ -13,6 +13,7 @@ public class JugadorHumano : Jugador {
 
     public override void Turno()
     {
+        GameObject.Find("IngameHudParent").GetComponent<IngameInterfaceManager>().MakeInteractable();
         turnoAcabado = false;
     }
 

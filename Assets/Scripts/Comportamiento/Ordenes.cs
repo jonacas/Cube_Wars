@@ -138,4 +138,9 @@ public struct Ordenes
         return or;
     }
 
+        public float GetOrdenExploracion()
+        {
+            return exploracion;
+        }
+
 }

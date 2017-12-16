@@ -146,8 +146,8 @@ public class Node
 
 		influencePlayers = new List<List<int>> ();
 		currentResources = new List<TipoRecurso> (1);
-	
 
+        AddAllPlayersToInfluences();
     }
 
     public void SetVecinos(Node[] vecinos)

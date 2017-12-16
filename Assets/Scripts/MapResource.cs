@@ -68,8 +68,7 @@ public class MapResource : MonoBehaviour {
 	{
 		actualNode = stageDataReference.GetNodeFromPosition (this.transform.position);
 
-		stageDataReference.SetInfluenceToNode (3, actualNode, numJugadorOcupador,
-			stageDataReference.grafoTotal);
+        stageDataReference.SetInfluenceToNode(3, actualNode, numJugadorOcupador);
 
 		/*if (jugadorOcupador != null) {
 			stageDataReference.SetInfluenceToNode (Node.stepsInfluenceResource, actualNode, numJugadorOcupador,

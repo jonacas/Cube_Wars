@@ -6,6 +6,7 @@ public class Partida : MonoBehaviour{
 
     public int numJugadores;
 
+    private bool victoria;
 
     int turnos; //turnos totales de la partida
     public int GetTurnos()
@@ -38,6 +39,7 @@ public class Partida : MonoBehaviour{
 
     void empezarPartida()
     {
+        turnos = 0;
         //cargarEscenario()
         crearJugadores();
 
@@ -63,13 +65,17 @@ public class Partida : MonoBehaviour{
             if (i == 0)
             {
                 jugadores[i] = GameObject.Find("Jugador0").GetComponent<JugadorHumano>();
+                jugadores[i].Crearjugador(i, capis[i]);
             }
             //se crean los personajes controlados por la IA
             else
+            {
+                print("CREACION jugadorIA");
                 jugadores[i] = GameObject.Find("Jugador" + i).GetComponent<JugadorIA>();
-
-            jugadores[i].Crearjugador(i, capis[i]);
-
+                JugadorIA IA = (JugadorIA)jugadores[i];
+                IA.CrearJugadorIA(i, capis[i]);
+            }
+            jugadores[i].idJugador = i;
             //activamos capitales
             capis[i].gameObject.SetActive(true);
             capis[i].IdJugador = i;
@@ -78,22 +84,24 @@ public class Partida : MonoBehaviour{
 
     IEnumerator BucleDeJuego()
     {
-
-        for (int i = 0; i < numJugadores; i++)
+        print("COMIENZA BUCLE DEL JUEGO");
+        while (!victoria)
         {
-            jugadores[i].Turno();
+            for (int i = 0; i < numJugadores; i++)
+            {
+                print("COMIENZA EL TURNO DEL " + i);
+                jugadores[i].Turno();
 
-            while(!jugadores[i].HaAcabadoTurno())
-                yield return null;
+                while (!jugadores[i].HaAcabadoTurno())
+                    yield return null;
 
-            print("TURNO TERMINADO");
+                print("TURNO TERMINADO");
+            }
+            yield return null;
         }
-
-        yield return null;
-
     }
 
-    public bool DescativarJugadorYComprobarVictoria(int jugador)
+    public void DescativarJugadorYComprobarVictoria(int jugador)
     {
         //desactivamos jugador
         jugadores[jugador].CapitalDestruida();
@@ -107,16 +115,18 @@ public class Partida : MonoBehaviour{
                 ganador = j;
                 //y no habia detectado otro antes, indica que ya ha detectado un jugador
                 if (!jugadorDetectado)
+                {
                     jugadorDetectado = true;
+                    ganador = j;
+                }
                 //si ya habia detectado un jugador antes, no hay victoria
                 else
                 {
                     ganador = null;
-                    return false;
                 }
             }
-        }        
-        return true;
+        }
+        victoria = true;
     }
 
 }

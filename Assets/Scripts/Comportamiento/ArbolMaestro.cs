@@ -79,10 +79,11 @@ public class ArbolMaestro {
         {
             seleccion = Random.Range(0, aux.Count);
             personalidad.Add(aux[seleccion]);
-            aux.Remove(seleccion);
+            aux.Remove(aux[seleccion]);
         }
 
         jug = jugador;
+        recursosConocidos = 0;
     }
 
     /// <summary>
@@ -219,15 +220,15 @@ public class ArbolMaestro {
             asignacion += GlobalData.COSTE_PA_CREACION_EXPLORADOR;
         }
 
-        if (recursosConocidos >= 5 && capitalesConocidas == partidaActual.numJugadores)
+        if (recursosConocidos <= 5)
         {
-            puntosDisponibles -= StageData.COSTE_PA_MOVER_UNIDAD * ((5 - recursosConocidos) + (partidaActual.numJugadores - capitalesConocidas));
-            asignacion += StageData.COSTE_PA_MOVER_UNIDAD * ((5 - recursosConocidos) + (partidaActual.numJugadores - capitalesConocidas));
+            puntosDisponibles -= StageData.COSTE_PA_MOVER_UNIDAD * (5 - recursosConocidos);
+            asignacion += StageData.COSTE_PA_MOVER_UNIDAD * (5 - recursosConocidos);
         }
 
         //ajuste de la asignacion, la exploracion no debe superar el 50% despues del segundo turno
-        float definitivo = asignacion / (float)puntosAccionIniciales;
-        if (partidaActual.GetTurnos() < 2)
+        float definitivo = asignacion;// / (float)puntosAccionIniciales;
+       /* if (partidaActual.GetTurnos() < 2)
         {
             if (definitivo > 1)
                 definitivo = 1f;
@@ -236,7 +237,7 @@ public class ArbolMaestro {
         {
             if (definitivo > 0.5f)
                 definitivo = 0.5f;
-        }
+        }*/
         return definitivo;
     }
 
@@ -299,8 +300,11 @@ public class ArbolMaestro {
         {
             for (int j = 0; j < StageData.currentInstance.CG.columnas; j++)
             {
-                //for (int k = 0; k < partidaActual.numJugadores; k++) //se suma la influencia en el nodo del jugador
-                    //influenciasJugadores[k] += jug.influencias[i, j].GetMaxInfluenceFromPlayer(k);
+                for (int k = 0; k < partidaActual.numJugadores; k++)
+                {//se suma la influencia en el nodo del jugador
+                    if(jug.influencias[i, j].GetPlayerInfluence(k) != -1)
+                        influenciasJugadores[k] += jug.influencias[i, j].GetPlayerInfluence(k);
+                }
                 //acceder a unidad y si es un guerrero sumarlo al array
             }
         }
@@ -315,7 +319,8 @@ public class ArbolMaestro {
         {
             if (k == jug.idJugador)
                 continue;
-            aux = (guerrerosEnemigo[k] * 2 / guerrerosEnemigo[jug.idJugador]) / ((float)influenciasJugadores[k] / (float)influenciasJugadores[jug.idJugador]);
+
+            aux = (guerrerosEnemigo[k] * 2 / (guerrerosEnemigo[jug.idJugador] + 1)) / (((float)influenciasJugadores[k] / (float)influenciasJugadores[jug.idJugador]));
             if (debilidad > aux)
             {
                 debilidad = aux;

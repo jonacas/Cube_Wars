@@ -485,4 +485,13 @@ public class IngameInterfaceManager : MonoBehaviour {
         interactable = true;
     }
 
+    public void MakeInteractable()
+    {
+        StopCoroutine("HideEndTurnButton");
+        //print("ColcandoBotonEndTurn");
+        interactable = true;
+        endTurnButton.transform.localPosition = initPos_endTurnButton;
+        //endTurnButton.transform.localPosition = new Vector3(endTurnButton.transform.localPosition.x, endTurnButton.transform.localPosition.y + 150, endTurnButton.transform.localPosition.z);
+    }
+
 }

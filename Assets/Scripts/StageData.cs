@@ -399,7 +399,7 @@ public class StageData : MonoBehaviour
 
 
 	//USA ESTA FUNCION PARA SETTEAR LA INFLUENCIA DESDE EL CENTRO DEL NODO, PARA UN JUGADOR.
-	public void SetInfluenceToNode(int numberOfSteps, Node center, int player, Node[,] grafo)
+	public void SetInfluenceToNode(int numberOfSteps, Node center, int player)
 	{
 		int posX;
 		int posY;
@@ -407,6 +407,8 @@ public class StageData : MonoBehaviour
 		int numberOfStepsCuadratic = (numberOfSteps * 2 + 1);
 		int steps1 = (int) numberOfStepsCuadratic / 2;
 		int stepsDif = numberOfStepsCuadratic - steps1;
+
+        Node[,] grafo = StageData.currentInstance.grafoTotal;
 
 		//center.SetPlayerInfluence (player, numberOfSteps);
 		//Debug.Log ("peso en" + " x: " + 0 + " , " + "y: " + 0 + "==>" +  (numberOfSteps) );

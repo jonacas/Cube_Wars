@@ -15,9 +15,11 @@ public class JugadorIA : Jugador {
 
     public void CrearJugadorIA(int id, Unidad capi)
     {
+        //print("CREACION  funcion crearJugadorIA");
         Crearjugador(id, capi);
 
         arbol = new ArbolMaestro(this);
+        //print("CREACION  creadoArbolMaestro");
 
         rolExplo = this.GetComponent<RolExplorador>();
         rolGuerr = this.GetComponent<RolGuerrero>();
@@ -28,5 +30,11 @@ public class JugadorIA : Jugador {
 
     public override void Turno()
     {
+        print("TURNO DE " + idJugador);
+        Ordenes reparto = arbol.AsignarRecursos();
+        turnoAcabado = true;
+
+        print("ORDEN JUGADOR " + idJugador + ": Ataque-" + reparto.GetOrdenAtaque() + ": Defensa-" + reparto.GetOrdenDefensa() + ": Recoleccion-" + reparto.GetOrdenRecoleccion() + ": Exploracion-" + reparto.GetOrdenExploracion());
+
     }
 }
