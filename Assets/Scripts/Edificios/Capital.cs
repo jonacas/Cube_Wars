@@ -30,10 +30,7 @@ public class Capital : Unidad {
             primerUpdate = true;
         }
 
-        Nodo = StageData.currentInstance.GetNodeFromPosition(transform.position);
-        Nodo.unidad = this;
-
-        if (Input.GetKeyDown(KeyCode.Space))
+       /* if (Input.GetKeyDown(KeyCode.Space))
         {
             List<Node> destinos = Control.GetNodosAlAlcance(this.Nodo, 2);
             CrearUnidad cr = (CrearUnidad)acciones[0];
@@ -46,18 +43,20 @@ public class Capital : Unidad {
                     break;
                 }
             }
-        }
+        }*/
     }
 
     public override bool RecibirAtaque(int danoBruto)
     {
- 	    bool destruido = base.RecibirAtaque(danoBruto);
+        bool destruido = base.RecibirAtaque(danoBruto);
 
         //codigo para informar de destruccion de capital
         if (destruido)
-            Partida.GetPartidaActual().DescativarJugadorYComprobarVictoria(IdJugador);
+            StageData.currentInstance.GetPartidaActual().DescativarJugadorYComprobarVictoria(this.IdJugador);
         return destruido;
     }
+
+
 
     public void llenarListaAcciones()
     {

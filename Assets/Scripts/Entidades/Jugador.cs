@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Jugador
+public abstract class Jugador : MonoBehaviour
 {
 
     #region CONSTANTES
@@ -22,6 +22,8 @@ public abstract class Jugador
 	public int IndexPlayerObjetivoActual;
 
     public RolGuerrero rolGuerrero;
+
+    protected bool turnoAcabado;
 
 	Unidad capital = null;
 	public Unidad Capital {
@@ -90,15 +92,15 @@ public abstract class Jugador
     //mapa influencias del jugador
     public Node[,] influencias;
 
-    public Jugador(int id, Unidad capital)
+    public void Crearjugador(int id, Unidad capital)
     {
         idJugador = id;
 
         if (id == ID_JUGADOR_HUMANO)
         {
-            madera = MADERA_INICIAL * (GlobalData.MAX_DIFICULTAD - GlobalData.DIFICULTAD);
-            metal = METAL_INICIAL * (GlobalData.MAX_DIFICULTAD - GlobalData.DIFICULTAD);
-            piedra = PIEDRA_INICIAL * (GlobalData.MAX_DIFICULTAD - GlobalData.DIFICULTAD);
+            madera = MADERA_INICIAL * (GlobalData.MAX_DIFICULTAD +1 - GlobalData.DIFICULTAD);
+            metal = METAL_INICIAL * (GlobalData.MAX_DIFICULTAD +1 - GlobalData.DIFICULTAD);
+            piedra = PIEDRA_INICIAL * (GlobalData.MAX_DIFICULTAD +1 - GlobalData.DIFICULTAD);
             comida = COMIDA_INICIAL * (GlobalData.MAX_DIFICULTAD + 1 - (GlobalData.DIFICULTAD)); //para evitar que sea 0
         }
 
@@ -180,7 +182,7 @@ public abstract class Jugador
         }
     }
 
-    public abstract void Turno(ref bool turnoFinalizado);
+    public abstract void Turno();
 
 
     /// <summary>
@@ -228,4 +230,14 @@ public abstract class Jugador
 		ANTES DE SETTEAR NADA, DEBEMOS AÑADIR EL NUMERO DE JUGADORES A LA PARTIDA USANDO 		ADDPLAYERTOINFLUENCES();
 		ESTA LLAMADA SE ESTA HACIENDO ACTUALMENTE EN CREACIONGRAFO.CS
 	*/
+
+    public void TerminarTurno()
+    {
+        turnoAcabado = true;
+    }
+
+    public bool HaAcabadoTurno()
+    {
+        return turnoAcabado;
+    }
 }

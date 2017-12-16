@@ -11,6 +11,8 @@ public enum HUDState
 
 public class IngameInterfaceManager : MonoBehaviour {
 
+
+    public GameObject endTurnButton;
     [Header("Unit Panels Parent")]
     public Transform unitPanels_Parent;
     [Header("Unit Info Panel")]
@@ -60,6 +62,8 @@ public class IngameInterfaceManager : MonoBehaviour {
     private Vector3 initPos_unitActions_panel;
     private Vector3 initPos_buildUnit_panel;
 
+    private Vector3 initPos_endTurnButton;
+
 
     private Vector3 initPos_cityInfo;
 	private Vector3 initPos_buildingInfo;
@@ -68,6 +72,8 @@ public class IngameInterfaceManager : MonoBehaviour {
 	public UnitNamePanel unitPanelSelected;
 
 	public static IngameInterfaceManager currentInstance;
+
+    private bool interactable;
 
 	void Awake()
 	{
@@ -81,6 +87,8 @@ public class IngameInterfaceManager : MonoBehaviour {
         unitActions_create_warriord.SetActive(false);
         unitActions_create_explorer.SetActive(false);
         unitActions_create_villager.SetActive(false);
+
+        StartTurn();
 	}
 
 	void Update()
@@ -108,49 +116,57 @@ public class IngameInterfaceManager : MonoBehaviour {
 		initPos_buildingInfo = CG_buildingInfo.transform.localPosition;
 
         initPos_buildUnit_panel = createUnits_panel.transform.localPosition;
+
+        initPos_endTurnButton = endTurnButton.transform.localPosition;
 	}
+
     void OpenActionInProgress(ActionInProgressMode mode)
     {
-        if (currentHudState != HUDState.unitSelected)
-            return;
-        if (animationInProgress)
-            return;
-        StopCoroutine("OpenAnim_actionInProgress");
-        StartCoroutine("OpenAnim_actionInProgress");
-        switch (mode)
+        if (interactable)
         {
-            case ActionInProgressMode.move:
-                {
-                    actionInProgress_info.text = "Select a destination";
-                    break;
-                }
-            case ActionInProgressMode.attack:
-                {
-                    actionInProgress_info.text = "Select a target";
-                    break;
-                }
-            case ActionInProgressMode.build:
-                {
-                    actionInProgress_info.text = "Select a place to build";
-                    break;
-                }
-            case ActionInProgressMode.gather:
-                {
-                    actionInProgress_info.text = "Select a resource";
-                    break;
-                }
-            case ActionInProgressMode.create:
-                {
-                    actionInProgress_info.text = "Select where to create unit";
-                    break;
-                }
+            if (currentHudState != HUDState.unitSelected)
+                return;
+            if (animationInProgress)
+                return;
+            StopCoroutine("OpenAnim_actionInProgress");
+            StartCoroutine("OpenAnim_actionInProgress");
+            switch (mode)
+            {
+                case ActionInProgressMode.move:
+                    {
+                        actionInProgress_info.text = "Select a destination";
+                        break;
+                    }
+                case ActionInProgressMode.attack:
+                    {
+                        actionInProgress_info.text = "Select a target";
+                        break;
+                    }
+                case ActionInProgressMode.build:
+                    {
+                        actionInProgress_info.text = "Select a place to build";
+                        break;
+                    }
+                case ActionInProgressMode.gather:
+                    {
+                        actionInProgress_info.text = "Select a resource";
+                        break;
+                    }
+                case ActionInProgressMode.create:
+                    {
+                        actionInProgress_info.text = "Select where to create unit";
+                        break;
+                    }
+            }
+            currentHudState = HUDState.actionSelected;
+            //print(currentHudState);
+            StopCoroutine("CloseAnim_unitInfo");
+            StartCoroutine("CloseAnim_unitInfo");
         }
-        currentHudState = HUDState.actionSelected;
-        //print(currentHudState);
-        StopCoroutine("CloseAnim_unitInfo");
-        StartCoroutine("CloseAnim_unitInfo");
     }
 
+
+    #region BUTTON HANDLERS
     // Si no se hace asi, no se puede referenciar la accion del script al boton desde el inspector, hashtag unity
     public void OnButtonClick_Create()
     {
@@ -208,6 +224,22 @@ public class IngameInterfaceManager : MonoBehaviour {
     public void OnButtonClick_Gather() { OpenActionInProgress(ActionInProgressMode.gather); }
     // En serio que cojones colega.
 
+    public void OnButtonClick_EndTurn()
+    {
+        JugadorHumano huma = (JugadorHumano)StageData.currentInstance.GetPartidaActual().Jugadores[GlobalData.JUGADOR_HUMANO];
+        huma.TerminarTurno();
+        StartCoroutine("CloseAnim_actionInProgress");
+        StartCoroutine("CloseAnim_unitInfo");
+        StartCoroutine("HideCreateUnitButtons");
+        StartCoroutine("HideEndTurnButton");
+        interactable = false;
+    }
+
+    #endregion
+
+
+
+
     public void CloseActionInProgress()
     {
         if (currentHudState != HUDState.actionSelected)
@@ -223,16 +255,19 @@ public class IngameInterfaceManager : MonoBehaviour {
     }
 	public void OpenUnitInfo(UnitNamePanel UNP)
 	{
-        if (!(currentHudState == HUDState.nothingSelected || currentHudState == HUDState.unitSelected))
-            return;
-        if (unitPanelSelected != null)
+        if (interactable)
         {
-            unitPanelSelected.DeSelect();
+            if (!(currentHudState == HUDState.nothingSelected || currentHudState == HUDState.unitSelected))
+                return;
+            if (unitPanelSelected != null)
+            {
+                unitPanelSelected.DeSelect();
+            }
+            unitPanelSelected = UNP;
+            UpdateUnitDisplayedInfo();
+            StartCoroutine("OpenAnim_unitInfo");
+            StopCoroutine("CloseAnim_unitInfo");
         }
-		unitPanelSelected = UNP;
-        UpdateUnitDisplayedInfo();
-		StartCoroutine ("OpenAnim_unitInfo");
-		StopCoroutine ("CloseAnim_unitInfo");
 	}
 	public void CloseUnitInfo()
 	{
@@ -271,34 +306,40 @@ public class IngameInterfaceManager : MonoBehaviour {
 
 	IEnumerator OpenAnim_unitInfo()
 	{
-		unitPanel_CG.gameObject.SetActive (true);
-        unitActions_CG.gameObject.SetActive(true);
-        highlightFlash.alpha = 0;
-        highlightFlash.transform.localScale = Vector3.one;
-        StopCoroutine("UnitCommandsHighlightFlash");
-        StartCoroutine("UnitCommandsHighlightFlash");
+        if (interactable)
+        {
+            unitPanel_CG.gameObject.SetActive(true);
+            unitActions_CG.gameObject.SetActive(true);
+            highlightFlash.alpha = 0;
+            highlightFlash.transform.localScale = Vector3.one;
+            StopCoroutine("UnitCommandsHighlightFlash");
+            StartCoroutine("UnitCommandsHighlightFlash");
 
-        currentHudState = HUDState.unitSelected;
-        animationInProgress = true;
+            currentHudState = HUDState.unitSelected;
+            animationInProgress = true;
 
-        float t = 0;
-		float animSpeed = 6f;
+            float t = 0;
+            float animSpeed = 6f;
 
-		while (t < 1) {
-			t = Mathf.MoveTowards (t, 1, Time.deltaTime * animSpeed * ((1-t) + 0.05f));
-			unitPanel_CG.alpha = t;
-			unitPanel_ColouredDeco.transform.localPosition = initPos_unitInfo_colouredDeco + Vector3.left * 100f * (1-t);
-			unitPanel_NameShade.transform.localRotation = Quaternion.Euler (0, 0, ((1 - t) * 100) + 45);
-			unitPanel_NameShade.transform.localPosition = initPos_unitInfo_nameShade + Vector3.left * 400f * (1 - t);
-			unitPanel_ColouredDeco.transform.localRotation = Quaternion.Euler (0, 0, (1 - t) * 600);
+            while (t < 1)
+            {
+                t = Mathf.MoveTowards(t, 1, Time.deltaTime * animSpeed * ((1 - t) + 0.05f));
+                unitPanel_CG.alpha = t;
+                unitPanel_ColouredDeco.transform.localPosition = initPos_unitInfo_colouredDeco + Vector3.left * 100f * (1 - t);
+                unitPanel_NameShade.transform.localRotation = Quaternion.Euler(0, 0, ((1 - t) * 100) + 45);
+                unitPanel_NameShade.transform.localPosition = initPos_unitInfo_nameShade + Vector3.left * 400f * (1 - t);
+                unitPanel_ColouredDeco.transform.localRotation = Quaternion.Euler(0, 0, (1 - t) * 600);
 
-            unitActions_CG.alpha = t;
-            unitActions_Name.transform.localPosition = initPos_unitActions_name + Vector3.down * 400 * (1 - t);
-            unitActions_Panel.transform.localPosition = initPos_unitActions_panel + Vector3.right * 200 * (1 - t);
-            yield return null;
-		}
-		animationInProgress = false;
+                unitActions_CG.alpha = t;
+                unitActions_Name.transform.localPosition = initPos_unitActions_name + Vector3.down * 400 * (1 - t);
+                unitActions_Panel.transform.localPosition = initPos_unitActions_panel + Vector3.right * 200 * (1 - t);
+                yield return null;
+            }
+            animationInProgress = false;
+        }
 	}
+
+
 	IEnumerator CloseAnim_unitInfo()
     {
         highlightFlash.alpha = 0;
@@ -356,20 +397,25 @@ public class IngameInterfaceManager : MonoBehaviour {
 	}
     IEnumerator OpenAnim_actionInProgress()
     {
-        animationInProgress = true;
-        float t = 0;
-        float animSpeed = 4f;
-        while (t < 1)
+        if (interactable)
         {
-            t = Mathf.MoveTowards(t, 1, Time.deltaTime * animSpeed);
-            actionInProgress_CG.alpha = t;
-            actionInProgress_panel.transform.localScale = new Vector3(1, t, 1);
-            yield return null;
+            animationInProgress = true;
+            float t = 0;
+            float animSpeed = 4f;
+            while (t < 1)
+            {
+                t = Mathf.MoveTowards(t, 1, Time.deltaTime * animSpeed);
+                actionInProgress_CG.alpha = t;
+                actionInProgress_panel.transform.localScale = new Vector3(1, t, 1);
+                yield return null;
+            }
+            actionInProgress_highlight.alpha = 0;
+            StartCoroutine("ActionInProgressHighlightAnimation");
+            animationInProgress = false;
         }
-        actionInProgress_highlight.alpha = 0;
-        StartCoroutine("ActionInProgressHighlightAnimation");
-        animationInProgress = false;
     }
+
+
     IEnumerator CloseAnim_actionInProgress()
     {
         StopCoroutine("ActionInProgressHighlightAnimation");
@@ -418,6 +464,25 @@ public class IngameInterfaceManager : MonoBehaviour {
         unitActions_create_warriord.SetActive(false);
         unitActions_create_explorer.SetActive(false);
         unitActions_create_villager.SetActive(false);
+    }
+
+    IEnumerator HideEndTurnButton()
+    {
+        float t = 1;
+        float animSpeed = 6f;
+
+        while (t > 0)
+        {
+            t = Mathf.MoveTowards(t, 0, Time.deltaTime * animSpeed * ((1 - t) + 0.05f));
+            endTurnButton.transform.localPosition = initPos_endTurnButton + Vector3.down * 200 * (1 - t);
+            yield return null;
+        }
+
+    }
+
+    public void StartTurn()
+    {
+        interactable = true;
     }
 
 }

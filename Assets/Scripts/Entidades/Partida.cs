@@ -6,7 +6,6 @@ public class Partida : MonoBehaviour{
 
     public int numJugadores;
 
-    private static Partida partidaActual;
 
     int turnos; //turnos totales de la partida
     public int GetTurnos()
@@ -31,12 +30,11 @@ public class Partida : MonoBehaviour{
 
     
 
-    void Awake()
+    void Start()
     {
-        partidaActual = this;
+        StageData.currentInstance.SetPartidaActual(this);
         empezarPartida();
     }
-
 
     void empezarPartida()
     {
@@ -49,35 +47,49 @@ public class Partida : MonoBehaviour{
 
     private void crearJugadores()
     {
+        //se cogen las capitales
+        List<Unidad> capis = new List<Unidad>();
+        foreach (Transform child in GameObject.Find("Capitales").transform)
+        {
+            capis.Add(child.GetComponent<Unidad>());
+            child.gameObject.SetActive(false);
+        }
+
+
         jugadores = new Jugador[numJugadores];
         for (int i = 0; i < numJugadores; i++)
         {
-            //FALTA CODIGO DE CREAR CAPITAL
-
-            //se instancia un gaeobject Capital
+            //se crea el peronaje controlado por el jugador
             if (i == 0)
             {
-            }
-            //se crea el peronaje controlado por el jugador
-            else
-            {
+                jugadores[i] = GameObject.Find("Jugador0").GetComponent<JugadorHumano>();
             }
             //se crean los personajes controlados por la IA
+            else
+                jugadores[i] = GameObject.Find("Jugador" + i).GetComponent<JugadorIA>();
 
+            jugadores[i].Crearjugador(i, capis[i]);
+
+            //activamos capitales
+            capis[i].gameObject.SetActive(true);
+            capis[i].IdJugador = i;
         }
     }
 
     IEnumerator BucleDeJuego()
     {
-        bool turnofinalizado = false;
 
         for (int i = 0; i < numJugadores; i++)
         {
-            jugadores[i].Turno(ref turnofinalizado);
+            jugadores[i].Turno();
 
-            while(!turnofinalizado)
+            while(!jugadores[i].HaAcabadoTurno())
                 yield return null;
+
+            print("TURNO TERMINADO");
         }
+
+        yield return null;
 
     }
 
@@ -105,12 +117,6 @@ public class Partida : MonoBehaviour{
             }
         }        
         return true;
-    }
-
-    public static Partida GetPartidaActual()
-    {
-        return partidaActual;
-
     }
 
 }

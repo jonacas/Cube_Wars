@@ -66,7 +66,7 @@ public class ArbolMaestro {
     /// Constructor
     /// </summary>
     /// <param name="jugador">REFERENCIA al jugador que controla</param>
-    public ArbolMaestro(ref Jugador jugador)
+    public ArbolMaestro(Jugador jugador)
     {
         List<int> aux = new List<int> { 2, 3, 4 };
         personalidad = new List<int> { 0, 1};

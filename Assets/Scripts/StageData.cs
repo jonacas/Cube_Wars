@@ -499,4 +499,9 @@ public class StageData : MonoBehaviour
     {
         return partidaActual;
     }
+
+    public void SetPartidaActual(Partida par)
+    {
+        partidaActual = par;
+    }
 }

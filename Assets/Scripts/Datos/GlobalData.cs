@@ -5,6 +5,8 @@ using UnityEngine;
 public static class GlobalData
 {
 
+    public const int JUGADOR_HUMANO = 0;
+
     public const int DIFICULTAD = 1;
     public const int MAX_DIFICULTAD = 5;
 
