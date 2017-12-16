@@ -24,7 +24,7 @@ public abstract class Jugador : MonoBehaviour
 
  //unidad que hay que destruir para ganar la partida
 
-    int puntosDeAccion;
+    protected int puntosDeAccion;
     public int PuntosDeAccion
     {
         get { return puntosDeAccion; }

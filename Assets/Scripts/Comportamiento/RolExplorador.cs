@@ -9,14 +9,18 @@ public class RolExplorador : MonoBehaviour {
 
 	Partida partidaActual;
     bool exploradoresSuficientes, coroutineActive;
+    List<Vector3> caminoANodoDestino;
+    bool fin;
+    int puntosAsignado;
 
 	void Start()
 	{
 		partidaActual = StageData.currentInstance.GetPartidaActual ();
 	}
 
-	public bool ComenzarTurno(int puntosAsignados)
+	public bool ComenzarTurno(int puntosAsignadosDesdeFuera)
 	{
+        puntosAsignado = puntosAsignadosDesdeFuera;
         exploradoresSuficientes = partidaActual.JugadorActual.Exploradores < 3;
         if (!exploradoresSuficientes)
             StartCoroutine("CrearExplorador");
@@ -29,7 +33,16 @@ public class RolExplorador : MonoBehaviour {
 
     private void MoverExploradores()
     {
-        
+        Node objetivo = GetObjetivoExplorador();
+        List<Unidad> exploradores = StageData.currentInstance.GetPartidaActual().JugadorActual.unidadesDisponibles;
+        for (int i = exploradores.Count; i >= 0; i--)
+            if (exploradores[i].IdUnidad != TipoUnidad.Explorer)
+                exploradores.Remove(exploradores[i]);
+        int puntosPorExplorador = puntosAsignado / exploradores.Count;
+        foreach (IA_Explorador expl in exploradores)
+        {
+            expl.AvanzarHaciaDestino(ref puntosPorExplorador);
+        }
     }
 
     IEnumerator CrearExplorador()

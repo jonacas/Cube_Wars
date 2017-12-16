@@ -31,16 +31,35 @@ public class CrearUnidad : Accion
         
         if (NodosAlAlcance.Contains(destino))
         {
+            GameObject gameObjectUnidad;
             switch (tipo)
             {
                 case TipoUnidad.Warrior:
-                    SetUnidadANodoYViceversa(Instantiate(StageData.currentInstance.WarriorPrefab, destino.position, StageData.currentInstance.WarriorPrefab.transform.rotation).GetComponent<Unidad>());                    
+                    gameObjectUnidad = Instantiate(StageData.currentInstance.WarriorPrefab, destino.position, StageData.currentInstance.WarriorPrefab.transform.rotation);
+                    if (StageData.currentInstance.GetPartidaActual().JugadorActual.idJugador != StageData.ID_JUGADOR_HUMANO)
+                    {
+                        Destroy(gameObjectUnidad.GetComponent<Unidad>());
+                        gameObjectUnidad.AddComponent<IA_Guerrero>();
+                    }
+                    SetUnidadANodoYViceversa(gameObjectUnidad.GetComponent<Unidad>());                    
                     break;
                 case TipoUnidad.Worker:
-                    SetUnidadANodoYViceversa(Instantiate(StageData.currentInstance.WorkerPrefab, destino.position, StageData.currentInstance.WorkerPrefab.transform.rotation).GetComponent<Unidad>());                   
+                    gameObjectUnidad = Instantiate(StageData.currentInstance.WorkerPrefab, destino.position, StageData.currentInstance.WorkerPrefab.transform.rotation);
+                    if (StageData.currentInstance.GetPartidaActual().JugadorActual.idJugador != StageData.ID_JUGADOR_HUMANO)
+                    {
+                        Destroy(gameObjectUnidad.GetComponent<Unidad>());
+                        gameObjectUnidad.AddComponent<IA_Aldeano>();
+                    }
+                    SetUnidadANodoYViceversa(gameObjectUnidad.GetComponent<Unidad>());                   
                     break;
                 case TipoUnidad.Explorer:
-                    SetUnidadANodoYViceversa(Instantiate(StageData.currentInstance.ExplorerPrefab, destino.position, StageData.currentInstance.ExplorerPrefab.transform.rotation).GetComponent<Unidad>());
+                    gameObjectUnidad = Instantiate(StageData.currentInstance.ExplorerPrefab, destino.position, StageData.currentInstance.ExplorerPrefab.transform.rotation);
+                    if (StageData.currentInstance.GetPartidaActual().JugadorActual.idJugador != StageData.ID_JUGADOR_HUMANO)
+                    {
+                        Destroy(gameObjectUnidad.GetComponent<Unidad>());
+                        gameObjectUnidad.AddComponent<IA_Explorador>();
+                    }
+                    SetUnidadANodoYViceversa(gameObjectUnidad.GetComponent<Unidad>());
                     break;
             }
             CancelarAccion();

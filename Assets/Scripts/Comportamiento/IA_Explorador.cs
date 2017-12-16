@@ -1,4 +1,4 @@
-﻿/*using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -33,7 +33,7 @@ public class IA_Explorador : Unidad {
             Nodo.unidad = this;
     }*/
 
-    /*
+
     public void AccionMover(List<Vector3> camino)
     {
         MoverUnidad mv = (MoverUnidad)acciones[ACCION_MOVER];
@@ -52,18 +52,11 @@ public class IA_Explorador : Unidad {
         //espera a que el camino este listo y lo guarda
         while (!caminoListo)
             yield return null;
-        caminoTotalACapital = caminoActual;
+        caminoTotalANodoDestino = caminoActual;
         posActual = 0;
         //print("Espera camino terminada");
         //AccionMover(caminoActual);
-    }
-
-    public void AccionAtacar(Node objetivo)
-    {
-        Atacar at = (Atacar)acciones[ACCION_ATACAR];
-        print(at == null);
-        //at.Ejecutar(objetivo.unidad);
-    }
+    }    
 
     public void SetDestino(Node destino)
     {
@@ -76,27 +69,10 @@ public class IA_Explorador : Unidad {
         //si hay unidades enemigas al alcance (guerreros y torres de defensa), las ataca si son del objetivo
         listo = false;
         List<Node> alcance;
-        alcance = Control.GetNodosAlAlcance(StageData.currentInstance.GetNodeFromPosition(this.transform.position), ALCANCE_GUERRERO);
-
-        for (int i = 0; i < alcance.Count; i++)
-        {
-            if (alcance[i].unidad != null  && alcance[i].unidad.IdJugador == StageData.currentInstance.GetPartidaActual().Jugadores[IdJugador].rolGuerrero.objetivoActual)
-            {
-                if (alcance[i].unidad.IdUnidad == TipoUnidad.Warrior || alcance[i].unidad.IdUnidad == TipoUnidad.DefensiveBuilding || alcance[i].unidad.IdUnidad == TipoUnidad.Capital)
-                {
-                    Atacar at = (Atacar)acciones[ACCION_ATACAR];
-                    if (at.Ejecutar(alcance[i]))
-                    {
-						puntosDisponibles -= StageData.COSTE_PA_ATACAR;
-                        listo = true;
-                        return;
-                    }
-                }
-            }
-        }
-
+        alcance = acciones[ACCION_MOVER].VerNodosAlAlcance();
+        
         //si no atacamos, movemos
-        caminoActual = caminoTotalACapital.GetRange(posActual, ALCANCE_GUERRERO - 1);
+        caminoActual = caminoTotalANodoDestino.GetRange(posActual, acciones[ACCION_MOVER].Alcance - 1);
 
         //comprobamos a que posiciones podemos movernos
         Vector3 destino = Vector3.zero;
@@ -140,4 +116,3 @@ public class IA_Explorador : Unidad {
     }
 
 }
-*/
