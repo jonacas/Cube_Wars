@@ -72,7 +72,7 @@ public class IA_Aldeano : Unidad {
         SolicitarYRecorrerCamino(destino.position);
     }
 
-    public void AvanzarHaciaDestino(ref int puntosDisponibles)
+    public void AvanzarHaciaDestinoMasLejano(ref int puntosDisponibles)
     {
         listo = false;
         List<Node> alcance;
@@ -106,12 +106,18 @@ public class IA_Aldeano : Unidad {
             puntosDisponibles -= StageData.COSTE_PA_MOVER_UNIDAD;
         }
         listo = true;
-
-        if (StageData.currentInstance.GetNodeFromPosition(destino).resourceType != TipoRecurso.NullResourceType) {
-            Recolectar recolecion = (Recolectar)acciones[ACCION_RECOLECTAR];
-            puntosDisponibles -= Recolectar.COSTE_RECOLECTAR;
-        }
         //Falta Construir, que no tengo muy claro donde ponerlo
+
+    }
+
+    public void Construir(ref int puntosDisponibles,Node n) {
+
+        Construir cs = (Construir)acciones[ACCION_CONSTRUIR];
+        if (!cs.Ejecutar(n)) {
+
+            print("No se ha podido construir ");
+
+        }
 
     }
 
