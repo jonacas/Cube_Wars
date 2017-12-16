@@ -36,6 +36,7 @@ public class StageData : MonoBehaviour
 
 	public List<MapResource> testResourceList;
 
+	public List<GameObject> mapResourceReference;
 
 	/// <summary>
 	/// COSTE DE LAS ACCIONES, CAMBIADLAS COMO OS SALGA DE LAS PELOTAS PERO SOLO AQUI
@@ -48,6 +49,8 @@ public class StageData : MonoBehaviour
 	public const int COSTE_PA_ATACAR = 20;
 
 	public const int CANTIDAD_RECOLECTADA = 50;
+
+	public const int CANTIDAD_RECURSOS_MAPA = 150;
 
     private int obstacleLayerMask = 1 << 8;
     //private bool cmunicationsEnabeled;
@@ -71,6 +74,7 @@ public class StageData : MonoBehaviour
     private Partida partidaActual;
 
 	public GameObject testCasillaMarcada;
+	public GameObject testModeladoResource;
 
     void Awake()
     {
@@ -78,6 +82,7 @@ public class StageData : MonoBehaviour
         ComunicationsEnabeled = true;
         aStar = this.GetComponent<AEstrella>();
 		grafoTotal = CG.nodeMap;
+		mapResourceReference = new List<GameObject> ();
     }
     public GameObject GetPlayer()
     {
@@ -517,11 +522,12 @@ public class StageData : MonoBehaviour
 	{
 		if (Input.GetKeyDown (KeyCode.A)) 
 		{
-			SetAllResourceInfluence ();
+			//SetAllResourceInfluence ();
 		}
 		if (Input.GetKeyDown (KeyCode.C)) 
 		{
-			ClearAllResourceInfluence ();
+			SetInitialResourcesOnMap ();
+			//ClearAllResourceInfluence ();
 		}
 	}
 
@@ -545,4 +551,23 @@ public class StageData : MonoBehaviour
     {
         partidaActual = par;
     }
+
+
+	public void SetInitialResourcesOnMap()
+	{
+		for (int i = 0; i < CANTIDAD_RECURSOS_MAPA; i++) 
+		{
+			int randFil = Random.Range (0, CG.filas - 1);
+			int randCol = Random.Range (0, CG.columnas - 1);
+			//COMO BASE, TODOS LOS RECURSOS SON FOOD.
+			grafoTotal [randFil, randCol].SetResourceToNode (TipoRecurso.Food);
+			grafoTotal [randFil, randCol].SetPlayerInfluence (0, Node.stepsInfluenceResource);
+			GameObject modeladoTest = Instantiate (testModeladoResource, grafoTotal [randFil, randCol].position, Quaternion.identity);
+			mapResourceReference.Add (modeladoTest);
+		}
+	}
+
+
+
+
 }

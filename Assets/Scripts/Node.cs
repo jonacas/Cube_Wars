@@ -233,6 +233,11 @@ public class Node
 		return influencePlayers [player] [0];
 	}
 
+	public void SetResourceToNode (TipoRecurso nuevoRecurso)
+	{
+		resourceType = nuevoRecurso;
+	}
+
 	//Usa esto para limpiar TODAS LAS INFLUENCIAS de un jugador, en este nodo.
 	public void ClearPlayerInfluence(int player)
 	{
@@ -263,7 +268,7 @@ public class Node
 	//Usa esto para limpiar una influencia específica de un jugador, en este nodo.
 
 	//ARREGLAR
-	public void AddRecourseInfluence(TipoRecurso recourseType, int influence)
+	/*public void AddRecourseInfluence(TipoRecurso recourseType, int influence)
 	{
 		//Hay tipo, miramos de encontrar el máximo.
 		if (currentResources.Contains (recourseType)) 
@@ -281,6 +286,7 @@ public class Node
 			currentResources.Add (recourseType);
 		}
 	}
+	*/
 
 }
 

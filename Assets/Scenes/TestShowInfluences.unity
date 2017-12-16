@@ -1362,9 +1362,11 @@ MonoBehaviour:
   testResourceList:
   - {fileID: 1200363524}
   - {fileID: 1374724675}
+  mapResourceReference: []
   tobeInteractedList: []
   numberOfPlayers: 3
   testCasillaMarcada: {fileID: 219455747}
+  testModeladoResource: {fileID: 100000, guid: 16a6bce66594bed42bf32c844bc12f80, type: 3}
 --- !u!4 &1758801786
 Transform:
   m_ObjectHideFlags: 0
