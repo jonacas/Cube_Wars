@@ -20,7 +20,8 @@ public abstract class Jugador : MonoBehaviour
 			return capital;
 		}
 	}
-		
+
+	public List<Vector3> posicionRecursosEncontrados;
 
  //unidad que hay que destruir para ganar la partida
 
@@ -105,6 +106,7 @@ public abstract class Jugador : MonoBehaviour
         this.capital = capital;
         unidadesDisponibles = new List<Unidad>();
         edificios = new List<Unidad>();
+		posicionRecursosEncontrados = new List<Vector3> ();
 
         //unidades
         exploradores = 0;
@@ -236,4 +238,35 @@ public abstract class Jugador : MonoBehaviour
     {
         return turnoAcabado;
     }
+
+	public void RecursoEncontrado(Vector3 pos)
+	{
+		if (!posicionRecursosEncontrados.Contains (pos)) 
+		{
+			posicionRecursosEncontrados.Add (pos);
+		}
+	}
+
+	public TipoRecurso GetMenorTipoRecurso()
+	{
+		if (piedra < comida && piedra < madera && piedra < metal) 
+		{
+			return TipoRecurso.Rock;
+		}
+		else if (madera < comida && madera < piedra && madera < metal) 
+		{
+			return TipoRecurso.Wood;
+		}
+		else if (metal < comida && metal < madera && metal < piedra) 
+		{
+			return TipoRecurso.Steel;
+		}
+		else
+		{
+			return TipoRecurso.Food;
+		}
+	}
+
+
+
 }
