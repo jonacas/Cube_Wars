@@ -471,11 +471,20 @@ public class StageData : MonoBehaviour
 					if (difX <= difY) 
 					{
 						grafo [posX, posY].SetPlayerInfluence (player, numberOfSteps - difY);
+						/*if (grafo [posX, posY].resourceType != TipoRecurso.NullResourceType) 
+						{
+							partidaActual.Jugadores [player].RecursoEncontrado (grafo [posX, posY].position);
+						}
+						*/
 						//Debug.Log ("peso en" + " x: " + difX + " , " + "y: " + difY + "==>" +  grafo[posX, posY].GetPlayerInfluence(player));
 					}
 					else 
 					{
 						grafo [posX, posY].SetPlayerInfluence (player, numberOfSteps - difX);
+						/*if (grafo [posX, posY].resourceType != TipoRecurso.NullResourceType) 
+						{
+							partidaActual.Jugadores [player].RecursoEncontrado (grafo [posX, posY].position);
+						}*/
 						//Debug.Log ("peso en" + " x: " + difX + " , " + "y: " + difY + "==>" +  grafo[posX, posY].GetPlayerInfluence(player));
 					}
 				}
@@ -558,7 +567,7 @@ public class StageData : MonoBehaviour
 		}
 		if (Input.GetKeyDown (KeyCode.C)) 
 		{
-			SetInitialResourcesOnMap ();
+			//SetInitialResourcesOnMap ();
 			//ClearAllResourceInfluence ();
 		}
 	}
@@ -592,7 +601,7 @@ public class StageData : MonoBehaviour
 			int randFil = Random.Range (0, CG.filas - 1);
 			int randCol = Random.Range (0, CG.columnas - 1);
 			//COMO BASE, TODOS LOS RECURSOS SON FOOD.
-			grafoTotal [randFil, randCol].SetResourceToNode (TipoRecurso.Food);
+			//grafoTotal [randFil, randCol].SetResourceToNode (TipoRecurso.Food);
 			grafoTotal [randFil, randCol].SetPlayerInfluence (0, Node.stepsInfluenceResource);
 			/*GameObject modeladoTest = Instantiate (testModeladoResource, grafoTotal [randFil, randCol].position, Quaternion.identity);
 			mapResourceReference.Add (modeladoTest);*/
