@@ -31,9 +31,17 @@ public class RolExplorador : MonoBehaviour {
 
     IEnumerator MoverExploradores()
     {
+        yield return new WaitForSeconds(1);
         print("Comienza mover exploradores");
         Node objetivo;
-        List<Unidad> exploradores = StageData.currentInstance.GetPartidaActual().JugadorActual.unidadesDisponibles;
+        List<Unidad> aux1 = StageData.currentInstance.GetPartidaActual().JugadorActual.unidadesDisponibles;
+        List<Unidad> exploradores = new List<Unidad>();
+        foreach (Unidad un in aux1)
+        {
+            if (un.IdUnidad == TipoUnidad.Explorer)
+                exploradores.Add(un);
+        }
+
         IA_Explorador aux;
         for (int i = exploradores.Count - 1; i >= 0; i--)
         {

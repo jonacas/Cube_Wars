@@ -108,7 +108,7 @@ public struct Ordenes
     float op;
     float or;
 
-    public Ordenes(float exploracion, float a, float d, float r, float p)
+    public Ordenes(float exploracion, float r, float d, float a, float p)
     {
         this.exploracion = exploracion;
         oa = a;

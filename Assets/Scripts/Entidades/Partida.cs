@@ -97,6 +97,7 @@ public class Partida : MonoBehaviour{
                     yield return null;
                 //yield return new WaitForSeconds(5);
                 print("TURNO TERMINADO");
+				yield return new WaitForSeconds(5);
             }
             yield return null;
         }

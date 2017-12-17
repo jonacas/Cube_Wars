@@ -73,6 +73,7 @@ public class RolProtector : MonoBehaviour {
 
     List<Unidad> GetCreadoresDeTorres() {
 
+        print("ATENCION, SE ESTAN BORRANDO UNIDADES DONDE NO SE DEBE");
         List<Unidad> creadoresDeTorres = partidaActual.JugadorActual.unidadesDisponibles; //COJO TODAS LAS UNIDADES
         for (int i = creadoresDeTorres.Count - 1; i >= 0; i--) {
             if (creadoresDeTorres[i].IdUnidad != TipoUnidad.Worker) {  //ME DESHAGO DE AQUELLAS QUE NO SEAN ALDEANOS

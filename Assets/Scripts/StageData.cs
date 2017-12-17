@@ -29,7 +29,7 @@ public class StageData : MonoBehaviour
 {
 
     public GameObject player, WarriorPrefab, WorkerPrefab, ExplorerPrefab, TowerPrefab, ResourceBuildPrefab;
-    public GameObject explorerIAPrefab;
+    public GameObject explorerIAPrefab, aldeanoIAprefab;
     public static StageData currentInstance;
     public List<EnemyMovement> enemiesInStage;
     public CreacionGrafo CG;

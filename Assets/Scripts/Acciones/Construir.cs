@@ -16,7 +16,7 @@ public class Construir : Accion
     {
         //aqui se deben coger los fantasmas que se mostraran para no instanciarlos mas tarde
         m_Unidad = GetComponent<Unidad>();
-        Alcance = 3;
+        Alcance = 4;
         //NodosAlAlcance = Control.GetNodosAlAlcance(m_Unidad.Nodo, Alcance);
         idAccion = AccionID.build;
     }

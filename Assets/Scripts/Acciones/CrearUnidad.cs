@@ -45,14 +45,18 @@ public class CrearUnidad : Accion
                     StageData.currentInstance.GetPartidaActual().JugadorActual.Guerreros++;
                     break;
                 case TipoUnidad.Worker:
-                    gameObjectUnidad = Instantiate(StageData.currentInstance.WorkerPrefab, destino.position, StageData.currentInstance.WorkerPrefab.transform.rotation);
                     if (StageData.currentInstance.GetPartidaActual().JugadorActual.idJugador != StageData.ID_JUGADOR_HUMANO)
                     {
-                        Destroy(gameObjectUnidad.GetComponent<Unidad>());
-                        gameObjectUnidad.AddComponent<IA_Aldeano>();
+                        gameObjectUnidad = Instantiate(StageData.currentInstance.aldeanoIAprefab, destino.position, StageData.currentInstance.ExplorerPrefab.transform.rotation);
+                    }
+                    else
+                    {
+                        gameObjectUnidad = Instantiate(StageData.currentInstance.aldeanoIAprefab, destino.position, StageData.currentInstance.ExplorerPrefab.transform.rotation);
                     }
                     SetUnidadANodoYViceversa(gameObjectUnidad.GetComponent<Unidad>());
-                    StageData.currentInstance.GetPartidaActual().JugadorActual.Aldeanos++;
+                    //StageData.currentInstance.GetPartidaActual().JugadorActual.Aldeanos++;
+                    StageData.currentInstance.GetPartidaActual().Jugadores[m_Unidad.IdJugador].unidadesDisponibles.Add(gameObjectUnidad.GetComponent<Unidad>());
+                    gameObjectUnidad.GetComponent<Unidad>().IdJugador = StageData.currentInstance.GetPartidaActual().JugadorActual.idJugador;
                     break;
                 case TipoUnidad.Explorer:
 

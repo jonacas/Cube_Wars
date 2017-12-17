@@ -51,10 +51,27 @@ public class JugadorIA : Jugador {
         asignacion = Mathf.RoundToInt(puntosDeAccion * reparto.GetOrdenExploracion());
         puntosDeAccion -= asignacion;
 
-        rolExplo.fin = false;
-        rolExplo.ComenzarTurno(asignacion);
-        while (!rolExplo.fin)
-            yield return null;
+        if (!(asignacion < StageData.COSTE_PA_MOVER_UNIDAD))
+        {
+            rolExplo.fin = false;
+            rolExplo.ComenzarTurno(asignacion);
+            while (!rolExplo.fin)
+                yield return null;
+
+            yield return new WaitForSeconds(3);
+        }
+
+
+       asignacion = Mathf.RoundToInt(puntosDeAccion * reparto.GetOrdenRecoleccion());
+        puntosDeAccion -= asignacion;
+
+        if (!(asignacion < StageData.COSTE_PA_MOVER_UNIDAD))
+        {
+            rolReco.fin = false;
+            rolReco.ComenzarTurno(ref asignacion);
+            while (!rolReco.fin)
+                yield return null;
+        }
 
         turnoAcabado = true;
 

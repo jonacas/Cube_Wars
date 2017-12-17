@@ -220,7 +220,7 @@ public class ArbolMaestro{
             asignacion += GlobalData.COSTE_PA_CREACION_EXPLORADOR;
         }
 
-        if (recursosConocidos <= 5)
+        if (StageData.currentInstance.GetPartidaActual().Jugadores[StageData.currentInstance.GetPartidaActual().JugadorActual.idJugador].posicionRecursosEncontrados.Count <= 5)
         {
             puntosDisponibles -= StageData.COSTE_PA_MOVER_UNIDAD * (5 - recursosConocidos);
             asignacion += StageData.COSTE_PA_MOVER_UNIDAD * (5 - recursosConocidos);

@@ -320,6 +320,7 @@ MonoBehaviour:
   capitalesEnemigas: []
   IndexPlayerObjetivoActual: 0
   rolGuerrero: {fileID: 0}
+  posicionRecursosEncontrados: []
   idJugador: 0
 --- !u!114 &504294169
 MonoBehaviour:
@@ -332,6 +333,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be1f027aa5fd0cf4e9ce90c2a179470e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fin: 0
 --- !u!114 &504294170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -537,8 +539,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 705783837}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 703.5, y: 304, z: 0}
-  m_LocalScale: {x: 0.6422977, y: 0.6422977, z: 0.6422977}
+  m_LocalPosition: {x: 325, y: 304, z: 0}
+  m_LocalScale: {x: 0.43656203, y: 0.43656203, z: 0.43656203}
   m_Children:
   - {fileID: 194914090}
   m_Father: {fileID: 0}
@@ -1167,6 +1169,7 @@ MonoBehaviour:
   capitalesEnemigas: []
   IndexPlayerObjetivoActual: 0
   rolGuerrero: {fileID: 0}
+  posicionRecursosEncontrados: []
   idJugador: 0
 --- !u!114 &1508765912
 MonoBehaviour:
@@ -1179,6 +1182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be1f027aa5fd0cf4e9ce90c2a179470e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fin: 0
 --- !u!114 &1508765913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1379,6 +1383,7 @@ MonoBehaviour:
   capitalesEnemigas: []
   IndexPlayerObjetivoActual: 0
   rolGuerrero: {fileID: 0}
+  posicionRecursosEncontrados: []
   idJugador: 0
 --- !u!114 &1758072911
 MonoBehaviour:
@@ -1391,6 +1396,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be1f027aa5fd0cf4e9ce90c2a179470e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fin: 0
 --- !u!114 &1758072912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1482,15 +1488,18 @@ MonoBehaviour:
     type: 2}
   explorerIAPrefab: {fileID: 1025802482311878, guid: c98733497dc8db24290ce53d73e1f832,
     type: 2}
+  aldeanoIAprefab: {fileID: 1831679263360590, guid: 7ae350e5c28a09b4e8a9e23fece473d5,
+    type: 2}
   enemiesInStage: []
   CG: {fileID: 1700817739}
   unidadACrear: 0
   testResourceList: []
   mapResourceReference: []
   tobeInteractedList: []
-  numberOfPlayers: 3
-  testCasillaMarcada: {fileID: 0}
-  testModeladoResource: {fileID: 0}
+  numberOfPlayers: 2
+  testCasillaMarcada: {fileID: 1745308983168744, guid: e6e44451835e6574a8b69876b952e584,
+    type: 2}
+  testModeladoResource: {fileID: 100000, guid: 16a6bce66594bed42bf32c844bc12f80, type: 3}
 --- !u!4 &1758801786
 Transform:
   m_ObjectHideFlags: 0
@@ -1526,7 +1535,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64c47c6948703dd448903cdbb19a77e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numJugadores: 4
+  numJugadores: 2
 --- !u!1 &1866643363 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1852531531037296, guid: 11a80ace49872554ea9c3363165ba61f,
@@ -1851,12 +1860,12 @@ Prefab:
     - target: {fileID: 224297228063903796, guid: 2d129bac9f08ab54fac71825928e983a,
         type: 2}
       propertyPath: m_LocalPosition.x
-      value: -245.2865
+      value: 105.546814
       objectReference: {fileID: 0}
     - target: {fileID: 224297228063903796, guid: 2d129bac9f08ab54fac71825928e983a,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: -51.69922
+      value: 171.3501
       objectReference: {fileID: 0}
     - target: {fileID: 224705924873278356, guid: 2d129bac9f08ab54fac71825928e983a,
         type: 2}
@@ -1981,6 +1990,7 @@ MonoBehaviour:
   capitalesEnemigas: []
   IndexPlayerObjetivoActual: 0
   rolGuerrero: {fileID: 0}
+  posicionRecursosEncontrados: []
   idJugador: 0
 --- !u!4 &2101246950 stripped
 Transform:

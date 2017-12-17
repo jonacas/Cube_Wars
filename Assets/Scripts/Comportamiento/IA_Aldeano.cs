@@ -6,9 +6,10 @@ public class IA_Aldeano : Unidad {
 
     const int ACCION_MOVER = 0, ACCION_CONSTRUIR = 1;
 
-    private bool heLlegado, listo;
-    private List<Vector3> caminoAObjetivo;
+    public bool heLlegado, listo;
+    private List<Vector3> caminoTotalANodoDestino;
     int posActual;
+    Node nodoRecurso;
 
     void Awake()
     {
@@ -19,6 +20,7 @@ public class IA_Aldeano : Unidad {
         acciones.Add(this.GetComponent<MoverUnidad>());
         acciones.Add(this.GetComponent<Construir>());
         idUnidad = TipoUnidad.Worker;
+        heLlegado = true;
 
         //FALTA RELLENAR INFLUENCIAS
     }
@@ -39,16 +41,20 @@ public class IA_Aldeano : Unidad {
     public override void SolicitarYRecorrerCamino(Vector3 final)
     {
         base.SolicitarYRecorrerCamino(final);
-        StartCoroutine("EsperarCamino");
+        //StartCoroutine("EsperarCamino");
     }
 
     public IEnumerator EsperarCamino()
     {
+        //espera a que el camino este listo y lo guarda
         while (!caminoListo)
             yield return null;
-        print("Espera camino terminada");
-        AccionMover(caminoActual);
-    }
+        caminoTotalANodoDestino = caminoActual;
+        posActual = 0;
+        //print("Espera camino terminada");
+        //AccionMover(caminoActual);
+    }    
+
 
     public void AccionConstruir(Node objetivo)
     {
@@ -59,11 +65,22 @@ public class IA_Aldeano : Unidad {
 
     public void SetDestino(Node destino)
     {
-        heLlegado = false;
-        SolicitarYRecorrerCamino(destino.position);
+        //guarda el nodo donde esta el recurso y fija su destino a uno circunandte
+        nodoRecurso = destino;
+        List<Node> nodosCircun = Control.GetNodosAlAlcance(destino, 2);
+
+        foreach (Node n in nodosCircun)
+        {
+            if (Nodo.resourceType == TipoRecurso.NullResourceType)
+            {
+                heLlegado = false;
+                SolicitarYRecorrerCamino(n.position);
+                break;
+            }
+        }
     }
 
-    public void AvanzarHaciaDestinoMasLejano(ref int puntosDisponibles)
+   /* public void AvanzarHaciaDestinoMasLejano(ref int puntosDisponibles)
     {
         listo = false;
         List<Node> alcance;
@@ -100,6 +117,69 @@ public class IA_Aldeano : Unidad {
         //Falta Construir, que no tengo muy claro donde ponerlo
 
     }
+*/
+
+
+    public void AvanzarHaciaDestino()
+    {
+        listo = false;
+        List<Node> alcance;
+        bool construir = false;
+        //alcance = acciones[ACCION_MOVER].VerNodosAlAlcance();
+
+        //si no atacamos, movemos
+        if (posActual + 4 > caminoTotalANodoDestino.Count - 1)
+        {
+            //si esta al alcance, debe construir
+            caminoActual = caminoTotalANodoDestino.GetRange(posActual, caminoTotalANodoDestino.Count - 1);
+            construir = true;
+        }
+        else
+            caminoActual = caminoTotalANodoDestino.GetRange(posActual, 4);
+        print(caminoActual.Count);
+
+
+        if (construir)
+        {
+            Construir accionConstr = (Construir)acciones[ACCION_CONSTRUIR];
+            if (accionConstr.Ejecutar(nodoRecurso))
+            {
+                heLlegado = true;
+            }
+        }
+
+        //comprobamos a que posiciones podemos movernos
+        Vector3 destino = Vector3.zero;
+        int incrementoPos = 0;
+        for (int i = caminoActual.Count - 1; i >= 0; i--)
+        {
+            if (StageData.currentInstance.GetNodeFromPosition(caminoActual[i]).unidad == null)// && StageData.currentInstance.GetNodeFromPosition(caminoActual[i]).resourceType == TipoRecurso.NullResourceType)
+            {
+                destino = caminoActual[i];
+                incrementoPos = i;
+                break;
+            }
+        }
+
+        //si no puede moverse, ha llegado
+        if (destino == Vector3.zero)
+        {
+            print("Avanzar hacia destino" + caminoActual.Count);
+            heLlegado = true;
+            listo = true;
+            return;
+        }
+
+        //si puede moverse, lo hace
+        MoverUnidad mv = (MoverUnidad)acciones[ACCION_MOVER];
+        print(StageData.currentInstance.GetNodeFromPosition(destino));
+        if (mv.Ejecutar(StageData.currentInstance.GetNodeFromPosition(destino)))
+        {
+            posActual += incrementoPos;
+        }
+        listo = true;
+    }
+
 
     public void Construir(ref int puntosDisponibles,Node n) {
 

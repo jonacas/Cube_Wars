@@ -9,11 +9,10 @@ public class RolRecolector : MonoBehaviour {
 		BajoDemanda, EnCamino, DemandaSatisfecha
 	};
 
-	private Partida partidaActual;
 	List<Vector3> caminoARecursoDestino;
-	bool fin;
-	int puntosAsignados;
+	public bool fin;
 	int numeroCreaciones;
+    int puntosDispo;
 	List<Vector3> recursosSinExplotar;
 
 	bool numeroAldeanosMINIMOS;
@@ -32,22 +31,38 @@ public class RolRecolector : MonoBehaviour {
 	//RECUERDA: ESTE SCRIPTE DEBE IR EN EL MISMO GAMEOBJECT QUE EL JUGADOR.
 	void Start()
 	{
-		partidaActual = StageData.currentInstance.GetPartidaActual ();
 		caminoARecursoDestino = new List<Vector3> ();
 		recursosSinExplotar = new List<Vector3> ();
 	}
 
-	public bool ComenzarTurno(int puntosAsig)
+	public bool ComenzarTurno(ref int puntosAsig)
 	{
 		// Buscamos ahora a los aldeanos disponibles.
-		puntosAsignados = puntosAsig;
-		numeroAldeanosMINIMOS = partidaActual.JugadorActual.Aldeanos < 3;
-		recursoMinimoActual = partidaActual.JugadorActual.GetMenorTipoRecurso ();
+        int totalAldeanos = 0;
+        puntosDispo = puntosAsig;
+        foreach (Unidad un in StageData.currentInstance.GetPartidaActual().JugadorActual.unidadesDisponibles)
+        {
+            if (un.IdUnidad == TipoUnidad.Worker)
+                totalAldeanos++;
+        }
+        if (totalAldeanos < 3)
+            numeroAldeanosMINIMOS = true;
+        else
+            numeroAldeanosMINIMOS = false;
+
+		//numeroAldeanosMINIMOS = StageData.currentInstance.GetPartidaActual().JugadorActual.Aldeanos < 1;
+		recursoMinimoActual = StageData.currentInstance.GetPartidaActual().JugadorActual.GetMenorTipoRecurso ();
 		recursosSinExplotar.Clear ();
 
-		if (!numeroAldeanosMINIMOS)
+        print("COMIENZA ROL RECOLECTOR");
+
+		if (numeroAldeanosMINIMOS)
 		{
-			numeroCreaciones = puntosAsignados / StageData.COSTE_PA_CREAR_ALDEANO;
+			numeroCreaciones = puntosAsig / StageData.COSTE_PA_CREAR_ALDEANO;
+
+            if (numeroCreaciones > 3)
+                numeroCreaciones = 3;
+
 			if (numeroCreaciones > 0) 
 			{
 				StartCoroutine ("CrearAldeano");
@@ -65,11 +80,12 @@ public class RolRecolector : MonoBehaviour {
 		}*/
 		else 
 		{
-			int movimientosDisponibles = puntosAsig / StageData.COSTE_PA_MOVER_UNIDAD;
+			int movimientosDisponibles = puntosDispo / StageData.COSTE_PA_MOVER_UNIDAD;
 
 			if (movimientosDisponibles > 0) 
 			{
-				MoverAldeanosDisponibles (movimientosDisponibles);
+                StartCoroutine("PrepararOrdenesAldeanos");
+                //StartCoroutine("MoverAldeanos");
 				return true;
 			} 
 			else
@@ -83,18 +99,35 @@ public class RolRecolector : MonoBehaviour {
 
 	}
 
-	private void MoverAldeanosDisponibles(int numeroMovimientos)
+	IEnumerator MoverAldeanos()
 	{
 		//AQUI MIRO SI TENGO ALDEANOS CERCA.
-		List<Unidad> aldeanos = partidaActual.JugadorActual.unidadesDisponibles;
-		for (int i = aldeanos.Count - 1; i >= 0; i--) 
+        yield return new WaitForSeconds(1);
+
+        List<Unidad> aux1 = StageData.currentInstance.GetPartidaActual().JugadorActual.unidadesDisponibles;
+        List<Unidad> aldeanos = new List<Unidad>();
+
+		for (int i = aux1.Count - 1; i >= 0; i--) 
 		{
-			if (aldeanos [i].IdUnidad == TipoUnidad.Worker) 
+			if (aux1 [i].IdUnidad == TipoUnidad.Worker) 
 			{
-				aldeanos.Remove (aldeanos[i]);
+				aldeanos.Add (aux1[i]);
 			}
 		}
-		List<Unidad> aldeanosOrdenadosPorProximidad = new List<Unidad> ();
+
+        if (aldeanos.Count != 0)
+        {
+
+
+            IA_Aldeano aldIA;
+            foreach (Unidad un in aldeanos)
+            {
+                print("Moviendo aldeanos recoleccion");
+                aldIA = (IA_Aldeano)un;
+                aldIA.AvanzarHaciaDestino();
+            }
+        }
+		/*List<Unidad> aldeanosOrdenadosPorProximidad = new List<Unidad> ();
 
 		SetResourcesSinExplotar (recursoMinimoActual);
 
@@ -118,7 +151,7 @@ public class RolRecolector : MonoBehaviour {
 			recursosSinExplotar.Remove (cerca);
 			aldeanosOrdenadosPorProximidad.Add(aux);
 			aldeanos.Remove(aux);
-		}
+		}*/
 
 
 
@@ -130,7 +163,7 @@ public class RolRecolector : MonoBehaviour {
 
 	public bool CheckMinimumResources()
 	{
-		return partidaActual.JugadorActual.ComprobarRecursosNecesarios (
+        return StageData.currentInstance.GetPartidaActual().JugadorActual.ComprobarRecursosNecesarios(
 			new FacturaRecursos (0, MINIMO_COMIDA, MINIMO_MADERA, MINIMO_PIEDRA, MINIMO_METAL)); 
 	}
 
@@ -151,12 +184,14 @@ public class RolRecolector : MonoBehaviour {
 
 	IEnumerator CrearAldeano()
 	{
+        print("CREANDO ALDEANOS");
 		List<Unidad> edificiosCreadores = GetCreadorDeAldeanosAdecuado ();
 		int edificioActual = 0;
+        int totalCreados = 0;
 		while (numeroCreaciones > 0 && edificioActual < edificiosCreadores.Count)
 		{
 			CrearUnidad accionCreadorUnidades = (CrearUnidad)edificiosCreadores [edificioActual].Acciones [0];
-			List<Node> nodosAlAlcance = GetComponent<CrearUnidad> ().VerNodosAlAlcance ();
+            List<Node> nodosAlAlcance = accionCreadorUnidades.VerNodosAlAlcance();
 			if (nodosAlAlcance.Count == 0) 
 			{
 				edificioActual++;
@@ -167,22 +202,69 @@ public class RolRecolector : MonoBehaviour {
 			}
 			else if (edificioActual < edificiosCreadores.Count)
 			{
-				bool haFuncionado = GetComponent<CrearUnidad>().Ejecutar(nodosAlAlcance[0], TipoUnidad.Worker);
+                bool haFuncionado = accionCreadorUnidades.Ejecutar(nodosAlAlcance[0], TipoUnidad.Worker);
 				if (haFuncionado)
 				{
+                    totalCreados++;
 					numeroCreaciones--;
-					print (numeroCreaciones);
-					yield return new WaitForSeconds(0.5F);
+					//print (numeroCreaciones);
+					yield return new WaitForSeconds(1);
 				}
 			}
 		}
 
+        StageData.currentInstance.GetPartidaActual().JugadorActual.Aldeanos += totalCreados;
+        StartCoroutine("PrepararOrdenesAldeanos");
 
 	}
 
+
+    IEnumerator PrepararOrdenesAldeanos()
+    {
+        print("PrepararOrdenesAldeanos");
+		SetResourcesSinExplotar (TipoRecurso.Food);
+        ///asignamos a cada aldeano un recurso que deb ir a explotar
+		List<Unidad> aldeanos = new List<Unidad>();
+		List<Unidad> unidades = StageData.currentInstance.GetPartidaActual().JugadorActual.unidadesDisponibles;
+
+
+        for (int i = unidades.Count - 1; i >= 0; i--)
+        {
+            if (unidades[i].IdUnidad == TipoUnidad.Worker)
+            {
+                print("borr");
+                aldeanos.Add(unidades[i]);
+            }
+        }
+
+
+        IA_Aldeano aldIA;
+        int indiceRecur = 0;
+        foreach (Unidad al in aldeanos)
+        {
+            print("preparandoAldeano RECO");
+            aldIA = (IA_Aldeano)al;
+            /*if (indiceRecur >= recursosSinExplotar.Count)
+                break;
+            if (!aldIA.HaLlegado())
+                continue;*/
+            print("set destino RECO");
+            if (indiceRecur < recursosSinExplotar.Count)
+            {
+                aldIA.SetDestino(StageData.currentInstance.GetNodeFromPosition(recursosSinExplotar[indiceRecur]));
+                while (!aldIA.caminoListo)
+                    yield return null;
+            }
+            indiceRecur++;
+        }
+
+        yield return null;
+    }
+
 	List<Unidad> GetCreadorDeAldeanosAdecuado()
 	{
-		List<Unidad> edificiosCreadoresDeunidades = partidaActual.JugadorActual.edificios;
+
+        List<Unidad> edificiosCreadoresDeunidades = StageData.currentInstance.GetPartidaActual().JugadorActual.edificios;
 		for (int i = edificiosCreadoresDeunidades.Count - 1; i >= 0; i--) 
 		{
 			if (edificiosCreadoresDeunidades [i].IdUnidad == TipoUnidad.DefensiveBuilding) 
@@ -191,7 +273,11 @@ public class RolRecolector : MonoBehaviour {
 			}
 
 		}
-		edificiosCreadoresDeunidades.Add (partidaActual.JugadorActual.Capital);
+        edificiosCreadoresDeunidades.Add(StageData.currentInstance.GetPartidaActual().JugadorActual.Capital);
+
+        return edificiosCreadoresDeunidades;
+
+        /*
 		List<Unidad> edificiosOrdenadosPorPrioridad = new List<Unidad>(); // LA LISTA EN LA QUE VOY A METER LOS EDIFICIOS ORDENADOS POR PRIORIDAD
 
 		//COMPROBAR EL RECURSO NECESARIO QUE ESTAMOS BUSCANDO.
@@ -221,14 +307,21 @@ public class RolRecolector : MonoBehaviour {
 			edificiosCreadoresDeunidades.Remove(aux);
 		}
 
-		return edificiosOrdenadosPorPrioridad;
+		return edificiosOrdenadosPorPrioridad;*/
 
 	}
 
 	private void SetResourcesSinExplotar(TipoRecurso recursoDeseado)
 	{
-		Node[,] grafo = StageData.currentInstance.grafoTotal;
-		List<Unidad> unidades_jugador = partidaActual.JugadorActual.unidadesDisponibles;
+		List<Vector3> recursos = StageData.currentInstance.GetPartidaActual ().JugadorActual.posicionRecursosEncontrados;
+
+		foreach(Vector3 v in recursos)
+		{
+			AddRecursoSinExplotar (v);
+		}
+
+		/*Node[,] grafo = StageData.currentInstance.grafoTotal;
+        List<Unidad> unidades_jugador = StageData.currentInstance.GetPartidaActual().JugadorActual.unidadesDisponibles;
 		List<Vector3> posRecursosSinExplorar = new List<Vector3> ();
 		foreach (Unidad u in unidades_jugador)
 		{
@@ -236,13 +329,13 @@ public class RolRecolector : MonoBehaviour {
 			List<Node> VisionDeNodos = Control.GetNodosAlAlcance (u.Nodo, 5);
 			foreach (Node n in VisionDeNodos)
 			{
-				if (n.GetPlayerInfluence (partidaActual.JugadorActual.idJugador) != 1 &&
+                if (n.GetPlayerInfluence(StageData.currentInstance.GetPartidaActual().JugadorActual.idJugador) != 1 &&
 					n.resourceType == recursoDeseado && n.unidad != null) 
 				{
 					AddRecursoSinExplotar (n.position);
 				}
 			}
-		}
+		}*/
 	}
 
 
