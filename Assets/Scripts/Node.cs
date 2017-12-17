@@ -138,6 +138,7 @@ public class Node
         Cost = float.PositiveInfinity;
 
         resourceType = TipoRecurso.NullResourceType;
+        unidad = null;
 
         arrayVecinos = new List<Pareja>();
         position = pos;
@@ -187,16 +188,18 @@ public class Node
 	public void AddAllPlayersToInfluences()
 	{
 		//for (int i = 0; i < StageData.currentInstance.GetPartidaActual().numJugadores; i++) 
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < 5; i++)
 		{
-			influencePlayers.Add (new List<int> (1){-1});
+            List<int> aux = new List<int>();
+            aux.Add(-1);
+			influencePlayers.Add (aux);
 		}
 	}
 				
 	public bool SetPlayerInfluence(int player, int influence)
 	{
 		//RECUERDA: LA POSICION 0 ESTÁ RESERVADA A LOS RECURSOS, Y LA POSICION 1 ESTÁ RESERVADA AL JUGADOR HUMANO
-		if (player >= influencePlayers.Count) 
+		if (player >= influencePlayers[player].Count) 
 		{
 			//Debug.Log ("INCORRECTO: JUGADOR NO AÑADIDO ANTERIORMENTE");
 			return false;
@@ -230,7 +233,7 @@ public class Node
 
 	public int GetPlayerInfluence(int player)
 	{
-		return influencePlayers [player] [0];
+		return influencePlayers [player][0];
 	}
 
 	public void SetResourceToNode (TipoRecurso nuevoRecurso)
@@ -246,16 +249,17 @@ public class Node
 			Debug.Log ("INCORRECTO: JUGADOR NO AÑADIDO ANTERIORMENTE");
 			return;
 		}
-		if (player == 0) 
+		/*if (player == 0) 
 		{
 			currentResources.Clear ();
-		}
+		}*/
 		//Guardamos las del entorno, para ponerlas despues de borrar.
-		influencePlayers [player].Clear ();
+        List<int> aux = influencePlayers[player];
+        aux[0] = 0;
 	}
 		
 	//Usa esto para limpiar la influencia de UN SOLO Recurso, en este nodo.
-	private void ClearResourceInfluence(TipoRecurso recourseType)
+	/*private void ClearResourceInfluence(TipoRecurso recourseType)
 	{
 		if (currentResources.Contains (resourceType)) 
 		{
@@ -263,7 +267,7 @@ public class Node
 			influencePlayers [0].RemoveAt (indexResource);
 			currentResources.Remove (recourseType);
 		}
-	}
+	}*/
 		
 	//Usa esto para limpiar una influencia específica de un jugador, en este nodo.
 

@@ -5,6 +5,7 @@ using UnityEngine;
 public class IA_Explorador : Unidad {
 
     const int ACCION_MOVER = 0;
+    const int VISION_EXPLO = 4;
 
     public bool heLlegado, listo;
     private List<Vector3> caminoTotalANodoDestino;
@@ -19,8 +20,9 @@ public class IA_Explorador : Unidad {
         defensaMaxima = StageData.DEFENSA_MAX_ALDEANO;
         Defensa = StageData.DEFENSA_MAX_ALDEANO;
         idUnidad = TipoUnidad.Explorer;
-        IdJugador = 2;
         Nodo = StageData.currentInstance.GetNodeFromPosition(transform.position);
+        heLlegado = false;
+        //StageData.currentInstance.SetInfluenceToNode(VISION_EXPLO, Nodo, IdJugador);
     }
 
     /*private void Start()
@@ -72,10 +74,13 @@ public class IA_Explorador : Unidad {
         //alcance = acciones[ACCION_MOVER].VerNodosAlAlcance();
         
         //si no atacamos, movemos
-        if(posActual + 3 > caminoTotalANodoDestino.Count - 1)
+        if (posActual + 6 > caminoTotalANodoDestino.Count - 1)
+        {
             caminoActual = caminoTotalANodoDestino.GetRange(posActual, caminoTotalANodoDestino.Count - 1);
+            heLlegado = true;
+        }
         else
-            caminoActual = caminoTotalANodoDestino.GetRange(posActual, 3);
+            caminoActual = caminoTotalANodoDestino.GetRange(posActual, 6);
         print(caminoActual.Count);
 
 
@@ -106,7 +111,7 @@ public class IA_Explorador : Unidad {
         print(StageData.currentInstance.GetNodeFromPosition(destino));
         if (mv.Ejecutar(StageData.currentInstance.GetNodeFromPosition(destino)))
         {
-            //posActual += incrementoPos;
+            posActual += incrementoPos;
             puntosDisponibles -= StageData.COSTE_PA_MOVER_UNIDAD;
         }
         listo = true;

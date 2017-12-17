@@ -40,8 +40,12 @@ public class RolExplorador : MonoBehaviour {
             if (exploradores[i].IdUnidad != TipoUnidad.Explorer)
                 exploradores.Remove(exploradores[i]);
             aux = (IA_Explorador)exploradores[i];
-            objetivo = GetObjetivoExplorador();
-            aux.SetDestino(objetivo);
+
+            if (!aux.HaLlegado())
+            {
+                objetivo = GetObjetivoExplorador();
+                aux.SetDestino(objetivo);
+            }
         }
 
         while (puntosAsignado >= StageData.COSTE_PA_MOVER_UNIDAD)

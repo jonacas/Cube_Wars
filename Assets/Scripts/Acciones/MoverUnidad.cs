@@ -17,13 +17,13 @@ public class MoverUnidad :  Accion{
         switch (m_Unidad.IdUnidad)
         {
             case TipoUnidad.Warrior: //en caso de que al final se añadan otras unidades, pues ya sabes loko
-                Alcance = 4;
+                Alcance = 6;
                 break;
             case TipoUnidad.Worker:
                 Alcance = 6;
                 break;
             case TipoUnidad.Explorer:
-                Alcance = 2;
+                Alcance = 6;
                 break;
         }
         idAccion = AccionID.move;
@@ -42,16 +42,16 @@ public class MoverUnidad :  Accion{
         VerNodosAlAlcance();
         print("Ejecutar entrado");
         print(NodosAlAlcance.Count);
-        //print(destino == null);
-        //if (NodosAlAlcance.Contains(destino))
-       // {
+        print(destino == null);
+        if (NodosAlAlcance.Contains(destino))
+        {
             SolicitarYRecorrerCamino(destino.position);
             this.m_Unidad.Nodo.unidad = null;
             this.m_Unidad.Nodo = null;
             return true;
-       // }
-       // else
-            //return false;
+        }
+       else
+            return false;
     }
 
     void Mover()
@@ -63,6 +63,7 @@ public class MoverUnidad :  Accion{
     IEnumerator RecorrerRuta()
     {
         Node Nodo = StageData.currentInstance.GetNodeFromPosition(transform.position);
+        StageData.currentInstance.ClearInfluenceToNode(Alcance, Nodo, this.m_Unidad.IdJugador, StageData.currentInstance.grafoTotal);
         Nodo.unidad = null;
         while (posicionActualRuta < m_Ruta.Count-1)
         {
@@ -81,6 +82,8 @@ public class MoverUnidad :  Accion{
         NodosAlAlcance = Control.GetNodosAlAlcance(StageData.currentInstance.GetNodeFromPosition(transform.position), 3);
         Nodo = StageData.currentInstance.GetNodeFromPosition(transform.position);
         Nodo.unidad = transform.GetComponent<Unidad>();
+        StageData.currentInstance.SetInfluenceToNode(Alcance, Nodo, m_Unidad.IdJugador);
+
     }   
 
     public override void CancelarAccion()

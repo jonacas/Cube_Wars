@@ -67,6 +67,7 @@ public class CrearUnidad : Accion
                     StageData.currentInstance.GetPartidaActual().JugadorActual.Exploradores++;
                     SetUnidadANodoYViceversa(gameObjectUnidad.GetComponent<Unidad>());
                     StageData.currentInstance.GetPartidaActual().Jugadores[m_Unidad.IdJugador].unidadesDisponibles.Add(gameObjectUnidad.GetComponent<Unidad>());
+                    gameObjectUnidad.GetComponent<Unidad>().IdJugador = StageData.currentInstance.GetPartidaActual().JugadorActual.idJugador;
                     break;
             }
             CancelarAccion();

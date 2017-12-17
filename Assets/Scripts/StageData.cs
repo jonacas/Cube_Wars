@@ -230,209 +230,16 @@ public class StageData : MonoBehaviour
 
         return new List<Vector3>();
     }
-    /*
-    public void SendAlert(Vector3 detectedPos, int stage, int area)
-    {
-        if (ComunicationsEnabeled)
-        {
-            //print("Sending alert...");
-            for (int i = 0; i < enemiesInStage.Count; i++)
-            {
-                if (enemiesInStage[i].enemyIDStage == stage && enemiesInStage[i].enemyIDStagePart == area)
-                {
-                    enemiesInStage[i].SendAlertToPosition(detectedPos);
-                }
-            }
 
-            sendAlertToOtherZones(stage, area);
-        }
-    }
-    /*
-    private void sendAlertToOtherZones(int area, int stage)
-    {
-        print("Alerta a otras zonas");
-        switch (area)
-        {
-            case 1:
-                {
-                    GameObject.Find("DR QB 2 1").GetComponent<EnemyMovement>().AlertFromAnotherZone(GameObject.Find("2_1").transform.position);
-                    GameObject.Find("DR QB 2 2").GetComponent<EnemyMovement>().AlertFromAnotherZone(GameObject.Find("2_1").transform.position);
-                    break;
-                }
-
-            case 2:
-                {
-                    GameObject.Find("DR QB 1 1").GetComponent<EnemyMovement>().AlertFromAnotherZone(GameObject.Find("1_2").transform.position);
-                    GameObject.Find("DR QB 1 2").GetComponent<EnemyMovement>().AlertFromAnotherZone(GameObject.Find("1_2").transform.position);
-                    GameObject.Find("DR QB 3 1 1").GetComponent<EnemyMovement>().AlertFromAnotherZone(GameObject.Find("31_2").transform.position);
-                    GameObject.Find("DR QB 3 1 2").GetComponent<EnemyMovement>().AlertFromAnotherZone(GameObject.Find("31_2").transform.position);
-                    break;
-                }
-
-            case 3:
-                {
-                    switch (stage)
-                    {
-                        case 1:
-                            GameObject.Find("DR QB 2 1").GetComponent<EnemyMovement>().AlertFromAnotherZone(GameObject.Find("31_2").transform.position);
-                            GameObject.Find("DR QB 2 2").GetComponent<EnemyMovement>().AlertFromAnotherZone(GameObject.Find("31_2").transform.position);
-                            GameObject.Find("DR QB 3 2 1").GetComponent<EnemyMovement>().AlertFromAnotherZone(GameObject.Find("31_32").transform.position);
-                            GameObject.Find("DR QB 3 2 2").GetComponent<EnemyMovement>().AlertFromAnotherZone(GameObject.Find("31_32").transform.position);
-                            GameObject.Find("DR QB 3 4 1").GetComponent<EnemyMovement>().AlertFromAnotherZone(GameObject.Find("31_34").transform.position);
-                            break;
-                        case 2:
-                            GameObject.Find("DR QB 3 1 1").GetComponent<EnemyMovement>().AlertFromAnotherZone(GameObject.Find("32_31").transform.position);
-                            GameObject.Find("DR QB 3 1 2").GetComponent<EnemyMovement>().AlertFromAnotherZone(GameObject.Find("32_31").transform.position);
-                            GameObject.Find("DR QB 3 3 1").GetComponent<EnemyMovement>().AlertFromAnotherZone(GameObject.Find("32_33").transform.position);
-                            GameObject.Find("DR QB 3 3 2").GetComponent<EnemyMovement>().AlertFromAnotherZone(GameObject.Find("32_33").transform.position);
-                            break;
-                        case 3:
-                            GameObject.Find("DR QB 3 2 1").GetComponent<EnemyMovement>().AlertFromAnotherZone(GameObject.Find("33_32").transform.position);
-                            GameObject.Find("DR QB 3 2 2").GetComponent<EnemyMovement>().AlertFromAnotherZone(GameObject.Find("33_32").transform.position);
-                            GameObject.Find("DR QB 3 4 1").GetComponent<EnemyMovement>().AlertFromAnotherZone(GameObject.Find("33_34").transform.position);
-                            break;
-                        case 4:
-                            break;
-                    }
-                    break;
-                }
-        }
-
-    }
-
-    public void CancelAlertToOtherZones(int area, int stage)
-    {
-        switch (area)
-        {
-            case 1:
-                {
-                    GameObject.Find("DR QB 2 1").GetComponent<EnemyMovement>().CancelAlertFromAnotherZone();
-                    GameObject.Find("DR QB 2 2").GetComponent<EnemyMovement>().CancelAlertFromAnotherZone();
-                    break;
-                }
-
-            case 2:
-                {
-                    GameObject.Find("DR QB 1 1").GetComponent<EnemyMovement>().CancelAlertFromAnotherZone();
-                    GameObject.Find("DR QB 1 2").GetComponent<EnemyMovement>().CancelAlertFromAnotherZone();
-                    GameObject.Find("DR QB 3 1 1").GetComponent<EnemyMovement>().CancelAlertFromAnotherZone();
-                    GameObject.Find("DR QB 3 1 2").GetComponent<EnemyMovement>().CancelAlertFromAnotherZone();
-                    break;
-                }
-
-            case 3:
-                {
-                    switch (stage)
-                    {
-                        case 1:
-                            GameObject.Find("DR QB 2 1").GetComponent<EnemyMovement>().CancelAlertFromAnotherZone();
-                            GameObject.Find("DR QB 2 2").GetComponent<EnemyMovement>().CancelAlertFromAnotherZone();
-                            GameObject.Find("DR QB 3 2 1").GetComponent<EnemyMovement>().CancelAlertFromAnotherZone();
-                            GameObject.Find("DR QB 3 2 2").GetComponent<EnemyMovement>().CancelAlertFromAnotherZone();
-                            GameObject.Find("DR QB 3 4 1").GetComponent<EnemyMovement>().CancelAlertFromAnotherZone();
-                            break;
-                        case 2:
-                            GameObject.Find("DR QB 3 1 1").GetComponent<EnemyMovement>().CancelAlertFromAnotherZone();
-                            GameObject.Find("DR QB 3 1 2").GetComponent<EnemyMovement>().CancelAlertFromAnotherZone();
-                            GameObject.Find("DR QB 3 3 1").GetComponent<EnemyMovement>().CancelAlertFromAnotherZone();
-                            GameObject.Find("DR QB 3 3 2").GetComponent<EnemyMovement>().CancelAlertFromAnotherZone();
-                            break;
-                        case 3:
-                            GameObject.Find("DR QB 3 2 1").GetComponent<EnemyMovement>().CancelAlertFromAnotherZone();
-                            GameObject.Find("DR QB 3 2 2").GetComponent<EnemyMovement>().CancelAlertFromAnotherZone();
-                            GameObject.Find("DR QB 3 4 1").GetComponent<EnemyMovement>().CancelAlertFromAnotherZone();
-                            break;
-                        case 4:
-                            break;
-                    }
-                    break;
-                }
-        }
-
-    }
-
-    public void SendNoise(Vector3 noisePos, float hearingRange)
-    {
-        for (int i = 0; i < enemiesInStage.Count; i++)
-        {
-            if (Vector3.Distance(enemiesInStage[i].gameObject.transform.position, noisePos) < hearingRange)
-                enemiesInStage[i].SendAlertToPosition(noisePos);
-        }
-        //lo mismo que send alert, pero esta vez no depende de comunicaciones, si no de rango
-    }
-
-    public void PressedButton(string buttonName)
-    {
-        switch (buttonName)
-        {
-            case "Boton1":
-                {
-                    tobeInteractedList[0].SetActive(false);
-                    pressedButtons[0] = true;
-                    break;
-                }
-            case "Boton2":
-                {
-                    tobeInteractedList[1].SetActive(false);
-                    pressedButtons[1] = true;
-                    break;
-                }
-            case "Boton3":
-                {
-                    tobeInteractedList[2].SetActive(false);
-                    pressedButtons[2] = true;
-                    break;
-                }
-            case "BotonComunicaciones":
-                {
-                    StageData.currentInstance.ComunicationsEnabeled = false;
-                    break;
-                }
-            default:
-                {
-                    break;
-                }
-        }
-
-        for (int i = 0; i < pressedButtons.Length; i++)
-        {
-            if (!pressedButtons[i])
-            {
-                return;
-            }
-        }
-        //Si llega hasta aqui, hemos desbloqueado la ruta alternativa.
-        tobeInteractedList[3].SetActive(false);
-        tobeInteractedList[4].SetActive(false);
-    }
-
-    */
-
-
-  /*  /// <summary>
-    ///  Devuelve el nodo al que pertenece una posicion
-    /// </summary>
-    /// <param name="pos">Posicion para la que se calcula el nodo</param>
-    /// <param name="grafo">Grafo del que se extraera el nodo
-    /// <returns></returns>
-    public Node GetNodoClick(Vector3 pos, Node[,] grafo)
-    {
-        int posX = (int)Mathf.Round(pos.x / CG.incrementoX);
-        int posZ = (int)Mathf.Round(pos.z / CG.incrementoZ);
-
-        return grafo[posX, posZ];
-
-    }*/
-
-	public void SetUnidadToNode( Unidad objeto)
+	/*public void SetUnidadToNode( Unidad objeto)
 	{
 		GetNodeFromPosition (objeto.transform.position).unidad = objeto;
-	}
+	}*/
 
-	public void SetResourceTypeToNode (TipoRecurso type, Vector3 resourcePosition)
+	/*private void SetResourceTypeToNode (TipoRecurso type, Vector3 resourcePosition)
 	{
 		GetNodeFromPosition (resourcePosition).resourceType = type;
-	}
+	}*/
 
 
 	//USA ESTA FUNCION PARA SETTEAR LA INFLUENCIA DESDE EL CENTRO DEL NODO, PARA UN JUGADOR.
@@ -471,20 +278,20 @@ public class StageData : MonoBehaviour
 					if (difX <= difY) 
 					{
 						grafo [posX, posY].SetPlayerInfluence (player, numberOfSteps - difY);
-						/*if (grafo [posX, posY].resourceType != TipoRecurso.NullResourceType) 
+						if (grafo [posX, posY].resourceType != TipoRecurso.NullResourceType) 
 						{
 							partidaActual.Jugadores [player].RecursoEncontrado (grafo [posX, posY].position);
 						}
-						*/
+						
 						//Debug.Log ("peso en" + " x: " + difX + " , " + "y: " + difY + "==>" +  grafo[posX, posY].GetPlayerInfluence(player));
 					}
 					else 
 					{
 						grafo [posX, posY].SetPlayerInfluence (player, numberOfSteps - difX);
-						/*if (grafo [posX, posY].resourceType != TipoRecurso.NullResourceType) 
+						if (grafo [posX, posY].resourceType != TipoRecurso.NullResourceType) 
 						{
 							partidaActual.Jugadores [player].RecursoEncontrado (grafo [posX, posY].position);
-						}*/
+						}
 						//Debug.Log ("peso en" + " x: " + difX + " , " + "y: " + difY + "==>" +  grafo[posX, posY].GetPlayerInfluence(player));
 					}
 				}
@@ -502,7 +309,7 @@ public class StageData : MonoBehaviour
 		int steps1 = (int) numberOfStepsCuadratic / 2;
 		int stepsDif = numberOfStepsCuadratic - steps1;
 
-		center.ClearPlayerInfluence (player);
+		//center.ClearPlayerInfluence (player);
 		//Debug.Log ("peso en" + " x: " + 0 + " , " + "y: " + 0 + "==>" +  (numberOfSteps) );
 
 		for (int i = -steps1; i < stepsDif; i++) 
@@ -601,10 +408,10 @@ public class StageData : MonoBehaviour
 			int randFil = Random.Range (0, CG.filas - 1);
 			int randCol = Random.Range (0, CG.columnas - 1);
 			//COMO BASE, TODOS LOS RECURSOS SON FOOD.
-			//grafoTotal [randFil, randCol].SetResourceToNode (TipoRecurso.Food);
+			grafoTotal [randFil, randCol].SetResourceToNode (TipoRecurso.Food);
 			grafoTotal [randFil, randCol].SetPlayerInfluence (0, Node.stepsInfluenceResource);
-			/*GameObject modeladoTest = Instantiate (testModeladoResource, grafoTotal [randFil, randCol].position, Quaternion.identity);
-			mapResourceReference.Add (modeladoTest);*/
+			GameObject modeladoTest = Instantiate (testModeladoResource, grafoTotal [randFil, randCol].position, Quaternion.identity);
+			mapResourceReference.Add (modeladoTest);
 		}
 	}
 

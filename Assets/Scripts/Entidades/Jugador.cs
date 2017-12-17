@@ -243,6 +243,7 @@ public abstract class Jugador : MonoBehaviour
 	{
 		if (!posicionRecursosEncontrados.Contains (pos)) 
 		{
+            print("Nuevo recurso encontrado");
 			posicionRecursosEncontrados.Add (pos);
 		}
 	}
