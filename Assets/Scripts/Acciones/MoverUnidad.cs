@@ -43,15 +43,15 @@ public class MoverUnidad :  Accion{
         print("Ejecutar entrado");
         print(NodosAlAlcance.Count);
         //print(destino == null);
-        if (NodosAlAlcance.Contains(destino))
-        {
+        //if (NodosAlAlcance.Contains(destino))
+       // {
             SolicitarYRecorrerCamino(destino.position);
             this.m_Unidad.Nodo.unidad = null;
             this.m_Unidad.Nodo = null;
             return true;
-        }
-        else
-            return false;
+       // }
+       // else
+            //return false;
     }
 
     void Mover()
@@ -97,15 +97,17 @@ public class MoverUnidad :  Accion{
     public override List<Node> VerNodosAlAlcance()
     {
         print("SeleccionarResaltoCasilla" + Alcance);
+        print(m_Unidad);
+        print(m_Unidad.Nodo);
         NodosAlAlcance = Control.GetNodosAlAlcance(m_Unidad.Nodo, Alcance);
         for (int i = NodosAlAlcance.Count - 1; i >= 0; i--)
         {
-			if (NodosAlAlcance[i].unidad != null ||
+			/*if (NodosAlAlcance[i].unidad != null ||
                 NodosAlAlcance[i].resourceType != TipoRecurso.NullResourceType)
             {
                 print(NodosAlAlcance[i].unidad + "   " + NodosAlAlcance[i].resourceType + "  Eliminado");
                 NodosAlAlcance.Remove(NodosAlAlcance[i]);
-            }
+            }*/
         }
 
         m_Unidad.ResaltarCasillasAlAlcance(NodosAlAlcance);

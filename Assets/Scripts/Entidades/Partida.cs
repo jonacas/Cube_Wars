@@ -90,16 +90,17 @@ public class Partida : MonoBehaviour{
         {
             for (int i = 0; i < numJugadores; i++)
             {
+                jugadorActual = jugadores[i];
                 print("COMIENZA EL TURNO DEL " + i);
                 jugadores[i].Turno();
-
                 while (!jugadores[i].HaAcabadoTurno())
                     yield return null;
-
+                //yield return new WaitForSeconds(5);
                 print("TURNO TERMINADO");
             }
             yield return null;
         }
+        yield return null;
     }
 
     public void DescativarJugadorYComprobarVictoria(int jugador)

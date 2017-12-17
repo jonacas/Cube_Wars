@@ -106,6 +106,13 @@ public abstract class Jugador : MonoBehaviour
         unidadesDisponibles = new List<Unidad>();
         edificios = new List<Unidad>();
 
+        //unidades
+        exploradores = 0;
+        guerreros = 0;
+        aldeanos = 0;
+        edificiosRecoleccion = 0;
+        torresDefensa = 0;
+
 		//Con esto copiamos un mapa de nodos limpio ^^
 		influencias = StageData.currentInstance.CG.nodeMap;
     }

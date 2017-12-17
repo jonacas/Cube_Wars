@@ -29,6 +29,7 @@ public class StageData : MonoBehaviour
 {
 
     public GameObject player, WarriorPrefab, WorkerPrefab, ExplorerPrefab, TowerPrefab, ResourceBuildPrefab;
+    public GameObject explorerIAPrefab;
     public static StageData currentInstance;
     public List<EnemyMovement> enemiesInStage;
     public CreacionGrafo CG;
@@ -593,8 +594,8 @@ public class StageData : MonoBehaviour
 			//COMO BASE, TODOS LOS RECURSOS SON FOOD.
 			grafoTotal [randFil, randCol].SetResourceToNode (TipoRecurso.Food);
 			grafoTotal [randFil, randCol].SetPlayerInfluence (0, Node.stepsInfluenceResource);
-			GameObject modeladoTest = Instantiate (testModeladoResource, grafoTotal [randFil, randCol].position, Quaternion.identity);
-			mapResourceReference.Add (modeladoTest);
+			/*GameObject modeladoTest = Instantiate (testModeladoResource, grafoTotal [randFil, randCol].position, Quaternion.identity);
+			mapResourceReference.Add (modeladoTest);*/
 		}
 	}
 

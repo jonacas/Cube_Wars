@@ -27,7 +27,7 @@ using UnityEngine;
  *si se ha garantizado su cumplimiento (se recogen suficientes recursos o hay bastantes defensas).
  */
 
-public class ArbolMaestro : MonoBehaviour{
+public class ArbolMaestro{
 
     private const int EXPLORADOR = 0;
     private const int RECOLECTOR = 1;

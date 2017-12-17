@@ -10,69 +10,87 @@ public class RolExplorador : MonoBehaviour {
 	Partida partidaActual;
     bool exploradoresSuficientes, coroutineActive;
     List<Vector3> caminoANodoDestino;
-    bool fin;
+    public bool fin;
     int puntosAsignado;
 
-	void Start()
-	{
-		partidaActual = StageData.currentInstance.GetPartidaActual ();
-	}
 
 	public bool ComenzarTurno(int puntosAsignadosDesdeFuera)
 	{
+        fin = false;
+        partidaActual = StageData.currentInstance.GetPartidaActual();
+        print("Comenza rol explorador");
         puntosAsignado = puntosAsignadosDesdeFuera;
-        exploradoresSuficientes = partidaActual.JugadorActual.Exploradores < 3;
-        if (!exploradoresSuficientes)
+        if (!(partidaActual.JugadorActual.Exploradores > 3))
             StartCoroutine("CrearExplorador");
-        else
-            MoverExploradores();
+
+        StartCoroutine("MoverExploradores");
 		//Decidir cual mover y cuanto moverlo
 
         return false;
 	}
 
-    private void MoverExploradores()
+    IEnumerator MoverExploradores()
     {
-        Node objetivo = GetObjetivoExplorador();
+        print("Comienza mover exploradores");
+        Node objetivo;
         List<Unidad> exploradores = StageData.currentInstance.GetPartidaActual().JugadorActual.unidadesDisponibles;
-        for (int i = exploradores.Count; i >= 0; i--)
+        IA_Explorador aux;
+        for (int i = exploradores.Count - 1; i >= 0; i--)
+        {
             if (exploradores[i].IdUnidad != TipoUnidad.Explorer)
                 exploradores.Remove(exploradores[i]);
-        int puntosPorExplorador = puntosAsignado / exploradores.Count;
-        foreach (IA_Explorador expl in exploradores)
-        {
-            expl.AvanzarHaciaDestino(ref puntosPorExplorador);
+            aux = (IA_Explorador)exploradores[i];
+            objetivo = GetObjetivoExplorador();
+            aux.SetDestino(objetivo);
         }
+
+        while (puntosAsignado >= StageData.COSTE_PA_MOVER_UNIDAD)
+        {
+            foreach (IA_Explorador expl in exploradores)
+            {
+                //puntosAsignado -= StageData.COSTE_PA_MOVER_UNIDAD;
+                expl.AvanzarHaciaDestino(ref puntosAsignado);
+                yield return new WaitForSeconds(5);
+                while (!expl.listo)
+                    yield return null;
+                if (puntosAsignado < StageData.COSTE_PA_MOVER_UNIDAD)
+                    break;
+                yield return null;
+            }
+            yield return null;
+        }
+        fin = true;
+        
     }
 
     IEnumerator CrearExplorador()
 	{
-        coroutineActive = true;
+        print("Comienza crear Exploradores");
         List<Unidad> edificiosCreadores = GetCreadorDeUnidadesAdecuado(); // MIRO TODOS LOS EDIFICIOS QUE PUEDEN CONSTRUIR UNIDADES Y LOS ORDENO POR PRIORIDAD
         int edificioActual = 0; // SE UTILIZA PARA SABER CUAL ES EL EDIFICIO QUE VA A CONSTRUIR, PARA CONTROLAR QUE SI UN EDIFICIO NO PUEDE CREAR MAS, PASE AL SIGUIENTE
         while (partidaActual.JugadorActual.Exploradores < 3 && edificioActual < edificiosCreadores.Count)
         {
             CrearUnidad accionCreadorUnidades = (CrearUnidad)edificiosCreadores[edificioActual].Acciones[CREAR_UNIDAD_INDEX];
-            List<Node> nodosAlAlcance = GetComponent<CrearUnidad>().VerNodosAlAlcance(); // COJO LOS NODOS AL ALCANCE ACTUALIZADO DEL EDIFICIO DE CREACION
+            List<Node> nodosAlAlcance = accionCreadorUnidades.VerNodosAlAlcance(); // COJO LOS NODOS AL ALCANCE ACTUALIZADO DEL EDIFICIO DE CREACION
             if (nodosAlAlcance.Count == 0)
             { // SI EN ESTE EDIFICIO NO SE PUEDE CREAR MAS GUERREROS, PASO AL SIGUIENTE
                 edificioActual++;
                 if (edificioActual >= edificiosCreadores.Count) // SI HE RECORRIDO TODOS LOS EDIFICIOS, SIGNIFICA QUE ME QUEDAN PUNTOS POR GASTAR PERO NO ME CABE EN NINGUN EDIFICIO MAS GUERREROS
                     print("NO SE PUEDEN CREAR MAS UNIDADES  PORQUE NO CABEN MAS UNIDADES");
             }
-            else if (edificioActual < edificiosCreadores.Count) // EN CASO DE QUE TODO VAYA BIEN, LO CREO
+           else if (edificioActual < edificiosCreadores.Count) // EN CASO DE QUE TODO VAYA BIEN, LO CREO
             {
-                bool haFuncionado = GetComponent<CrearUnidad>().Ejecutar(nodosAlAlcance[0], TipoUnidad.Warrior);
+                bool haFuncionado = accionCreadorUnidades.Ejecutar(nodosAlAlcance[0], TipoUnidad.Explorer);
                 if (haFuncionado)
                 {
+                    print(partidaActual.JugadorActual.Exploradores);
+                    puntosAsignado -= StageData.COSTE_PA_CREAR_ALDEANO;
                     yield return new WaitForSeconds(0.5f); // DELAY QUE SE TARDA ENTRE CREAR UNA UNIDAD Y OTRA
                 }
             }
         }
-        exploradoresSuficientes = partidaActual.JugadorActual.Exploradores < 3;
-        if(exploradoresSuficientes)
-            MoverExploradores();
-        coroutineActive = false;
+        yield return new WaitForSeconds(2);
+        StartCoroutine("MoverExploradores");
     }
 
 	List<Unidad> GetCreadorDeUnidadesAdecuado()
@@ -103,6 +121,35 @@ public class RolExplorador : MonoBehaviour {
     private Node GetObjetivoExplorador()
     {
         Node[,] grafo = StageData.currentInstance.grafoTotal;
+        Node destino = null;
+        Node aux;
+        List<Node> alAlcance;
+        int valor = 0;
+
+        while (destino == null)
+        {
+            aux = grafo[UnityEngine.Random.Range(0, StageData.currentInstance.CG.filas), UnityEngine.Random.Range(0, StageData.currentInstance.CG.columnas)];
+            alAlcance = Control.GetNodosAlAlcance(aux, 5);
+
+            foreach(Node n in alAlcance)
+            {
+                valor += n.GetPlayerInfluence(StageData.currentInstance.GetPartidaActual().JugadorActual.idJugador);
+            }
+
+            if (valor < 20)
+            {
+                destino = aux;
+            }
+
+            else
+            {
+                valor = 0;
+            }
+
+        }
+
+        return destino;
+        /*Node[,] grafo = StageData.currentInstance.grafoTotal;
         List<Node> nodosSinVisitar = new List<Node>();
         for (int i = 0; i < grafo.GetLength(0); i++)
         {
@@ -120,6 +167,8 @@ public class RolExplorador : MonoBehaviour {
                 aux = n;
                 
         }
-        return aux;
+
+        print(aux.position);
+        return grafo[5,5];*/
     }
 }

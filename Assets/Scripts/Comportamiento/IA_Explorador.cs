@@ -6,7 +6,7 @@ public class IA_Explorador : Unidad {
 
     const int ACCION_MOVER = 0;
 
-    private bool heLlegado, listo;
+    public bool heLlegado, listo;
     private List<Vector3> caminoTotalANodoDestino;
     int posActual;
 
@@ -20,6 +20,7 @@ public class IA_Explorador : Unidad {
         Defensa = StageData.DEFENSA_MAX_ALDEANO;
         idUnidad = TipoUnidad.Explorer;
         IdJugador = 2;
+        Nodo = StageData.currentInstance.GetNodeFromPosition(transform.position);
     }
 
     /*private void Start()
@@ -66,20 +67,24 @@ public class IA_Explorador : Unidad {
 
     public void AvanzarHaciaDestino(ref int puntosDisponibles)
     {
-        //si hay unidades enemigas al alcance (guerreros y torres de defensa), las ataca si son del objetivo
         listo = false;
         List<Node> alcance;
-        alcance = acciones[ACCION_MOVER].VerNodosAlAlcance();
+        //alcance = acciones[ACCION_MOVER].VerNodosAlAlcance();
         
         //si no atacamos, movemos
-        caminoActual = caminoTotalANodoDestino.GetRange(posActual, acciones[ACCION_MOVER].Alcance - 1);
+        if(posActual + 3 > caminoTotalANodoDestino.Count - 1)
+            caminoActual = caminoTotalANodoDestino.GetRange(posActual, caminoTotalANodoDestino.Count - 1);
+        else
+            caminoActual = caminoTotalANodoDestino.GetRange(posActual, 3);
+        print(caminoActual.Count);
+
 
         //comprobamos a que posiciones podemos movernos
-        Vector3 destino = Vector3.zero;
+       Vector3 destino = Vector3.zero;
         int incrementoPos = 0;
         for (int i = caminoActual.Count - 1; i >= 0; i--)
         {
-            if (StageData.currentInstance.GetNodeFromPosition(caminoActual[i]).unidad == null && StageData.currentInstance.GetNodeFromPosition(caminoActual[i]).resourceType == TipoRecurso.NullResourceType)
+            if (StageData.currentInstance.GetNodeFromPosition(caminoActual[i]).unidad == null)// && StageData.currentInstance.GetNodeFromPosition(caminoActual[i]).resourceType == TipoRecurso.NullResourceType)
             {
                 destino = caminoActual[i];
                 incrementoPos = i;
@@ -88,8 +93,9 @@ public class IA_Explorador : Unidad {
         }
 
         //si no puede moverse, ha llegado
-        if (destino == Vector3.zero)
+       if (destino == Vector3.zero)
         {
+            print("Avanzar hacia destino" + caminoActual.Count);
             heLlegado = true;
             listo = true;
             return;
@@ -97,9 +103,10 @@ public class IA_Explorador : Unidad {
 
         //si puede moverse, lo hace
         MoverUnidad mv = (MoverUnidad)acciones[ACCION_MOVER];
+        print(StageData.currentInstance.GetNodeFromPosition(destino));
         if (mv.Ejecutar(StageData.currentInstance.GetNodeFromPosition(destino)))
         {
-            posActual += incrementoPos;
+            //posActual += incrementoPos;
             puntosDisponibles -= StageData.COSTE_PA_MOVER_UNIDAD;
         }
         listo = true;

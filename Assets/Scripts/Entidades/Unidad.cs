@@ -23,7 +23,7 @@ public abstract class Unidad : MonoBehaviour {
     
     private void Start()
     {
-        piscina = new GameObject("Piscina");
+        //piscina = new GameObject("Piscina");
         if (IngameInterfaceManager.currentInstance != null)
         {
             GameObject panelCreated = Instantiate(unitPanelPrefab, IngameInterfaceManager.currentInstance.unitPanels_Parent) as GameObject;

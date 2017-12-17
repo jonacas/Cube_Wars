@@ -380,6 +380,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 900ff3d7ebb65aa43a6f5ce643e416bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fin: 0
 --- !u!1001 &633763357
 Prefab:
   m_ObjectHideFlags: 0
@@ -389,7 +390,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4342418967315192, guid: aed9c45806d1fac458b8110dd33bd252, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 46
+      value: 247.8
       objectReference: {fileID: 0}
     - target: {fileID: 4342418967315192, guid: aed9c45806d1fac458b8110dd33bd252, type: 2}
       propertyPath: m_LocalPosition.y
@@ -397,7 +398,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4342418967315192, guid: aed9c45806d1fac458b8110dd33bd252, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 28.59
+      value: 198.4
       objectReference: {fileID: 0}
     - target: {fileID: 4342418967315192, guid: aed9c45806d1fac458b8110dd33bd252, type: 2}
       propertyPath: m_LocalRotation.x
@@ -536,8 +537,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 705783837}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 703.5, y: 370, z: 0}
-  m_LocalScale: {x: 0.7085988, y: 0.7085988, z: 0.7085988}
+  m_LocalPosition: {x: 703.5, y: 304, z: 0}
+  m_LocalScale: {x: 0.6422977, y: 0.6422977, z: 0.6422977}
   m_Children:
   - {fileID: 194914090}
   m_Father: {fileID: 0}
@@ -1226,6 +1227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 900ff3d7ebb65aa43a6f5ce643e416bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fin: 0
 --- !u!4 &1591571275 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4405737073153696, guid: 7ca57e483a76135448f31d550765ca21,
@@ -1437,6 +1439,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 900ff3d7ebb65aa43a6f5ce643e416bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fin: 0
 --- !u!1 &1758801784
 GameObject:
   m_ObjectHideFlags: 0
@@ -1477,13 +1480,17 @@ MonoBehaviour:
     type: 2}
   ResourceBuildPrefab: {fileID: 1133215434081162, guid: 244e7ef30648da0408c677d9f65f543d,
     type: 2}
+  explorerIAPrefab: {fileID: 1025802482311878, guid: c98733497dc8db24290ce53d73e1f832,
+    type: 2}
   enemiesInStage: []
   CG: {fileID: 1700817739}
   unidadACrear: 0
   testResourceList: []
+  mapResourceReference: []
   tobeInteractedList: []
   numberOfPlayers: 3
   testCasillaMarcada: {fileID: 0}
+  testModeladoResource: {fileID: 0}
 --- !u!4 &1758801786
 Transform:
   m_ObjectHideFlags: 0
@@ -1844,12 +1851,12 @@ Prefab:
     - target: {fileID: 224297228063903796, guid: 2d129bac9f08ab54fac71825928e983a,
         type: 2}
       propertyPath: m_LocalPosition.x
-      value: -142.80438
+      value: -245.2865
       objectReference: {fileID: 0}
     - target: {fileID: 224297228063903796, guid: 2d129bac9f08ab54fac71825928e983a,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: -2.8427734
+      value: -51.69922
       objectReference: {fileID: 0}
     - target: {fileID: 224705924873278356, guid: 2d129bac9f08ab54fac71825928e983a,
         type: 2}
