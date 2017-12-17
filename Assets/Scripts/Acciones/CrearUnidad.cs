@@ -42,7 +42,7 @@ public class CrearUnidad : Accion
                         gameObjectUnidad.AddComponent<IA_Guerrero>();
                     }
                     SetUnidadANodoYViceversa(gameObjectUnidad.GetComponent<Unidad>());
-                    StageData.currentInstance.GetPartidaActual().Jugadores[m_Unidad.IdJugador].Guerreros++;
+                    StageData.currentInstance.GetPartidaActual().JugadorActual.Guerreros++;
                     break;
                 case TipoUnidad.Worker:
                     gameObjectUnidad = Instantiate(StageData.currentInstance.WorkerPrefab, destino.position, StageData.currentInstance.WorkerPrefab.transform.rotation);
@@ -52,7 +52,7 @@ public class CrearUnidad : Accion
                         gameObjectUnidad.AddComponent<IA_Aldeano>();
                     }
                     SetUnidadANodoYViceversa(gameObjectUnidad.GetComponent<Unidad>());
-                    StageData.currentInstance.GetPartidaActual().Jugadores[m_Unidad.IdJugador].Aldeanos++;
+                    StageData.currentInstance.GetPartidaActual().JugadorActual.Aldeanos++;
                     break;
                 case TipoUnidad.Explorer:
 
@@ -64,8 +64,8 @@ public class CrearUnidad : Accion
                     {
                         gameObjectUnidad = Instantiate(StageData.currentInstance.ExplorerPrefab, destino.position, StageData.currentInstance.ExplorerPrefab.transform.rotation);
                     }
-                    StageData.currentInstance.GetPartidaActual().Jugadores[StageData.currentInstance.GetPartidaActual().JugadorActual.idJugador].Exploradores++;
-                    //SetUnidadANodoYViceversa(gameObjectUnidad.GetComponent<Unidad>());
+                    StageData.currentInstance.GetPartidaActual().JugadorActual.Exploradores++;
+                    SetUnidadANodoYViceversa(gameObjectUnidad.GetComponent<Unidad>());
                     StageData.currentInstance.GetPartidaActual().Jugadores[m_Unidad.IdJugador].unidadesDisponibles.Add(gameObjectUnidad.GetComponent<Unidad>());
                     break;
             }
