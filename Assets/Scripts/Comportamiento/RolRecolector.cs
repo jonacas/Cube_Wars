@@ -8,11 +8,17 @@ public class RolRecolector : MonoBehaviour {
 	{
 		BajoDemanda, EnCamino, DemandaSatisfecha
 	};
-		
-	private Partida partidaActual;
-	private List<IA_Aldeano> aldeanos;
 
-	public const int MINIMO_ALDEANOS_DISPONIBLES = 2;
+	private Partida partidaActual;
+	List<Vector3> caminoARecursoDestino;
+	bool fin;
+	int puntosAsignados;
+	int numeroCreaciones;
+	List<Vector3> recursosSinExplotar;
+
+	bool numeroAldeanosMINIMOS;
+
+	TipoRecurso recursoMinimoActual;
 
 	// EL COSTE DE COMIDA ES TAMBIEN EL DE BASE, PARA HACER PRUEBAS.
 	public const int MINIMO_COMIDA = 40;
@@ -26,46 +32,106 @@ public class RolRecolector : MonoBehaviour {
 	//RECUERDA: ESTE SCRIPTE DEBE IR EN EL MISMO GAMEOBJECT QUE EL JUGADOR.
 	void Start()
 	{
-		aldeanos = new List<IA_Aldeano> ();
 		partidaActual = StageData.currentInstance.GetPartidaActual ();
+		caminoARecursoDestino = new List<Vector3> ();
+		recursosSinExplotar = new List<Vector3> ();
 	}
 
-	/*public bool ComenzarTurno(int puntosAsignados, int recursoBase)
+	public bool ComenzarTurno(int puntosAsig)
 	{
 		// Buscamos ahora a los aldeanos disponibles.
-		aldeanos.Clear();
-		for (int i = 0; i < partidaActual.JugadorActual.unidadesDisponibles.Count; i++) 
+		puntosAsignados = puntosAsig;
+		numeroAldeanosMINIMOS = partidaActual.JugadorActual.Aldeanos < 3;
+		recursoMinimoActual = partidaActual.JugadorActual.GetMenorTipoRecurso ();
+		recursosSinExplotar.Clear ();
+
+		if (!numeroAldeanosMINIMOS)
 		{
-			if (partidaActual.JugadorActual.unidadesDisponibles [i].IdUnidad == TipoUnidad.Worker) 
+			numeroCreaciones = puntosAsignados / StageData.COSTE_PA_CREAR_ALDEANO;
+			if (numeroCreaciones > 0) 
 			{
-				aldeanos.Add ((IA_Aldeano)partidaActual.JugadorActual.unidadesDisponibles [i]);
+				StartCoroutine ("CrearAldeano");
+				return true;
 			}
+			else
+			{
+				return false;
+			}
+			//Empieza la corutina de crear los aldeanos.
+		}
+		/*if (partidaActual.JugadorActual.posicionRecursosEncontrados.Count < 3) 
+		{
+			//Mandamos a la peña a recoger recursos, para ello dedicaremos los recursos a Explorador.
+		}*/
+		else 
+		{
+			int movimientosDisponibles = puntosAsig / StageData.COSTE_PA_MOVER_UNIDAD;
+
+			if (movimientosDisponibles > 0) 
+			{
+				MoverAldeanosDisponibles (movimientosDisponibles);
+				return true;
+			} 
+			else
+			{
+				return false;
+			}
+
 		}
 
 		//Comprobamos si necesitamos recursos mínimos, para cumplir necesidades mínimas.
-		if (!CheckMinimumPlaceHolder (recursoBase)) 
-		{
-			//Necesitamos recursos.
 
-			if (aldeanos.Count < MINIMO_ALDEANOS_DISPONIBLES) 
+	}
+
+	private void MoverAldeanosDisponibles(int numeroMovimientos)
+	{
+		//AQUI MIRO SI TENGO ALDEANOS CERCA.
+		List<Unidad> aldeanos = partidaActual.JugadorActual.unidadesDisponibles;
+		for (int i = aldeanos.Count - 1; i >= 0; i--) 
+		{
+			if (aldeanos [i].IdUnidad == TipoUnidad.Worker) 
 			{
-				//No tenemos tampoco aldeanos suficientes. 
-				//Por ahora vamos a spawnear 2 aldeanos.
-				//Debemos buscar ahora el lugar más cercano para crear los aldeanos.
-				// Por ahora, 
+				aldeanos.Remove (aldeanos[i]);
+			}
+		}
+		List<Unidad> aldeanosOrdenadosPorProximidad = new List<Unidad> ();
+
+		SetResourcesSinExplotar (recursoMinimoActual);
+
+		Unidad aux = aldeanos[0];
+		Vector3 cerca = recursosSinExplotar[0];
+
+		while (aldeanos.Count > 0 && recursosSinExplotar.Count > 0) // ORDENACION
+		{
+			foreach (Unidad u in aldeanos)  // LOS ORDENO POR DISTANCIA. CUANTA MENOR ES LA DISTANCIA, MAYOR ES LA PRIORIDAD
+			{
+				foreach (Vector3 pos in recursosSinExplotar) //BUSCAMOS EL RECURSO MAS CERCANO RESPECTO LA CAPITAL.
+				{
+					if (Vector3.Distance (pos, u.Nodo.position) < Vector3.Distance (cerca, u.Nodo.position)) 
+					{
+						cerca = pos;
+						aux = u;
+					}
+				}
 
 			}
-
+			recursosSinExplotar.Remove (cerca);
+			aldeanosOrdenadosPorProximidad.Add(aux);
+			aldeanos.Remove(aux);
 		}
-	}
-	*/
 
-	public bool CheckMinimumResources(FacturaRecursos recActuales)
+
+
+
+
+
+	}
+
+
+	public bool CheckMinimumResources()
 	{
-		return recActuales.GetComida () >= MINIMO_COMIDA &&
-		recActuales.GetMadera () >= MINIMO_MADERA &&
-		recActuales.GetMetal () >= MINIMO_METAL &&
-		recActuales.GetPiedra () >= MINIMO_PIEDRA;
+		return partidaActual.JugadorActual.ComprobarRecursosNecesarios (
+			new FacturaRecursos (0, MINIMO_COMIDA, MINIMO_MADERA, MINIMO_PIEDRA, MINIMO_METAL)); 
 	}
 
 	public bool CheckMinimumPlaceHolder (int recursoBase)
@@ -83,27 +149,110 @@ public class RolRecolector : MonoBehaviour {
 
 	*/
 
-	/*
-	void CrearAldeanosParaRecurso()
+	IEnumerator CrearAldeano()
 	{
-		//Obtenemos todos los posibles, del jugador que queremos. 
-		List<Unidad> edificiosCreadoresDeAldeanos = partidaActual.JugadorActual.edificios;
-		for (int i = edificiosCreadoresDeAldeanos.Count - 1; i >= 0; i++) 
+		List<Unidad> edificiosCreadores = GetCreadorDeAldeanosAdecuado ();
+		int edificioActual = 0;
+		while (numeroCreaciones > 0 && edificioActual < edificiosCreadores.Count)
 		{
-			if (edificiosCreadoresDeAldeanos [i].IdUnidad != TipoUnidad.Building) 
+			CrearUnidad accionCreadorUnidades = (CrearUnidad)edificiosCreadores [edificioActual].Acciones [0];
+			List<Node> nodosAlAlcance = GetComponent<CrearUnidad> ().VerNodosAlAlcance ();
+			if (nodosAlAlcance.Count == 0) 
 			{
-				edificiosCreadoresDeAldeanos.Remove (edificiosCreadoresDeAldeanos [i]);
+				edificioActual++;
+				if (edificioActual >= edificiosCreadores.Count)
+				{
+					print ("No se pueden crear más en este edificio");
+				}
+			}
+			else if (edificioActual < edificiosCreadores.Count)
+			{
+				bool haFuncionado = GetComponent<CrearUnidad>().Ejecutar(nodosAlAlcance[0], TipoUnidad.Worker);
+				if (haFuncionado)
+				{
+					numeroCreaciones--;
+					print (numeroCreaciones);
+					yield return new WaitForSeconds(0.5F);
+				}
 			}
 		}
-		edificiosCreadoresDeAldeanos.Add (partidaActual.JugadorActual.Capital);
-
-		//Aqui, comprobar qué edificio está más cerca de qué recursos.
-
 
 
 	}
-	*/
 
+	List<Unidad> GetCreadorDeAldeanosAdecuado()
+	{
+		List<Unidad> edificiosCreadoresDeunidades = partidaActual.JugadorActual.edificios;
+		for (int i = edificiosCreadoresDeunidades.Count - 1; i >= 0; i--) 
+		{
+			if (edificiosCreadoresDeunidades [i].IdUnidad == TipoUnidad.DefensiveBuilding) 
+			{
+				edificiosCreadoresDeunidades.Remove (edificiosCreadoresDeunidades [i]);
+			}
+
+		}
+		edificiosCreadoresDeunidades.Add (partidaActual.JugadorActual.Capital);
+		List<Unidad> edificiosOrdenadosPorPrioridad = new List<Unidad>(); // LA LISTA EN LA QUE VOY A METER LOS EDIFICIOS ORDENADOS POR PRIORIDAD
+
+		//COMPROBAR EL RECURSO NECESARIO QUE ESTAMOS BUSCANDO.
+		SetResourcesSinExplotar (recursoMinimoActual);
+
+		Unidad aux;
+		Vector3 cerca;
+		while (edificiosCreadoresDeunidades.Count > 0 && recursosSinExplotar.Count > 0) // ORDENACION
+		{
+			aux = edificiosCreadoresDeunidades[0];
+			cerca = recursosSinExplotar[0];
+			foreach (Unidad u in edificiosCreadoresDeunidades)  // LOS ORDENO POR DISTANCIA. CUANTA MENOR ES LA DISTANCIA, MAYOR ES LA PRIORIDAD
+			{
+
+				foreach (Vector3 pos in recursosSinExplotar) //BUSCAMOS EL RECURSO MAS CERCANO RESPECTO LA CAPITAL.
+				{
+					if (Vector3.Distance (pos, u.Nodo.position) < Vector3.Distance (cerca, u.Nodo.position)) 
+					{
+						cerca = pos;
+						aux = u;
+					}
+				}
+
+			}
+			recursosSinExplotar.Remove (cerca);
+			edificiosOrdenadosPorPrioridad.Add(aux);
+			edificiosCreadoresDeunidades.Remove(aux);
+		}
+
+		return edificiosOrdenadosPorPrioridad;
+
+	}
+
+	private void SetResourcesSinExplotar(TipoRecurso recursoDeseado)
+	{
+		Node[,] grafo = StageData.currentInstance.grafoTotal;
+		List<Unidad> unidades_jugador = partidaActual.JugadorActual.unidadesDisponibles;
+		List<Vector3> posRecursosSinExplorar = new List<Vector3> ();
+		foreach (Unidad u in unidades_jugador)
+		{
+			//Aqui esta como quie muy harcodeado lol xd.
+			List<Node> VisionDeNodos = Control.GetNodosAlAlcance (u.Nodo, 5);
+			foreach (Node n in VisionDeNodos)
+			{
+				if (n.GetPlayerInfluence (partidaActual.JugadorActual.idJugador) != 1 &&
+					n.resourceType == recursoDeseado && n.unidad != null) 
+				{
+					AddRecursoSinExplotar (n.position);
+				}
+			}
+		}
+	}
+
+
+	private void AddRecursoSinExplotar(Vector3 pos)
+	{
+		if (!recursosSinExplotar.Contains (pos)) 
+		{
+			recursosSinExplotar.Add (pos);
+		}
+	}
 
 
 }
