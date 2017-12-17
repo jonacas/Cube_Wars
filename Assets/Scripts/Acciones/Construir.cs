@@ -37,7 +37,7 @@ public class Construir : Accion
                 if (nodo.unidad == null)
                 {
                     //si no hay un recurso, se muestra la torre
-                    if (nodo.resourceType != null)
+                    if (nodo.resourceType != TipoRecurso.NullResourceType)
                     {
                         fantasmaTorre.SetActive(true);
                         fantasmaTorre.transform.position = nodo.position + new Vector3(0, OFFSET_Y, 0);
@@ -78,6 +78,7 @@ public class Construir : Accion
             {
                 if (StageData.currentInstance.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(StageData.COSTE_PA_CONSTRUIR_TORRE))
                 {
+                    StageData.currentInstance.GetPartidaActual().JugadorActual.TorresDefensa++;
                     Instantiate(StageData.currentInstance.TowerPrefab, n.position, StageData.currentInstance.TowerPrefab.transform.rotation);
                     CancelarAccion();
                     return true;
@@ -87,6 +88,7 @@ public class Construir : Accion
             {//por si queremos poner costes distintos
                 if (StageData.currentInstance.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(StageData.COSTE_PA_CONSTRUIR_RECURSOS))
                 {
+                    StageData.currentInstance.GetPartidaActual().JugadorActual.EdificiosRecoleccion++;
                     Instantiate(StageData.currentInstance.ResourceBuildPrefab, n.position, StageData.currentInstance.ResourceBuildPrefab.transform.rotation);
                     CancelarAccion();
                     return true;

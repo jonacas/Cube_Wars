@@ -16,6 +16,7 @@ public class RolProtector : MonoBehaviour {
     {
         //Decidir cual mover y cuanto moverlo
         numeroCreaciones = puntosAsignados / StageData.COSTE_PA_CONSTRUIR_TORRE; // CALCULO CUANTAS CREACIONES PUEDO HACER CON LOS PUNTOS ASIGNADOS
+        puntosAsignados = numeroCreaciones * StageData.COSTE_PA_CONSTRUIR_TORRE;
         if (numeroCreaciones > 0)
         {
             CrearTorres();

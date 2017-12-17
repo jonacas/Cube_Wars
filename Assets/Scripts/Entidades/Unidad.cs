@@ -138,7 +138,27 @@ public abstract class Unidad : MonoBehaviour {
         if (vida <= 0)
         {
             vida = 0;
-            StageData.currentInstance.GetPartidaActual().Jugadores[IdJugador].DestruirUnidad(this);
+            if (this.IdUnidad == TipoUnidad.Worker) {
+                StageData.currentInstance.GetPartidaActual().Jugadores[idJugador].Aldeanos -= 1;
+            }
+            else if(this.IdUnidad == TipoUnidad.Warrior) {
+                StageData.currentInstance.GetPartidaActual().Jugadores[idJugador].Guerreros -= 1;
+            }
+
+            else if (this.IdUnidad == TipoUnidad.Explorer)
+            {
+                StageData.currentInstance.GetPartidaActual().Jugadores[idJugador].Exploradores -= 1;
+            }
+
+            else if (this.IdUnidad == TipoUnidad.Building)
+            {
+                StageData.currentInstance.GetPartidaActual().Jugadores[idJugador].EdificiosRecoleccion -= 1;
+            }
+
+            else if (this.IdUnidad == TipoUnidad.DefensiveBuilding)
+            {
+                StageData.currentInstance.GetPartidaActual().Jugadores[idJugador].TorresDefensa -= 1;
+            }
             return true;
         }
         else
