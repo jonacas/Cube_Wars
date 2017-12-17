@@ -1,35 +1,16 @@
 fileFormatVersion: 2
-guid: 4659f197786e0864caa95584dea07f69
-timeCreated: 1513448991
+guid: 1cd9065ba0cf4b34796df90f8b13ed14
+timeCreated: 1513508682
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
-    100002: Aspa
-    100004: Cube
     400000: //RootNode
-    400002: Aspa
-    400004: Cube
     2300000: //RootNode
-    2300002: Aspa
-    2300004: Cube
     3300000: //RootNode
-    3300002: Aspa
-    3300004: Cube
     4300000: Cube
-    4300002: Aspa
   externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Aspas
-    second: {fileID: 2100000, guid: 3eadfec98984eb24e8769eb31dcb43b1, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: JugadorRecursos
-    second: {fileID: 2100000, guid: 11b8a5540b045a34284a4e315d847e98, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
