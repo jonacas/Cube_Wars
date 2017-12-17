@@ -1,36 +1,26 @@
 fileFormatVersion: 2
-guid: 93bbf56664597554aa59e66ed9dffed7
-timeCreated: 1513509954
+guid: 56f53e30bd7b5cc4b980b67d9f55eace
+timeCreated: 1513521480
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
+    100000: Camera
+    100002: Cube
+    100004: //RootNode
+    400000: Camera
+    400002: Cube
+    400004: //RootNode
+    2000000: Camera
+    2300000: Cube
+    3300000: Cube
     4300000: Cube
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Cuernos
-    second: {fileID: 2100000, guid: 4ce8025f10fee4e4ea29166115042ce3, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Morro
-    second: {fileID: 2100000, guid: 94a64ba704d2e6846b81e959d9167202, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: No Name
-    second: {fileID: 2100000, guid: 6aec11e2f56958b4e85bd159a353e2c0, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Vaca
-    second: {fileID: 2100000, guid: 4a1c1c427d096724b99978ad732455e9, type: 2}
+      name: RecursoMetal
+    second: {fileID: 2100000, guid: 7f821574d405f064ba5e547bcddef12e, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
@@ -60,7 +50,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 3
+    globalScale: 0.6
     meshCompression: 0
     addColliders: 0
     importVisibility: 1

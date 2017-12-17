@@ -14,6 +14,16 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Hojas
+    second: {fileID: 2100000, guid: f5101ef5fdc03e04b8288486b1f3fc48, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Madera
+    second: {fileID: 2100000, guid: b2fd524ed8209bd4fa8c42b264813dae, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: Material
     second: {fileID: 2100000, guid: cb61080227d00264db7ec3da5c33d255, type: 2}
   materials:
@@ -45,7 +55,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 1.5
     meshCompression: 0
     addColliders: 0
     importVisibility: 1
