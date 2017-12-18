@@ -122,7 +122,7 @@ public class RolRecolector : MonoBehaviour {
             {
                 print("Moviendo aldeanos recoleccion");
                 aldIA = (IA_Aldeano)un;
-                aldIA.AvanzarHaciaDestino();
+                aldIA.AvanzarHaciaDestino(true); 
             }
         }
 		/*List<Unidad> aldeanosOrdenadosPorProximidad = new List<Unidad> ();

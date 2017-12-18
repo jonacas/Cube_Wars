@@ -8,8 +8,6 @@ public class RolExplorador : MonoBehaviour {
     const int CREAR_UNIDAD_INDEX = 0, NUMERO_MINIMO_EXPLORADORES = 3;
 
 	Partida partidaActual;
-    bool exploradoresSuficientes, coroutineActive;
-    List<Vector3> caminoANodoDestino;
     public bool fin;
     int puntosAsignado;
 

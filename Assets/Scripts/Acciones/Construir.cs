@@ -76,7 +76,7 @@ public class Construir : Accion
         {
             if (n.resourceType == TipoRecurso.NullResourceType)
             {
-                if (StageData.currentInstance.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(StageData.COSTE_PA_CONSTRUIR_TORRE))
+                if (true/*StageData.currentInstance.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(StageData.COSTE_PA_CONSTRUIR_TORRE)*/)
                 {
                     StageData.currentInstance.GetPartidaActual().JugadorActual.TorresDefensa++;
                     Instantiate(StageData.currentInstance.TowerPrefab, n.position, StageData.currentInstance.TowerPrefab.transform.rotation);

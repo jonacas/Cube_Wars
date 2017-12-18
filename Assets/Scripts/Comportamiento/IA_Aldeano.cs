@@ -81,30 +81,55 @@ public class IA_Aldeano : Unidad {
         }
     }
 
-    bool CrearEdificio()
+    bool CrearEdificio(bool esEdificioDeRecoleccion)
     {
         Construir creadorEdificios = (Construir) acciones[ACCION_CONSTRUIR];
         List<Node> nodosAptos = Control.GetNodosAlAlcance(Nodo, 2);
-        List<Node> nodosConRecursos = new List<Node>();
-
-        foreach (Node n in nodosAptos)
+        if (esEdificioDeRecoleccion)
         {
-            if (n.resourceType != TipoRecurso.NullResourceType)
+            List<Node> nodosConRecursos = new List<Node>();
+            foreach (Node n in nodosAptos)
             {
-                nodosConRecursos.Add(n);
+                if (n.resourceType != TipoRecurso.NullResourceType)
+                {
+                    nodosConRecursos.Add(n);
+                }
+            }
+
+            foreach (Node n in nodosConRecursos)
+            {
+                print("A ver si construyo un edificio de recursos");
+                if (creadorEdificios.Ejecutar(n) /* && tiene recursos suficientes*/)
+                {
+                    print("He construidoooo");
+                    ((JugadorIA)StageData.currentInstance.GetPartidaActual().JugadorActual).rolReco.recursosSinExplotar.Remove(n.position);
+                    return true;
+                }
+            }
+        }
+        else
+        {
+            List<Node> nodosParaTorres = new List<Node>();
+            foreach (Node n in nodosAptos)
+            {
+                if (n.resourceType == TipoRecurso.NullResourceType)
+                {
+                    nodosParaTorres.Add(n);
+                }
+            }    
+
+            foreach (Node n in nodosParaTorres)
+            {
+                print("A ver si construyo una torre");
+                if (creadorEdificios.Ejecutar(n) /* && tiene recursos suficientes*/)
+                {
+                    print("He construidoooo");
+                    ((JugadorIA)StageData.currentInstance.GetPartidaActual().JugadorActual).rolReco.recursosSinExplotar.Remove(n.position);
+                    return true;
+                }
             }
         }
 
-        foreach (Node n in nodosConRecursos)
-        {
-            print("A ver si construyo");
-            if (creadorEdificios.Ejecutar(n) /* && tiene recursos suficientes*/)
-            {                
-                print("He construidoooo");
-                ((JugadorIA)StageData.currentInstance.GetPartidaActual().JugadorActual).rolReco.recursosSinExplotar.Remove(n.position);
-                return true;
-            }
-        }
 
         return false;
     }
@@ -149,7 +174,7 @@ public class IA_Aldeano : Unidad {
  */
 
 
-    public void AvanzarHaciaDestino()
+    public void AvanzarHaciaDestino(bool esEdificioDeRecoleccion)
     {
         listo = false;
         List<Node> alcance;
@@ -194,7 +219,7 @@ public class IA_Aldeano : Unidad {
         if (destino == Vector3.zero)
         {
             print("Avanzar hacia destino" + caminoActual.Count);
-            CrearEdificio();
+            CrearEdificio(esEdificioDeRecoleccion);
             heLlegado = true;
             listo = true;
             return;
