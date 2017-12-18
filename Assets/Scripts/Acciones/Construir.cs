@@ -102,8 +102,11 @@ public class Construir : Accion
 
     public override void CancelarAccion()
     {
-        fantasmaTorre.SetActive(false);
-        fantasmaEdificioRecoleccion.SetActive(false);
+		if (fantasmaTorre != null && fantasmaEdificioRecoleccion != null) 
+		{
+			fantasmaTorre.SetActive(false);
+			fantasmaEdificioRecoleccion.SetActive(false);
+		}      
         m_Unidad.QuitarResaltoCasillasAlAlcance(NodosAlAlcance);
     }
 

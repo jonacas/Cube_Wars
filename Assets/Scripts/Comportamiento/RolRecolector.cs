@@ -85,7 +85,7 @@ public class RolRecolector : MonoBehaviour {
 			if (movimientosDisponibles > 0) 
 			{
                 StartCoroutine("PrepararOrdenesAldeanos");
-                //StartCoroutine("MoverAldeanos");
+                StartCoroutine("MoverAldeanos");
 				return true;
 			} 
 			else

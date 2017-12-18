@@ -21,7 +21,7 @@ public class IA_Aldeano : Unidad {
         acciones.Add(this.GetComponent<Construir>());
         idUnidad = TipoUnidad.Worker;
         heLlegado = true;
-
+		caminoTotalANodoDestino = new List<Vector3> ();
         //FALTA RELLENAR INFLUENCIAS
     }
 
@@ -41,7 +41,7 @@ public class IA_Aldeano : Unidad {
     public override void SolicitarYRecorrerCamino(Vector3 final)
     {
         base.SolicitarYRecorrerCamino(final);
-        //StartCoroutine("EsperarCamino");
+        StartCoroutine("EsperarCamino");
     }
 
     public IEnumerator EsperarCamino()
@@ -50,6 +50,7 @@ public class IA_Aldeano : Unidad {
         while (!caminoListo)
             yield return null;
         caminoTotalANodoDestino = caminoActual;
+		Debug.Log ("Tamaño camino a recorrer: " + caminoTotalANodoDestino);
         posActual = 0;
         //print("Espera camino terminada");
         //AccionMover(caminoActual);
