@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class RolExplorador : MonoBehaviour {
 
-    const int CREAR_UNIDAD_INDEX = 0;
+    const int CREAR_UNIDAD_INDEX = 0, NUMERO_MINIMO_EXPLORADORES = 1;
 
 	Partida partidaActual;
     bool exploradoresSuficientes, coroutineActive;
@@ -20,7 +20,7 @@ public class RolExplorador : MonoBehaviour {
         partidaActual = StageData.currentInstance.GetPartidaActual();
         print("Comenza rol explorador");
         puntosAsignado = puntosAsignadosDesdeFuera;
-        if (!(partidaActual.JugadorActual.Exploradores > 3))
+        if (partidaActual.JugadorActual.Exploradores < NUMERO_MINIMO_EXPLORADORES)
             StartCoroutine("CrearExplorador");
 
         StartCoroutine("MoverExploradores");
@@ -80,7 +80,7 @@ public class RolExplorador : MonoBehaviour {
         print("Comienza crear Exploradores");
         List<Unidad> edificiosCreadores = GetCreadorDeUnidadesAdecuado(); // MIRO TODOS LOS EDIFICIOS QUE PUEDEN CONSTRUIR UNIDADES Y LOS ORDENO POR PRIORIDAD
         int edificioActual = 0; // SE UTILIZA PARA SABER CUAL ES EL EDIFICIO QUE VA A CONSTRUIR, PARA CONTROLAR QUE SI UN EDIFICIO NO PUEDE CREAR MAS, PASE AL SIGUIENTE
-        while (partidaActual.JugadorActual.Exploradores < 3 && edificioActual < edificiosCreadores.Count)
+        while (partidaActual.JugadorActual.Exploradores < NUMERO_MINIMO_EXPLORADORES && edificioActual < edificiosCreadores.Count)
         {
             CrearUnidad accionCreadorUnidades = (CrearUnidad)edificiosCreadores[edificioActual].Acciones[CREAR_UNIDAD_INDEX];
             List<Node> nodosAlAlcance = accionCreadorUnidades.VerNodosAlAlcance(); // COJO LOS NODOS AL ALCANCE ACTUALIZADO DEL EDIFICIO DE CREACION
