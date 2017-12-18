@@ -9,7 +9,7 @@ public class IA_Aldeano : Unidad {
     public bool heLlegado, listo;
     private List<Vector3> caminoTotalANodoDestino;
     int posActual;
-    Node nodoRecurso;
+    Node nodoRecurso;    
 
     void Awake()
     {
@@ -81,44 +81,62 @@ public class IA_Aldeano : Unidad {
         }
     }
 
-   /* public void AvanzarHaciaDestinoMasLejano(ref int puntosDisponibles)
+    bool CrearEdificio()
     {
-        listo = false;
-        List<Node> alcance;
-        alcance = Control.GetNodosAlAlcance(StageData.currentInstance.GetNodeFromPosition(this.transform.position), acciones[ACCION_MOVER].Alcance);
-        //Codigo de recolectar
+        Construir creadorEdificios = (Construir) acciones[ACCION_CONSTRUIR];
+        List<Node> nodosAptos = creadorEdificios.VerNodosAlAlcance();
 
-        caminoActual = caminoAObjetivo.GetRange(posActual, acciones[ACCION_MOVER].Alcance - 1);
-
-
-        Vector3 destino = Vector3.zero;
-        int incrementoPos = 0;
-        for (int i = caminoActual.Count - 1; i >= 0; i--) {
-            if (StageData.currentInstance.GetNodeFromPosition(caminoActual[i]).unidad == null && StageData.currentInstance.GetNodeFromPosition(caminoActual[i]).resourceType != TipoRecurso.NullResourceType)
-            {
-                destino = caminoActual[i];
-                incrementoPos = i;
-                break;
+        foreach (Node n in nodosAptos)
+        {
+            if (creadorEdificios.Ejecutar(n) /* && tiene recursos suficientes*/)
+            {                
+                print("He construidoooo");
+                ((JugadorIA)StageData.currentInstance.GetPartidaActual().JugadorActual).rolRecolector.recursosSinExplotar.Remove(n.position);
+                return true;
             }
-
-        }
-        if (destino == Vector3.zero) {
-            heLlegado = true;
-            listo = true;
-            return;
         }
 
-        MoverUnidad mv = (MoverUnidad)acciones[ACCION_MOVER];
-        if (mv.Ejecutar(StageData.currentInstance.GetNodeFromPosition(destino))) {
-
-            posActual += incrementoPos;
-            puntosDisponibles -= StageData.COSTE_PA_MOVER_UNIDAD;
-        }
-        listo = true;
-        //Falta Construir, que no tengo muy claro donde ponerlo
-
+        return false;
     }
-*/
+
+    /* public void AvanzarHaciaDestinoMasLejano(ref int puntosDisponibles)
+     {
+         listo = false;
+         List<Node> alcance;
+         alcance = Control.GetNodosAlAlcance(StageData.currentInstance.GetNodeFromPosition(this.transform.position), acciones[ACCION_MOVER].Alcance);
+         //Codigo de recolectar
+
+         caminoActual = caminoAObjetivo.GetRange(posActual, acciones[ACCION_MOVER].Alcance - 1);
+
+
+         Vector3 destino = Vector3.zero;
+         int incrementoPos = 0;
+         for (int i = caminoActual.Count - 1; i >= 0; i--) {
+             if (StageData.currentInstance.GetNodeFromPosition(caminoActual[i]).unidad == null && StageData.currentInstance.GetNodeFromPosition(caminoActual[i]).resourceType != TipoRecurso.NullResourceType)
+             {
+                 destino = caminoActual[i];
+                 incrementoPos = i;
+                 break;
+             }
+
+         }
+         if (destino == Vector3.zero) {
+             heLlegado = true;
+             listo = true;
+             return;
+         }
+
+         MoverUnidad mv = (MoverUnidad)acciones[ACCION_MOVER];
+         if (mv.Ejecutar(StageData.currentInstance.GetNodeFromPosition(destino))) {
+
+             posActual += incrementoPos;
+             puntosDisponibles -= StageData.COSTE_PA_MOVER_UNIDAD;
+         }
+         listo = true;
+         //Falta Construir, que no tengo muy claro donde ponerlo
+
+     }
+ */
 
 
     public void AvanzarHaciaDestino()
@@ -166,6 +184,7 @@ public class IA_Aldeano : Unidad {
         if (destino == Vector3.zero)
         {
             print("Avanzar hacia destino" + caminoActual.Count);
+            CrearEdificio();
             heLlegado = true;
             listo = true;
             return;
@@ -179,18 +198,6 @@ public class IA_Aldeano : Unidad {
             posActual += incrementoPos;
         }
         listo = true;
-    }
-
-
-    public void Construir(ref int puntosDisponibles,Node n) {
-
-        Construir cs = (Construir)acciones[ACCION_CONSTRUIR];
-        if (!cs.Ejecutar(n)) {
-
-            print("No se ha podido construir ");
-
-        }
-
     }
 
     public bool HaLlegado()

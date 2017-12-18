@@ -10,8 +10,6 @@ public abstract class Jugador : MonoBehaviour
 
 	public int IndexPlayerObjetivoActual;
 
-    public RolGuerrero rolGuerrero;
-
     protected bool turnoAcabado;
 
 	Unidad capital = null;

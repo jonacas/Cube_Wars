@@ -7,11 +7,11 @@ public class JugadorIA : Jugador {
     ArbolMaestro arbol;
 
     //roles
-    RolExplorador rolExplo;
-    RolGuerrero rolGuerr;
-    RolLatente rolLat;
-    RolProtector rolPro;
-    RolRecolector rolReco;
+    public RolExplorador rolExplo;
+    public RolGuerrero rolGuerr;
+    public RolLatente rolLat;
+    public RolProtector rolPro;
+    public RolRecolector rolReco;
 
 
 

@@ -13,7 +13,7 @@ public class RolRecolector : MonoBehaviour {
 	public bool fin;
 	int numeroCreaciones;
     int puntosDispo;
-	List<Vector3> recursosSinExplotar;
+	public List<Vector3> recursosSinExplotar;
 
 	bool numeroAldeanosMINIMOS;
 
@@ -117,8 +117,6 @@ public class RolRecolector : MonoBehaviour {
 
         if (aldeanos.Count != 0)
         {
-
-
             IA_Aldeano aldIA;
             foreach (Unidad un in aldeanos)
             {
@@ -152,14 +150,7 @@ public class RolRecolector : MonoBehaviour {
 			aldeanosOrdenadosPorProximidad.Add(aux);
 			aldeanos.Remove(aux);
 		}*/
-
-
-
-
-
-
 	}
-
 
 	public bool CheckMinimumResources()
 	{
@@ -257,7 +248,6 @@ public class RolRecolector : MonoBehaviour {
             }
             indiceRecur++;
         }
-
         yield return null;
     }
 
@@ -338,14 +328,16 @@ public class RolRecolector : MonoBehaviour {
 		}*/
 	}
 
+    private void RemoveRecursoSinExplotar(Vector3 pos)
+    {
+        recursosSinExplotar.Remove(pos);
+    }
 
-	private void AddRecursoSinExplotar(Vector3 pos)
+    private void AddRecursoSinExplotar(Vector3 pos)
 	{
 		if (!recursosSinExplotar.Contains (pos)) 
 		{
 			recursosSinExplotar.Add (pos);
 		}
 	}
-
-
 }
