@@ -86,7 +86,7 @@ public class Construir : Accion
             }
             else
             {//por si queremos poner costes distintos
-                if (StageData.currentInstance.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(StageData.COSTE_PA_CONSTRUIR_RECURSOS))
+                if (true/*StageData.currentInstance.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(StageData.COSTE_PA_CONSTRUIR_RECURSOS)*/)
                 {
                     StageData.currentInstance.GetPartidaActual().JugadorActual.EdificiosRecoleccion++;
                     Instantiate(StageData.currentInstance.ResourceBuildPrefab, n.position, StageData.currentInstance.ResourceBuildPrefab.transform.rotation);
@@ -121,8 +121,7 @@ public class Construir : Accion
         NodosAlAlcance = Control.GetNodosAlAlcance(m_Unidad.Nodo, Alcance);
         for (int i = NodosAlAlcance.Count - 1; i >= 0; i--)
         {
-            if (NodosAlAlcance[i].unidad != null ||
-                NodosAlAlcance[i].resourceType != TipoRecurso.NullResourceType)
+            if (NodosAlAlcance[i].unidad != null)
             {
                 NodosAlAlcance.Remove(NodosAlAlcance[i]);
             }

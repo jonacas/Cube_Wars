@@ -40,9 +40,9 @@ public class MoverUnidad :  Accion{
     {
         
         VerNodosAlAlcance();
-        print("Ejecutar entrado");
-        print(NodosAlAlcance.Count);
-        print(destino == null);
+        //print("Ejecutar entrado");
+        //print(NodosAlAlcance.Count);
+        //print(destino == null);
         if (NodosAlAlcance.Contains(destino))
         {
             SolicitarYRecorrerCamino(destino.position);
@@ -74,11 +74,11 @@ public class MoverUnidad :  Accion{
 			else
 				yield return null;        
         }
-        print("me cago en dios");
+        //print("me cago en dios");
         posicionActualRuta = 0;
         CancelarAccion();
         m_Unidad.Nodo = StageData.currentInstance.GetNodeFromPosition(m_Unidad.gameObject.transform.position);
-        print(m_Unidad.Nodo.fil + "  " + m_Unidad.Nodo.col);
+        //print(m_Unidad.Nodo.fil + "  " + m_Unidad.Nodo.col);
         NodosAlAlcance = Control.GetNodosAlAlcance(StageData.currentInstance.GetNodeFromPosition(transform.position), 3);
         Nodo = StageData.currentInstance.GetNodeFromPosition(transform.position);
         Nodo.unidad = transform.GetComponent<Unidad>();
@@ -99,9 +99,9 @@ public class MoverUnidad :  Accion{
 
     public override List<Node> VerNodosAlAlcance()
     {
-        print("SeleccionarResaltoCasilla" + Alcance);
-        print(m_Unidad);
-        print(m_Unidad.Nodo);
+        //print("SeleccionarResaltoCasilla" + Alcance);
+        //print(m_Unidad);
+        //print(m_Unidad.Nodo);
         NodosAlAlcance = Control.GetNodosAlAlcance(m_Unidad.Nodo, Alcance);
         for (int i = NodosAlAlcance.Count - 1; i >= 0; i--)
         {
@@ -127,7 +127,7 @@ public class MoverUnidad :  Accion{
     {
         while (!m_Unidad.caminoListo)
             yield return null;
-        print("Espera camino terminada");
+        //print("Espera camino terminada");
         Mover();
     }
 

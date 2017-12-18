@@ -71,7 +71,7 @@ public class Partida : MonoBehaviour{
             //se crean los personajes controlados por la IA
             else
             {
-                print("CREACION jugadorIA");
+                //print("CREACION jugadorIA");
                 jugadores[i] = GameObject.Find("Jugador" + i).GetComponent<JugadorIA>();
                 JugadorIA IA = (JugadorIA)jugadores[i];
                 IA.CrearJugadorIA(i, capis[i]);
@@ -85,18 +85,18 @@ public class Partida : MonoBehaviour{
 
     IEnumerator BucleDeJuego()
     {
-        print("COMIENZA BUCLE DEL JUEGO");
+        //print("COMIENZA BUCLE DEL JUEGO");
         while (!victoria)
         {
             for (int i = 0; i < numJugadores; i++)
             {
                 jugadorActual = jugadores[i];
-                print("COMIENZA EL TURNO DEL " + i);
+                //print("COMIENZA EL TURNO DEL " + i);
                 jugadores[i].Turno();
                 while (!jugadores[i].HaAcabadoTurno())
                     yield return null;
                 //yield return new WaitForSeconds(5);
-                print("TURNO TERMINADO");
+                //print("TURNO TERMINADO");
 				yield return new WaitForSeconds(5);
             }
             yield return null;

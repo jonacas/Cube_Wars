@@ -82,7 +82,7 @@ public class IA_Guerrero : Unidad {
 
         for (int i = 0; i < alcance.Count; i++)
         {
-            if (alcance[i].unidad != null  && alcance[i].unidad.IdJugador == StageData.currentInstance.GetPartidaActual().Jugadores[IdJugador].rolGuerrero.objetivoActual)
+			if (alcance[i].unidad != null  && alcance[i].unidad.IdJugador == ((JugadorIA) StageData.currentInstance.GetPartidaActual().Jugadores[IdJugador]).rolGuerr.objetivoActual)
             {
                 if (alcance[i].unidad.IdUnidad == TipoUnidad.Warrior || alcance[i].unidad.IdUnidad == TipoUnidad.DefensiveBuilding || alcance[i].unidad.IdUnidad == TipoUnidad.Capital)
                 {

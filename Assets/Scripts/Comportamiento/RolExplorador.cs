@@ -95,7 +95,7 @@ public class RolExplorador : MonoBehaviour {
                 bool haFuncionado = accionCreadorUnidades.Ejecutar(nodosAlAlcance[0], TipoUnidad.Explorer);
                 if (haFuncionado)
                 {
-                    print(partidaActual.JugadorActual.Exploradores);
+                    //print(partidaActual.JugadorActual.Exploradores);
                     puntosAsignado -= StageData.COSTE_PA_CREAR_ALDEANO;
                     yield return new WaitForSeconds(0.5f); // DELAY QUE SE TARDA ENTRE CREAR UNA UNIDAD Y OTRA
                 }

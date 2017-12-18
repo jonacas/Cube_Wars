@@ -63,7 +63,7 @@ public abstract class Unidad : MonoBehaviour {
 
     internal void ResultadoAEstrella(List<Vector3> aux)
     {
-		print ("Camino listo");
+		//print ("Camino listo");
         caminoActual = aux;
         caminoListo = true;
     }

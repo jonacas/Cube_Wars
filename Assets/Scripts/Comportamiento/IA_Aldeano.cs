@@ -84,14 +84,24 @@ public class IA_Aldeano : Unidad {
     bool CrearEdificio()
     {
         Construir creadorEdificios = (Construir) acciones[ACCION_CONSTRUIR];
-        List<Node> nodosAptos = creadorEdificios.VerNodosAlAlcance();
+        List<Node> nodosAptos = Control.GetNodosAlAlcance(Nodo, 2);
+        List<Node> nodosConRecursos = new List<Node>();
 
         foreach (Node n in nodosAptos)
         {
+            if (n.resourceType != TipoRecurso.NullResourceType)
+            {
+                nodosConRecursos.Add(n);
+            }
+        }
+
+        foreach (Node n in nodosConRecursos)
+        {
+            print("A ver si construyo");
             if (creadorEdificios.Ejecutar(n) /* && tiene recursos suficientes*/)
             {                
                 print("He construidoooo");
-                ((JugadorIA)StageData.currentInstance.GetPartidaActual().JugadorActual).rolRecolector.recursosSinExplotar.Remove(n.position);
+                ((JugadorIA)StageData.currentInstance.GetPartidaActual().JugadorActual).rolReco.recursosSinExplotar.Remove(n.position);
                 return true;
             }
         }
