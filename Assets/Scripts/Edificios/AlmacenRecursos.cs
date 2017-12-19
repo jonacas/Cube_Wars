@@ -12,6 +12,8 @@ public class AlmacenRecursos : Unidad {
         defensaMaxima = StageData.DEFENSA_MAX_RECOLECTOR;
         Defensa = StageData.DEFENSA_MAX_RECOLECTOR;
         idUnidad = TipoUnidad.Resource;
+        acciones = new List<Accion>();
+        acciones.Add(GetComponent<CrearUnidad>());
     }
 
     public void SumarRecursos() // COGE AL JUGADOR ACTUAL

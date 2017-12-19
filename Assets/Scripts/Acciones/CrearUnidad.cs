@@ -35,11 +35,13 @@ public class CrearUnidad : Accion
             switch (tipo)
             {
                 case TipoUnidad.Warrior:
-                    gameObjectUnidad = Instantiate(StageData.currentInstance.WarriorPrefab, destino.position, StageData.currentInstance.WarriorPrefab.transform.rotation);
                     if (StageData.currentInstance.GetPartidaActual().JugadorActual.idJugador != StageData.ID_JUGADOR_HUMANO)
                     {
-                        Destroy(gameObjectUnidad.GetComponent<Unidad>());
-                        gameObjectUnidad.AddComponent<IA_Guerrero>();
+                        gameObjectUnidad = Instantiate(StageData.currentInstance.guerreroIAPrefab, destino.position, StageData.currentInstance.ExplorerPrefab.transform.rotation);
+                    }
+                    else
+                    {
+                        gameObjectUnidad = Instantiate(StageData.currentInstance.guerreroIAPrefab, destino.position, StageData.currentInstance.ExplorerPrefab.transform.rotation);
                     }
                     SetUnidadANodoYViceversa(gameObjectUnidad.GetComponent<Unidad>());
                     StageData.currentInstance.GetPartidaActual().Jugadores[m_Unidad.IdJugador].unidadesDisponibles.Add(gameObjectUnidad.GetComponent<Unidad>());

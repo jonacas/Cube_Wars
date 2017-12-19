@@ -82,7 +82,7 @@ public class Construir : Accion
 					GameObject tower = Instantiate(StageData.currentInstance.TowerPrefab, n.position, StageData.currentInstance.TowerPrefab.transform.rotation);
 					StageData.currentInstance.GetPartidaActual ().JugadorActual.edificios.Add (tower.GetComponent<TorreDefensa>());
 					StageData.currentInstance.RemoveResourceModel (n.position);
-                    SetUnidadANodoYViceversa(tower.GetComponent<TorreDefensa>());
+                    SetUnidadANodoYViceversa(tower.GetComponent<Unidad>());
                     tower.GetComponent<Unidad>().IdJugador = StageData.currentInstance.GetPartidaActual().JugadorActual.idJugador;
                     StageData.currentInstance.GetPartidaActual().JugadorActual.edificios.Add(tower.GetComponent<Unidad>());
                     CancelarAccion();
@@ -96,7 +96,7 @@ public class Construir : Accion
                     StageData.currentInstance.GetPartidaActual().JugadorActual.EdificiosRecoleccion++;
                     GameObject almacen = Instantiate(StageData.currentInstance.ResourceBuildPrefab, n.position, StageData.currentInstance.ResourceBuildPrefab.transform.rotation);
 					StageData.currentInstance.RemoveResourceModel (n.position);
-                    SetUnidadANodoYViceversa(almacen.GetComponent<AlmacenRecursos>());
+                    SetUnidadANodoYViceversa(almacen.GetComponent<Unidad>());
                     almacen.GetComponent<Unidad>().IdJugador = StageData.currentInstance.GetPartidaActual().JugadorActual.idJugador;
                     StageData.currentInstance.GetPartidaActual().JugadorActual.edificios.Add(almacen.GetComponent<Unidad>());
                     CancelarAccion();
@@ -111,9 +111,11 @@ public class Construir : Accion
 
     void SetUnidadANodoYViceversa(Unidad unidad)
     {
+        Vector3 aux = unidad.transform.position;
         Node nodoActual = StageData.currentInstance.GetNodeFromPosition(unidad.transform.position);
         unidad.Nodo = nodoActual;
         nodoActual.unidad = unidad;
+        StageData.currentInstance.SetInfluenceToNode(Node.stepsInfluenceDefensiveBuilding, nodoActual, StageData.currentInstance.GetPartidaActual().JugadorActual.idJugador);
     }
 
     public override void CancelarAccion()

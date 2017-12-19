@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RolProtector : MonoBehaviour {
-/*
+
+    const float UMBRAL_CREACION_TORRES = 5.5f;
+
     List<Vector3> caminoANodoDestino;
     public bool fin;
     Partida partidaActual;
@@ -17,8 +19,9 @@ public class RolProtector : MonoBehaviour {
         caminoANodoDestino = new List<Vector3>();
     }
 
-    public bool ComenzarTurno(int puntosAsig)
+    public bool ComenzarTurno(ref int puntosAsig)
     {
+        partidaActual = StageData.currentInstance.GetPartidaActual();
         // Buscamos ahora a los aldeanos disponibles.
         int totalAldeanos = 0;
         puntosDispo = puntosAsig;
@@ -27,6 +30,7 @@ public class RolProtector : MonoBehaviour {
             if (un.IdUnidad == TipoUnidad.Worker)
                 totalAldeanos++;
         }
+
         if (totalAldeanos < 3)
             numeroAldeanosMINIMOS = true;
         else
@@ -49,6 +53,7 @@ public class RolProtector : MonoBehaviour {
             else
             {
                 return false;
+                fin = true;
             }
             //Empieza la corutina de crear los aldeanos.
         }
@@ -59,12 +64,12 @@ public class RolProtector : MonoBehaviour {
             if (movimientosDisponibles > 0)
             {
                 StartCoroutine("PrepararOrdenesAldeanos");
-                StartCoroutine("MoverAldeanos");
                 return true;
             }
             else
             {
                 return false;
+                fin = true;
             }
 
         }
@@ -79,6 +84,8 @@ public class RolProtector : MonoBehaviour {
 		List<Unidad> aldeanos = new List<Unidad>();
         List<Unidad> unidades = StageData.currentInstance.GetPartidaActual().JugadorActual.unidadesDisponibles;
         
+
+        //se obtienen los aldeanos disponibles
         for (int i = unidades.Count - 1; i >= 0; i--)
         {
             if (unidades[i].IdUnidad == TipoUnidad.Worker)
@@ -88,43 +95,107 @@ public class RolProtector : MonoBehaviour {
             }
         }
 
+        //se obtienen los edificios que se deben proteger
+        List<Unidad> unidadesParaEdificios = StageData.currentInstance.GetPartidaActual().JugadorActual.edificios;
+        List<Unidad> edificios = new List<Unidad>();
+        //int torres = 0;
+        foreach (Unidad u in unidadesParaEdificios)
+        {
+            if (u.IdUnidad == TipoUnidad.Resource || u.IdUnidad == TipoUnidad.Capital)
+            {
+                edificios.Add(u);
+            }
+
+            /*if(u.IdUnidad == TipoUnidad.DefensiveBuilding)
+            {
+                torres++;
+            }*/
+        }
+
+
+        /*if (torres > 5)
+            StopCoroutine("PrepararOrdenesAldeanos");*/
+
         IA_Aldeano aldIA;
-        int indiceRecur = 0;
+        int edificioActual = 0;
         foreach (Unidad al in aldeanos)
         {
             print("preparandoAldeano PROTEC");
             aldIA = (IA_Aldeano)al;
             print("set destino PROTEC");
 
-            List<Unidad> unidadesParaEdificios = StageData.currentInstance.GetPartidaActual().JugadorActual.unidadesDisponibles;
-            List<Unidad> edificios = new List<Unidad>();
 
-            foreach (Unidad u in unidadesParaEdificios)
+            if (edificioActual >= unidadesParaEdificios.Count)
+                break;
+
+                List<Node> cercanias;
+            cercanias = Control.GetNodosAlAlcance(edificios[edificioActual].Nodo, 5);
+            int suma = 0;
+            foreach (Node n in cercanias)
             {
-                if (u.IdUnidad == TipoUnidad.Resource || u.IdUnidad == TipoUnidad.Capital)
-                {
-                    edificios.Add(u);
-                }
+                suma += n.GetPlayerInfluence(StageData.currentInstance.GetPartidaActual().JugadorActual.idJugador);
             }
-            
-            // AQUI FALTA SEGUIR VIENDO A QUE EDIFICIOS MANDAR
 
-            if (indiceRecur < recursosSinExplotar.Count)
+            float media = suma / cercanias.Count;
+
+            //si la media no llega al minimo, se envia un aldeano a una posicion cercana para que construya una torre
+            if (media < UMBRAL_CREACION_TORRES)
             {
-                aldIA.SetDestino(StageData.currentInstance.GetNodeFromPosition(recursosSinExplotar[indiceRecur]));
+                cercanias = Control.GetNodosAlAlcance(edificios[edificioActual].Nodo, 2);
+                aldIA.SetDestino(StageData.currentInstance.GetNodeFromPosition(cercanias[Random.Range(0, cercanias.Count - 1)].position));
                 while (!aldIA.caminoListo)
                     yield return null;
+                continue;
             }
-            indiceRecur++;
+
+
+            //si llega, se elimina el edificio y se sigue con el resto
+            else
+            {
+                edificios.Remove(edificios[edificioActual]);
+                continue;
+            }
+            edificioActual++;
+            //enviamos un aldeano por edificio
         }
         yield return null;
+        StartCoroutine("MoverAldeanos");
     }
 
+    IEnumerator MoverAldeanos()
+    {
+        //AQUI MIRO SI TENGO ALDEANOS CERCA.
+        yield return new WaitForSeconds(1);
 
-    IEnumerator CrearAldeano()
+        List<Unidad> aux1 = StageData.currentInstance.GetPartidaActual().JugadorActual.unidadesDisponibles;
+        List<Unidad> aldeanos = new List<Unidad>();
+
+        for (int i = aux1.Count - 1; i >= 0; i--)
+        {
+            if (aux1[i].IdUnidad == TipoUnidad.Worker)
+            {
+                aldeanos.Add(aux1[i]);
+            }
+        }
+
+        if (aldeanos.Count != 0)
+        {
+            IA_Aldeano aldIA;
+            foreach (Unidad un in aldeanos)
+            {
+                //print("Moviendo aldeanos recoleccion");
+                aldIA = (IA_Aldeano)un;
+                aldIA.AvanzarHaciaDestino(true);
+            }
+        }
+
+        fin = true;
+    }
+
+        IEnumerator CrearAldeano()
     {
         print("CREANDO ALDEANOS");
-        List<Unidad> edificiosCreadores = GetCreadorDeAldeanosAdecuado();
+        List<Unidad> edificiosCreadores = GetCreadoresDeTorres();
         int edificioActual = 0;
         int totalCreados = 0;
         while (numeroCreaciones > 0 && edificioActual < edificiosCreadores.Count)
@@ -231,5 +302,5 @@ public class RolProtector : MonoBehaviour {
 
         return creadoresOrdenados;
     }
-*/
+
 }

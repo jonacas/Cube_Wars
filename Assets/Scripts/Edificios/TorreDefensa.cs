@@ -5,9 +5,7 @@ using UnityEngine;
 public class TorreDefensa : Unidad{
 
     const int ACCION_ATACAR = 0;
-
-    Node nodo;
-
+    
     void Awake()
     {
         acciones = new List<Accion>();
@@ -17,13 +15,19 @@ public class TorreDefensa : Unidad{
         defensaMaxima = StageData.DEFENSA_MAX_TORRE_DEFENSIVA;
         Defensa = StageData.DEFENSA_MAX_TORRE_DEFENSIVA;
 		idUnidad = TipoUnidad.DefensiveBuilding;  
-		//nodo = StageData.currentInstance.GetNodeFromPosition(transform.position);
-		//linea innecesaria pa al version final?
+		Nodo = StageData.currentInstance.GetNodeFromPosition(transform.position);
+        Debug.Log("Pos Nodo Centro: " + Nodo.fil + " , " + Nodo.col );
+        Debug.Log("Pos Nodo 0,0: " + StageData.currentInstance.grafoTotal[0,0].position.x + " , " +
+                                     StageData.currentInstance.grafoTotal[0, 0].position.z);
+        Debug.Log("Pos Nodo ExtremoOpuesto: " + StageData.currentInstance.grafoTotal[49, 49].position.x + " , " +
+                                     StageData.currentInstance.grafoTotal[49, 49].position.z);
+        //StageData.currentInstance.SetInfluenceToNode(Node.stepsInfluenceDefensiveBuilding, Nodo, StageData.currentInstance.GetPartidaActual().JugadorActual.idJugador);
+        //linea innecesaria pa al version final?
     }
 
     public void AtacarAlInicioTurno()
     {
-        List<Node> nodos =  Control.GetNodosAlAlcance(nodo, acciones[ACCION_ATACAR].Alcance);
+        List<Node> nodos =  Control.GetNodosAlAlcance(Nodo, acciones[ACCION_ATACAR].Alcance);
 
         foreach (Node n in nodos)
         {

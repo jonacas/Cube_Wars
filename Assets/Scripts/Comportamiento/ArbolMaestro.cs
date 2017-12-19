@@ -68,10 +68,12 @@ public class ArbolMaestro{
     /// <param name="jugador">REFERENCIA al jugador que controla</param>
     public ArbolMaestro(Jugador jugador)
     {
-        List<int> aux = new List<int> { 2, 3, 4 };
-        personalidad = new List<int> { 0, 1};
-        int seleccion;
+        List<int> aux = new List<int> { 2, 3, 4 }; 
+        //para testear, los roles siguen un orden predeterminado
+        personalidad = new List<int> { 0, 1, 2, 3, 4};
         partidaActual = StageData.currentInstance.GetPartidaActual();
+        /*int seleccion;
+        
 
         //se genera el comportamiento del jugador
         //explorador y recolector siempre van delante porque son necesario para que el personaje pueda realizar el resto dse tareas
@@ -80,7 +82,7 @@ public class ArbolMaestro{
             seleccion = Random.Range(0, aux.Count);
             personalidad.Add(aux[seleccion]);
             aux.Remove(aux[seleccion]);
-        }
+        }*/
 
         jug = jugador;
         recursosConocidos = 0;

@@ -39,7 +39,7 @@ public class JugadorIA : Jugador {
         //print("TURNO DE " + idJugador);
         reparto = arbol.AsignarRecursos();
 
-        //print("ORDEN JUGADOR " + idJugador + ": Ataque-" + reparto.GetOrdenAtaque() + ": Defensa-" + reparto.GetOrdenDefensa() + ": Recoleccion-" + reparto.GetOrdenRecoleccion() + ": Exploracion-" + reparto.GetOrdenExploracion());
+        print("ORDEN JUGADOR " + idJugador + ": Ataque-" + reparto.GetOrdenAtaque() + ": Defensa-" + reparto.GetOrdenDefensa() + ": Recoleccion-" + reparto.GetOrdenRecoleccion() + ": Exploracion-" + reparto.GetOrdenExploracion() + ": Latente-" + reparto.GetOrdenPreparacion());
 
         StartCoroutine("EjecucionRoles");
     }
@@ -70,9 +70,33 @@ public class JugadorIA : Jugador {
         {
             rolReco.fin = false;
             rolReco.ComenzarTurno(ref asignacion);
-            while (!rolReco.fin)
-                yield return null;
+            //while (!rolReco.fin)
+                yield return new WaitForSeconds(3);
         }
+
+        asignacion = Mathf.RoundToInt(puntosDeAccion * reparto.GetOrdenDefensa());
+        puntosDeAccion -= asignacion;
+        if (!(asignacion < StageData.COSTE_PA_MOVER_UNIDAD))
+        {
+            rolPro.fin = false;
+            rolPro.ComenzarTurno(ref asignacion);
+            /*while (!rolReco.fin)
+                yield return null;*/
+            yield return new WaitForSeconds(3);
+        }
+
+        asignacion = Mathf.RoundToInt(puntosDeAccion * reparto.GetOrdenPreparacion());
+        puntosDeAccion -= asignacion;
+        if (!(asignacion < StageData.COSTE_PA_CREAR_GUERRERO))
+        {
+            rolLat.fin = false;
+            rolLat.ComenzarTurno(ref asignacion);
+            /*while (!rolLat.fin)
+                yield return null;*/
+            yield return new WaitForSeconds(3);
+        }
+
+        yield return new WaitForSeconds(5);
 
         turnoAcabado = true;
 
