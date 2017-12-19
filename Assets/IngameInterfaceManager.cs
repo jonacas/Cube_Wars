@@ -40,6 +40,8 @@ public class IngameInterfaceManager : MonoBehaviour {
     public CanvasGroup actionInProgress_highlight;
     public Transform actionInProgress_panel;
     public Text actionInProgress_info;
+    [Header("Create Unit Buttons")]
+    public CanvasGroup createUnitButtons_CG;
 
     public enum ActionInProgressMode
     {
@@ -68,7 +70,11 @@ public class IngameInterfaceManager : MonoBehaviour {
     private Vector3 initPos_cityInfo;
 	private Vector3 initPos_buildingInfo;
 
+    private Vector3 initPos_createUnitButtons;
+
 	private bool animationInProgress = false;
+    private bool createUnitSubPanelOpen = false;
+    private bool createBuildingSubPanelOpen = false;
 	public UnitNamePanel unitPanelSelected;
 
 	public static IngameInterfaceManager currentInstance;
@@ -83,10 +89,6 @@ public class IngameInterfaceManager : MonoBehaviour {
 	{
 		SaveInterfaceBasePositions ();
 		StartCoroutine ("OpenAnim_alwaysOnDisplay");
-
-        unitActions_create_warriord.SetActive(false);
-        unitActions_create_explorer.SetActive(false);
-        unitActions_create_villager.SetActive(false);
 
         StartTurn();
 	}
@@ -170,13 +172,8 @@ public class IngameInterfaceManager : MonoBehaviour {
     // Si no se hace asi, no se puede referenciar la accion del script al boton desde el inspector, hashtag unity
     public void OnButtonClick_Create()
     {
-        if(GlobalControl.currentInstance.SeleccionarAccion(AccionID.create, false))
-        {
-            createUnits_panel.transform.localPosition = initPos_buildUnit_panel;
-            unitActions_create_explorer.SetActive(true);
-            unitActions_create_villager.SetActive(true);
-            unitActions_create_warriord.SetActive(true);
-        }
+        //if (GlobalControl.currentInstance.SeleccionarAccion(AccionID.create, false))
+        StartCoroutine("ShowCreateUnitButtons");
     }
     public void OnButtonClick_Move()
     {
@@ -199,6 +196,8 @@ public class IngameInterfaceManager : MonoBehaviour {
 
     public void OnButtonClick_CreateExplorer()
     {
+        if (!createUnitSubPanelOpen)
+            return;
         StartCoroutine("HideCreateUnitButtons");
         StageData.currentInstance.unidadACrear = TipoUnidad.Explorer;
         if (GlobalControl.currentInstance.SeleccionarAccion(AccionID.create))
@@ -207,6 +206,8 @@ public class IngameInterfaceManager : MonoBehaviour {
 
     public void OnButtonClick_CreateVillager()
     {
+        if (!createUnitSubPanelOpen)
+            return;
         StartCoroutine("HideCreateUnitButtons");
         StageData.currentInstance.unidadACrear = TipoUnidad.Worker;
         if (GlobalControl.currentInstance.SeleccionarAccion(AccionID.create))
@@ -215,6 +216,8 @@ public class IngameInterfaceManager : MonoBehaviour {
 
     public void OnButtonClick_CreateWarrior()
     {
+        if (!createUnitSubPanelOpen)
+            return;
         StartCoroutine("HideCreateUnitButtons");
         StageData.currentInstance.unidadACrear = TipoUnidad.Warrior;
         if (GlobalControl.currentInstance.SeleccionarAccion(AccionID.create))
@@ -222,7 +225,6 @@ public class IngameInterfaceManager : MonoBehaviour {
     }
 
     public void OnButtonClick_Gather() { OpenActionInProgress(ActionInProgressMode.gather); }
-    // En serio que cojones colega.
 
     public void OnButtonClick_EndTurn()
     {
@@ -448,22 +450,38 @@ public class IngameInterfaceManager : MonoBehaviour {
             t = 0;
         }
     }
+    IEnumerator ShowCreateUnitButtons()
+    {
+        createUnitButtons_CG.gameObject.SetActive(true);
+        createUnitButtons_CG.transform.localPosition = unitActions_create.transform.localPosition + Vector3.left * 600;
+        initPos_createUnitButtons = createUnitButtons_CG.transform.localPosition;
 
+        float t = 0;
+        float animSpeed = 10f;
+
+        while (t < 1)
+        {
+            t = Mathf.MoveTowards(t, 1, Time.deltaTime * animSpeed * ((1 - t) + 0.05f));
+            createUnitButtons_CG.alpha = t;
+            createUnitButtons_CG.transform.localPosition = initPos_createUnitButtons + Vector3.right * 200 * (1 - t);
+            yield return null;
+        }
+        createUnitSubPanelOpen = true;
+    }
     IEnumerator HideCreateUnitButtons()
     {
+        createUnitSubPanelOpen = false;
         float t = 1;
-        float animSpeed = 6f;
+        float animSpeed = 10f;
 
         while (t > 0)
         {
             t = Mathf.MoveTowards(t, 0, Time.deltaTime * animSpeed * ((1 - t) + 0.05f));
-            createUnits_panel.transform.localPosition = initPos_buildUnit_panel + Vector3.right * 200 * (1 - t);
+            createUnitButtons_CG.alpha = t;
+            createUnitButtons_CG.transform.localPosition = initPos_createUnitButtons + Vector3.right * 200 * (1 - t);
             yield return null;
         }
-
-        unitActions_create_warriord.SetActive(false);
-        unitActions_create_explorer.SetActive(false);
-        unitActions_create_villager.SetActive(false);
+        createUnitButtons_CG.gameObject.SetActive(false);
     }
 
     IEnumerator HideEndTurnButton()
