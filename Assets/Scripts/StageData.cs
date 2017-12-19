@@ -105,8 +105,16 @@ public class StageData : MonoBehaviour
 
     private Partida partidaActual;
 
+	//public GameObject UnitGamePanelPrefab;
+
 	public GameObject testCasillaMarcada;
+
 	public GameObject testModeladoResource;
+	public GameObject FoodResourceModel;
+	public GameObject WoodResourceModel;
+	public GameObject StoneResourceModel;
+	public GameObject MetalResourceModel;
+
 
     void Awake()
     {
@@ -407,15 +415,62 @@ public class StageData : MonoBehaviour
 		{
 			int randFil = Random.Range (0, CG.filas - 1);
 			int randCol = Random.Range (0, CG.columnas - 1);
-			//COMO BASE, TODOS LOS RECURSOS SON FOOD.
-			grafoTotal [randFil, randCol].SetResourceToNode (TipoRecurso.Food);
-			grafoTotal [randFil, randCol].SetPlayerInfluence (0, Node.stepsInfluenceResource);
-			GameObject modeladoTest = Instantiate (testModeladoResource, grafoTotal [randFil, randCol].position, Quaternion.identity);
-			mapResourceReference.Add (modeladoTest);
+			if (grafoTotal [randFil, randCol].unidad != null || grafoTotal[randFil, randCol].resourceType != TipoRecurso.NullResourceType) {	i = i - 1;	continue;	}
+			else
+			{
+				//AQUI ESCOGEMOS UN MODELADO ALEATORIO A PONER.
+				int randomResource = Random.Range (0, 4);
+				Vector3 resourcePosition = new Vector3 (grafoTotal [randFil, randCol].position.x, grafoTotal [randFil, randCol].position.y - 1, grafoTotal [randFil, randCol].position.z);
+				switch (randomResource) 
+				{
+					case 0:
+					{
+						GameObject modeladoTest = Instantiate (FoodResourceModel, resourcePosition, FoodResourceModel.transform.rotation);
+						mapResourceReference.Add (modeladoTest);
+						break;
+					}
+					case 1:
+					{
+						GameObject modeladoTest = Instantiate (WoodResourceModel, resourcePosition, WoodResourceModel.transform.rotation);
+						mapResourceReference.Add (modeladoTest);
+						break;
+					}
+					case 2:
+					{
+						GameObject modeladoTest = Instantiate (MetalResourceModel, resourcePosition, MetalResourceModel.transform.rotation);
+						mapResourceReference.Add (modeladoTest);
+						break;
+					}
+					case 3:
+					{
+						GameObject modeladoTest = Instantiate (StoneResourceModel, resourcePosition, StoneResourceModel.transform.rotation);
+						mapResourceReference.Add (modeladoTest);
+						break;
+					}
+				}
+				//COMO BASE, TODOS LOS RECURSOS SON FOOD.
+				grafoTotal [randFil, randCol].SetResourceToNode (TipoRecurso.Food);
+				grafoTotal [randFil, randCol].SetPlayerInfluence (0, Node.stepsInfluenceResource);
+			}
 		}
 	}
 
 
+	public void RemoveResourceModel(Vector3 position)
+	{
+		//Debug.Log (mapResourceReference.Count);
+		for (int i = 0; i < mapResourceReference.Count; i++) 
+		{
+			if (mapResourceReference [i].transform.position.x == position.x && mapResourceReference [i].transform.position.z == position.z) 
+			{
+				GameObject toBeDestroyed = mapResourceReference [i];
+				mapResourceReference.RemoveAt (i);
+				Destroy (toBeDestroyed);
+				return;
+			}
+		}
+		//Debug.Log ("has tratado de eliminar un recurso que no existe o ya se ha eliminado antes: revisa el codigo.");
 
+	}
 
 }

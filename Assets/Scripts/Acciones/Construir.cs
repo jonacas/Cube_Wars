@@ -79,7 +79,10 @@ public class Construir : Accion
                 if (true/*StageData.currentInstance.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(StageData.COSTE_PA_CONSTRUIR_TORRE)*/)
                 {
                     StageData.currentInstance.GetPartidaActual().JugadorActual.TorresDefensa++;
-                    Instantiate(StageData.currentInstance.TowerPrefab, n.position, StageData.currentInstance.TowerPrefab.transform.rotation);
+					GameObject tower = Instantiate(StageData.currentInstance.TowerPrefab, n.position, StageData.currentInstance.TowerPrefab.transform.rotation);
+					StageData.currentInstance.GetPartidaActual ().JugadorActual.edificios.Add (tower.GetComponent<TorreDefensa>());
+					n.unidad = tower.GetComponent<TorreDefensa>();
+					StageData.currentInstance.RemoveResourceModel (n.position);
                     CancelarAccion();
                     return true;
                 }
@@ -89,7 +92,8 @@ public class Construir : Accion
                 if (true/*StageData.currentInstance.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(StageData.COSTE_PA_CONSTRUIR_RECURSOS)*/)
                 {
                     StageData.currentInstance.GetPartidaActual().JugadorActual.EdificiosRecoleccion++;
-                    Instantiate(StageData.currentInstance.ResourceBuildPrefab, n.position, StageData.currentInstance.ResourceBuildPrefab.transform.rotation);
+					Instantiate(StageData.currentInstance.ResourceBuildPrefab, n.position, StageData.currentInstance.ResourceBuildPrefab.transform.rotation);
+					StageData.currentInstance.RemoveResourceModel (n.position);
                     CancelarAccion();
                     return true;
                 }
