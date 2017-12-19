@@ -70,7 +70,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4205152202510224}
   - component: {fileID: 95517154409777864}
-  - component: {fileID: 114895751603557490}
+  - component: {fileID: 114576526669112114}
   m_Layer: 0
   m_Name: AlmacenRecursos
   m_TagString: Untagged
@@ -112,7 +112,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1960263331399086}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1, z: 0}
+  m_LocalPosition: {x: 131.59, y: -0.89153063, z: 102.37671}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 4372724109028958}
@@ -249,7 +249,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114895751603557490
+--- !u!114 &114576526669112114
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -257,10 +257,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1960263331399086}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 418979263345de84cb9a3c19f0b76565, type: 3}
+  m_Script: {fileID: 11500000, guid: 90b43f73d60a4e94ca0933852cecb31a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitPanelPrefab: {fileID: 0}
+  unitPanelPrefab: {fileID: 1177745714050020, guid: d3fc6c15b5c5a9f48860ccb506009f92,
+    type: 2}
   UNP: {fileID: 0}
   CasillaMarcada: {fileID: 1745308983168744, guid: e6e44451835e6574a8b69876b952e584,
     type: 2}

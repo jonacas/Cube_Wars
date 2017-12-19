@@ -54,7 +54,7 @@ public class RolRecolector : MonoBehaviour {
 		recursoMinimoActual = StageData.currentInstance.GetPartidaActual().JugadorActual.GetMenorTipoRecurso ();
 		recursosSinExplotar.Clear ();
 
-        print("COMIENZA ROL RECOLECTOR");
+        //print("COMIENZA ROL RECOLECTOR");
 
 		if (numeroAldeanosMINIMOS)
 		{
@@ -120,7 +120,7 @@ public class RolRecolector : MonoBehaviour {
             IA_Aldeano aldIA;
             foreach (Unidad un in aldeanos)
             {
-                print("Moviendo aldeanos recoleccion");
+                //print("Moviendo aldeanos recoleccion");
                 aldIA = (IA_Aldeano)un;
                 aldIA.AvanzarHaciaDestino(true); 
             }
@@ -175,7 +175,7 @@ public class RolRecolector : MonoBehaviour {
 
 	IEnumerator CrearAldeano()
 	{
-        print("CREANDO ALDEANOS");
+        //print("CREANDO ALDEANOS");
 		List<Unidad> edificiosCreadores = GetCreadorDeAldeanosAdecuado ();
 		int edificioActual = 0;
         int totalCreados = 0;
@@ -188,7 +188,7 @@ public class RolRecolector : MonoBehaviour {
 				edificioActual++;
 				if (edificioActual >= edificiosCreadores.Count)
 				{
-					print ("No se pueden crear más en este edificio");
+					//print ("No se pueden crear más en este edificio");
 				}
 			}
 			else if (edificioActual < edificiosCreadores.Count)
@@ -212,7 +212,7 @@ public class RolRecolector : MonoBehaviour {
 
     IEnumerator PrepararOrdenesAldeanos()
     {
-        print("PrepararOrdenesAldeanos");
+        //print("PrepararOrdenesAldeanos");
 		SetResourcesSinExplotar (TipoRecurso.Food);
         ///asignamos a cada aldeano un recurso que deb ir a explotar
 		List<Unidad> aldeanos = new List<Unidad>();
@@ -223,7 +223,7 @@ public class RolRecolector : MonoBehaviour {
         {
             if (unidades[i].IdUnidad == TipoUnidad.Worker)
             {
-                print("borr");
+                //print("borr");
                 aldeanos.Add(unidades[i]);
             }
         }
@@ -233,13 +233,13 @@ public class RolRecolector : MonoBehaviour {
         int indiceRecur = 0;
         foreach (Unidad al in aldeanos)
         {
-            print("preparandoAldeano RECO");
+            //print("preparandoAldeano RECO");
             aldIA = (IA_Aldeano)al;
             /*if (indiceRecur >= recursosSinExplotar.Count)
                 break;
             if (!aldIA.HaLlegado())
                 continue;*/
-            print("set destino RECO");
+            //print("set destino RECO");
             if (indiceRecur < recursosSinExplotar.Count)
             {
                 aldIA.SetDestino(StageData.currentInstance.GetNodeFromPosition(recursosSinExplotar[indiceRecur]));

@@ -81,8 +81,10 @@ public class Construir : Accion
                     StageData.currentInstance.GetPartidaActual().JugadorActual.TorresDefensa++;
 					GameObject tower = Instantiate(StageData.currentInstance.TowerPrefab, n.position, StageData.currentInstance.TowerPrefab.transform.rotation);
 					StageData.currentInstance.GetPartidaActual ().JugadorActual.edificios.Add (tower.GetComponent<TorreDefensa>());
-					n.unidad = tower.GetComponent<TorreDefensa>();
 					StageData.currentInstance.RemoveResourceModel (n.position);
+                    SetUnidadANodoYViceversa(tower.GetComponent<TorreDefensa>());
+                    tower.GetComponent<Unidad>().IdJugador = StageData.currentInstance.GetPartidaActual().JugadorActual.idJugador;
+                    StageData.currentInstance.GetPartidaActual().JugadorActual.edificios.Add(tower.GetComponent<Unidad>());
                     CancelarAccion();
                     return true;
                 }
@@ -92,8 +94,11 @@ public class Construir : Accion
                 if (true/*StageData.currentInstance.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(StageData.COSTE_PA_CONSTRUIR_RECURSOS)*/)
                 {
                     StageData.currentInstance.GetPartidaActual().JugadorActual.EdificiosRecoleccion++;
-					Instantiate(StageData.currentInstance.ResourceBuildPrefab, n.position, StageData.currentInstance.ResourceBuildPrefab.transform.rotation);
+                    GameObject almacen = Instantiate(StageData.currentInstance.ResourceBuildPrefab, n.position, StageData.currentInstance.ResourceBuildPrefab.transform.rotation);
 					StageData.currentInstance.RemoveResourceModel (n.position);
+                    SetUnidadANodoYViceversa(almacen.GetComponent<AlmacenRecursos>());
+                    almacen.GetComponent<Unidad>().IdJugador = StageData.currentInstance.GetPartidaActual().JugadorActual.idJugador;
+                    StageData.currentInstance.GetPartidaActual().JugadorActual.edificios.Add(almacen.GetComponent<Unidad>());
                     CancelarAccion();
                     return true;
                 }
@@ -102,6 +107,13 @@ public class Construir : Accion
         }
         CancelarAccion();
         return false;
+    }
+
+    void SetUnidadANodoYViceversa(Unidad unidad)
+    {
+        Node nodoActual = StageData.currentInstance.GetNodeFromPosition(unidad.transform.position);
+        unidad.Nodo = nodoActual;
+        nodoActual.unidad = unidad;
     }
 
     public override void CancelarAccion()

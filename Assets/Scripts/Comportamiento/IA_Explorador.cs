@@ -81,7 +81,7 @@ public class IA_Explorador : Unidad {
         }
         else
             caminoActual = caminoTotalANodoDestino.GetRange(posActual, 6);
-        print(caminoActual.Count);
+        //print(caminoActual.Count);
 
 
         //comprobamos a que posiciones podemos movernos
@@ -108,7 +108,7 @@ public class IA_Explorador : Unidad {
 
         //si puede moverse, lo hace
         MoverUnidad mv = (MoverUnidad)acciones[ACCION_MOVER];
-        print(StageData.currentInstance.GetNodeFromPosition(destino));
+        //print(StageData.currentInstance.GetNodeFromPosition(destino));
         if (mv.Ejecutar(StageData.currentInstance.GetNodeFromPosition(destino)))
         {
             posActual += incrementoPos;

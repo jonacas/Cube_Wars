@@ -34,11 +34,12 @@ public class JugadorIA : Jugador {
 
     public override void Turno()
     {
+        base.Turno();
         puntosDeAccion = 100 + 20 * edificios.Count;
-        print("TURNO DE " + idJugador);
+        //print("TURNO DE " + idJugador);
         reparto = arbol.AsignarRecursos();
 
-        print("ORDEN JUGADOR " + idJugador + ": Ataque-" + reparto.GetOrdenAtaque() + ": Defensa-" + reparto.GetOrdenDefensa() + ": Recoleccion-" + reparto.GetOrdenRecoleccion() + ": Exploracion-" + reparto.GetOrdenExploracion());
+        //print("ORDEN JUGADOR " + idJugador + ": Ataque-" + reparto.GetOrdenAtaque() + ": Defensa-" + reparto.GetOrdenDefensa() + ": Recoleccion-" + reparto.GetOrdenRecoleccion() + ": Exploracion-" + reparto.GetOrdenExploracion());
 
         StartCoroutine("EjecucionRoles");
     }

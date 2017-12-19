@@ -50,7 +50,7 @@ public class IA_Aldeano : Unidad {
         while (!caminoListo)
             yield return null;
         caminoTotalANodoDestino = caminoActual;
-		Debug.Log ("Tamaño camino a recorrer: " + caminoTotalANodoDestino);
+		//Debug.Log ("Tamaño camino a recorrer: " + caminoTotalANodoDestino);
         posActual = 0;
         //print("Espera camino terminada");
         //AccionMover(caminoActual);
@@ -98,10 +98,10 @@ public class IA_Aldeano : Unidad {
 
             foreach (Node n in nodosConRecursos)
             {
-                print("A ver si construyo un edificio de recursos");
+                //print("A ver si construyo un edificio de recursos");
                 if (creadorEdificios.Ejecutar(n) /* && tiene recursos suficientes*/)
                 {
-                    print("He construidoooo");
+                    //print("He construidoooo");
                     ((JugadorIA)StageData.currentInstance.GetPartidaActual().JugadorActual).rolReco.recursosSinExplotar.Remove(n.position);
                     return true;
                 }
@@ -190,7 +190,7 @@ public class IA_Aldeano : Unidad {
         }
         else
             caminoActual = caminoTotalANodoDestino.GetRange(posActual, 4);
-        print(caminoActual.Count);
+        //print(caminoActual.Count);
 
 
         if (construir)
@@ -218,7 +218,7 @@ public class IA_Aldeano : Unidad {
         //si no puede moverse, ha llegado
         if (destino == Vector3.zero)
         {
-            print("Avanzar hacia destino" + caminoActual.Count);
+            //print("Avanzar hacia destino" + caminoActual.Count);
             CrearEdificio(esEdificioDeRecoleccion);
             heLlegado = true;
             listo = true;
@@ -227,7 +227,7 @@ public class IA_Aldeano : Unidad {
 
         //si puede moverse, lo hace
         MoverUnidad mv = (MoverUnidad)acciones[ACCION_MOVER];
-        print(StageData.currentInstance.GetNodeFromPosition(destino));
+        //print(StageData.currentInstance.GetNodeFromPosition(destino));
         if (mv.Ejecutar(StageData.currentInstance.GetNodeFromPosition(destino)))
         {
             posActual += incrementoPos;

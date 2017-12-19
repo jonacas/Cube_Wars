@@ -175,10 +175,20 @@ public abstract class Jugador : MonoBehaviour
             case TipoRecurso.Rock:
                 piedra += cantidad;
                 break;
+            case TipoRecurso.AllTypeResource:
+                comida += cantidad;
+                madera += cantidad;
+                metal += cantidad;
+                piedra += cantidad;
+                break;
         }
     }
 
-    public abstract void Turno();
+    public virtual void Turno()
+    {
+        SumarRecursosDeTodosLosAlmacenes();
+        print("El jugador: " + idJugador + " tiene:\nMadera: " + madera + "\nPiedra: " + piedra + "\nMetal: " + metal + "\nComida: " + comida);
+    }
 
 
     /// <summary>
@@ -266,6 +276,15 @@ public abstract class Jugador : MonoBehaviour
 		}
 	}
 
-
+    protected void SumarRecursosDeTodosLosAlmacenes()
+    {
+        foreach (Unidad u in edificios)
+        {
+            if (u.IdUnidad == TipoUnidad.Resource)
+            {
+                ((AlmacenRecursos)u).SumarRecursos();
+            }
+        }
+    }
 
 }

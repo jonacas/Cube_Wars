@@ -16,7 +16,7 @@ public class RolExplorador : MonoBehaviour {
 	{
         fin = false;
         partidaActual = StageData.currentInstance.GetPartidaActual();
-        print("Comenza rol explorador");
+        //print("Comenza rol explorador");
         puntosAsignado = puntosAsignadosDesdeFuera;
         if (partidaActual.JugadorActual.Exploradores < NUMERO_MINIMO_EXPLORADORES)
             StartCoroutine("CrearExplorador");
@@ -30,7 +30,7 @@ public class RolExplorador : MonoBehaviour {
     IEnumerator MoverExploradores()
     {
         yield return new WaitForSeconds(1);
-        print("Comienza mover exploradores");
+        //print("Comienza mover exploradores");
         Node objetivo;
         List<Unidad> aux1 = StageData.currentInstance.GetPartidaActual().JugadorActual.unidadesDisponibles;
         List<Unidad> exploradores = new List<Unidad>();
@@ -75,7 +75,7 @@ public class RolExplorador : MonoBehaviour {
 
     IEnumerator CrearExplorador()
 	{
-        print("Comienza crear Exploradores");
+        //print("Comienza crear Exploradores");
         List<Unidad> edificiosCreadores = GetCreadorDeUnidadesAdecuado(); // MIRO TODOS LOS EDIFICIOS QUE PUEDEN CONSTRUIR UNIDADES Y LOS ORDENO POR PRIORIDAD
         int edificioActual = 0; // SE UTILIZA PARA SABER CUAL ES EL EDIFICIO QUE VA A CONSTRUIR, PARA CONTROLAR QUE SI UN EDIFICIO NO PUEDE CREAR MAS, PASE AL SIGUIENTE
         while (partidaActual.JugadorActual.Exploradores < NUMERO_MINIMO_EXPLORADORES && edificioActual < edificiosCreadores.Count)
@@ -86,7 +86,7 @@ public class RolExplorador : MonoBehaviour {
             { // SI EN ESTE EDIFICIO NO SE PUEDE CREAR MAS GUERREROS, PASO AL SIGUIENTE
                 edificioActual++;
                 if (edificioActual >= edificiosCreadores.Count) // SI HE RECORRIDO TODOS LOS EDIFICIOS, SIGNIFICA QUE ME QUEDAN PUNTOS POR GASTAR PERO NO ME CABE EN NINGUN EDIFICIO MAS GUERREROS
-                    print("NO SE PUEDEN CREAR MAS UNIDADES  PORQUE NO CABEN MAS UNIDADES");
+                   print("NO SE PUEDEN CREAR MAS UNIDADES  PORQUE NO CABEN MAS UNIDADES");
             }
            else if (edificioActual < edificiosCreadores.Count) // EN CASO DE QUE TODO VAYA BIEN, LO CREO
             {

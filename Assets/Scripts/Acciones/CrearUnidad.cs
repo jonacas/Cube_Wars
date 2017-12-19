@@ -42,7 +42,9 @@ public class CrearUnidad : Accion
                         gameObjectUnidad.AddComponent<IA_Guerrero>();
                     }
                     SetUnidadANodoYViceversa(gameObjectUnidad.GetComponent<Unidad>());
+                    StageData.currentInstance.GetPartidaActual().Jugadores[m_Unidad.IdJugador].unidadesDisponibles.Add(gameObjectUnidad.GetComponent<Unidad>());
                     StageData.currentInstance.GetPartidaActual().JugadorActual.Guerreros++;
+                    gameObject.GetComponent<Unidad>().IdJugador = StageData.currentInstance.GetPartidaActual().JugadorActual.idJugador;
                     break;
                 case TipoUnidad.Worker:
                     if (StageData.currentInstance.GetPartidaActual().JugadorActual.idJugador != StageData.ID_JUGADOR_HUMANO)

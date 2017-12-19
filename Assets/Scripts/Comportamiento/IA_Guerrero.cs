@@ -20,8 +20,7 @@ public class IA_Guerrero : Unidad {
         defensaMaxima = StageData.DEFENSA_MAX_GUERRERO;
         Defensa = StageData.DEFENSA_MAX_GUERRERO;
         danyo = StageData.ATAQUE_GUERRERO;
-        idUnidad = TipoUnidad.Warrior;
-        IdJugador = 2;
+        idUnidad = TipoUnidad.Warrior;        
     }
 
     /*private void Start()
