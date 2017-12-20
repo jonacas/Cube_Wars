@@ -72,6 +72,7 @@ GameObject:
   - component: {fileID: 4031322538516492}
   - component: {fileID: 33448569007931362}
   - component: {fileID: 23930989066307536}
+  - component: {fileID: 114973389050494478}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -278,3 +279,15 @@ MonoBehaviour:
   caminoListo: 0
   heLlegado: 0
   listo: 0
+--- !u!114 &114973389050494478
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1926299297378314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abf879f3a47234a40a6f7f9db59db50e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: d773f1b0d8aacad4eaa95da810713095, type: 2}

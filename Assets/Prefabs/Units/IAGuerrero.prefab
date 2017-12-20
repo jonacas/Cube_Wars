@@ -57,6 +57,7 @@ GameObject:
   - component: {fileID: 4599636740736582}
   - component: {fileID: 33411730980565294}
   - component: {fileID: 23122630592030942}
+  - component: {fileID: 114766184754948288}
   m_Layer: 0
   m_Name: Cuerpo
   m_TagString: Untagged
@@ -259,6 +260,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4aff02f7d72e3df43ba616ed7d31fed7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114766184754948288
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1766736696763770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abf879f3a47234a40a6f7f9db59db50e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: 0e65e1e979754294b903081d35eb32ac, type: 2}
 --- !u!114 &114892370458143020
 MonoBehaviour:
   m_ObjectHideFlags: 1

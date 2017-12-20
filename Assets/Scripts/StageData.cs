@@ -35,6 +35,7 @@ public class StageData : MonoBehaviour
     public List<EnemyMovement> enemiesInStage;
     public CreacionGrafo CG;
     public TipoUnidad unidadACrear;
+    public Color[] colores = new Color[4];
 
 	public List<MapResource> testResourceList;
 
