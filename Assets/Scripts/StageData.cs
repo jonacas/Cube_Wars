@@ -29,6 +29,7 @@ public class StageData : MonoBehaviour
 {
 
     public GameObject player, WarriorPrefab, WorkerPrefab, ExplorerPrefab, TowerPrefab, ResourceBuildPrefab;
+    public GameObject WoodBuildPrefab, StoneBuildPrefab, MetalBuildPrefab;
     public GameObject explorerIAPrefab, aldeanoIAprefab, guerreroIAPrefab;
     public static StageData currentInstance;
     public List<EnemyMovement> enemiesInStage;
@@ -427,29 +428,31 @@ public class StageData : MonoBehaviour
 					{
 						GameObject modeladoTest = Instantiate (FoodResourceModel, resourcePosition, FoodResourceModel.transform.rotation);
 						mapResourceReference.Add (modeladoTest);
-						break;
+                        grafoTotal[randFil, randCol].SetResourceToNode(TipoRecurso.Food);
+                            break;
 					}
 					case 1:
 					{
 						GameObject modeladoTest = Instantiate (WoodResourceModel, resourcePosition, WoodResourceModel.transform.rotation);
 						mapResourceReference.Add (modeladoTest);
-						break;
+                        grafoTotal[randFil, randCol].SetResourceToNode(TipoRecurso.Wood);
+                            break;
 					}
 					case 2:
 					{
 						GameObject modeladoTest = Instantiate (MetalResourceModel, resourcePosition, MetalResourceModel.transform.rotation);
 						mapResourceReference.Add (modeladoTest);
-						break;
+                        grafoTotal[randFil, randCol].SetResourceToNode(TipoRecurso.Steel);
+                            break;
 					}
 					case 3:
 					{
 						GameObject modeladoTest = Instantiate (StoneResourceModel, resourcePosition, StoneResourceModel.transform.rotation);
 						mapResourceReference.Add (modeladoTest);
-						break;
+                        grafoTotal[randFil, randCol].SetResourceToNode(TipoRecurso.Rock);
+                            break;
 					}
 				}
-				//COMO BASE, TODOS LOS RECURSOS SON FOOD.
-				grafoTotal [randFil, randCol].SetResourceToNode (TipoRecurso.Food);
 				grafoTotal [randFil, randCol].SetPlayerInfluence (0, Node.stepsInfluenceResource);
 			}
 		}

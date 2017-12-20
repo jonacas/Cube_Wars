@@ -94,11 +94,59 @@ public class Construir : Accion
                 if (true/*StageData.currentInstance.GetPartidaActual().Jugadores[m_Unidad.IdJugador].RestarPuntosDeAccion(StageData.COSTE_PA_CONSTRUIR_RECURSOS)*/)
                 {
                     StageData.currentInstance.GetPartidaActual().JugadorActual.EdificiosRecoleccion++;
-                    GameObject almacen = Instantiate(StageData.currentInstance.ResourceBuildPrefab, n.position, StageData.currentInstance.ResourceBuildPrefab.transform.rotation);
-					StageData.currentInstance.RemoveResourceModel (n.position);
-                    SetUnidadANodoYViceversa(almacen.GetComponent<Unidad>());
-                    almacen.GetComponent<Unidad>().IdJugador = StageData.currentInstance.GetPartidaActual().JugadorActual.idJugador;
-                    StageData.currentInstance.GetPartidaActual().JugadorActual.edificios.Add(almacen.GetComponent<Unidad>());
+                    switch (n.resourceType)
+                    {
+                        case TipoRecurso.AllTypeResource:
+                        {
+                                GameObject almacen = Instantiate(StageData.currentInstance.ResourceBuildPrefab,
+                                    n.position, StageData.currentInstance.ResourceBuildPrefab.transform.rotation);
+                                StageData.currentInstance.RemoveResourceModel(n.position);
+                                SetUnidadANodoYViceversa(almacen.GetComponent<Unidad>());
+                                almacen.GetComponent<Unidad>().IdJugador = StageData.currentInstance.GetPartidaActual().JugadorActual.idJugador;
+                                StageData.currentInstance.GetPartidaActual().JugadorActual.edificios.Add(almacen.GetComponent<Unidad>());
+                                break;
+                        }
+                        case TipoRecurso.Food:
+                        {
+                              GameObject almacen = Instantiate(StageData.currentInstance.ResourceBuildPrefab,
+                                    n.position, StageData.currentInstance.ResourceBuildPrefab.transform.rotation);
+                                StageData.currentInstance.RemoveResourceModel(n.position);
+                                SetUnidadANodoYViceversa(almacen.GetComponent<Unidad>());
+                                almacen.GetComponent<Unidad>().IdJugador = StageData.currentInstance.GetPartidaActual().JugadorActual.idJugador;
+                                StageData.currentInstance.GetPartidaActual().JugadorActual.edificios.Add(almacen.GetComponent<Unidad>());
+                                break;
+                        }
+                        case TipoRecurso.Steel:
+                            {
+                                GameObject almacen = Instantiate(StageData.currentInstance.MetalBuildPrefab,
+                                    n.position, StageData.currentInstance.ResourceBuildPrefab.transform.rotation);
+                                StageData.currentInstance.RemoveResourceModel(n.position);
+                                SetUnidadANodoYViceversa(almacen.GetComponent<Unidad>());
+                                almacen.GetComponent<Unidad>().IdJugador = StageData.currentInstance.GetPartidaActual().JugadorActual.idJugador;
+                                StageData.currentInstance.GetPartidaActual().JugadorActual.edificios.Add(almacen.GetComponent<Unidad>());
+                                break;
+                            }
+                        case TipoRecurso.Wood:
+                            {
+                                GameObject almacen = Instantiate(StageData.currentInstance.WoodBuildPrefab,
+                                    n.position, StageData.currentInstance.ResourceBuildPrefab.transform.rotation);
+                                StageData.currentInstance.RemoveResourceModel(n.position);
+                                SetUnidadANodoYViceversa(almacen.GetComponent<Unidad>());
+                                almacen.GetComponent<Unidad>().IdJugador = StageData.currentInstance.GetPartidaActual().JugadorActual.idJugador;
+                                StageData.currentInstance.GetPartidaActual().JugadorActual.edificios.Add(almacen.GetComponent<Unidad>());
+                                break;
+                            }
+                        case TipoRecurso.Rock:
+                            {
+                                GameObject almacen = Instantiate(StageData.currentInstance.StoneBuildPrefab,
+                                    n.position, StageData.currentInstance.ResourceBuildPrefab.transform.rotation);
+                                StageData.currentInstance.RemoveResourceModel(n.position);
+                                SetUnidadANodoYViceversa(almacen.GetComponent<Unidad>());
+                                almacen.GetComponent<Unidad>().IdJugador = StageData.currentInstance.GetPartidaActual().JugadorActual.idJugador;
+                                StageData.currentInstance.GetPartidaActual().JugadorActual.edificios.Add(almacen.GetComponent<Unidad>());
+                                break;
+                            }
+                    }                
                     CancelarAccion();
                     return true;
                 }

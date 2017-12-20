@@ -18,7 +18,7 @@ public class AlmacenRecursos : Unidad {
 
     public void SumarRecursos() // COGE AL JUGADOR ACTUAL
     {
-        //StageData.currentInstance.GetPartidaActual().JugadorActual.SumarRecursos(Nodo.resourceType, StageData.CANTIDAD_RECOLECTADA);
-        StageData.currentInstance.GetPartidaActual().JugadorActual.SumarRecursos(TipoRecurso.AllTypeResource, StageData.CANTIDAD_RECOLECTADA);
+        StageData.currentInstance.GetPartidaActual().JugadorActual.SumarRecursos(Nodo.resourceType, StageData.CANTIDAD_RECOLECTADA);
+        //StageData.currentInstance.GetPartidaActual().JugadorActual.SumarRecursos(TipoRecurso.AllTypeResource, StageData.CANTIDAD_RECOLECTADA);
     }
 }
