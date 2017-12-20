@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class ColorChange : MonoBehaviour {
 
-    public Material material;
+	public Renderer materialReference;
 	// Use this for initialization
-	void Awake () {
+	void Start () {
 
-        material.color = StageData.currentInstance.colores[StageData.currentInstance.GetPartidaActual().JugadorActual.idJugador];
+		materialReference.materials[0] = new Material(Shader.Find("Diffuse"));
+		materialReference.materials [0].color = StageData.currentInstance.colores [StageData.currentInstance.GetPartidaActual ().JugadorActual.idJugador].color;
 	}
 }

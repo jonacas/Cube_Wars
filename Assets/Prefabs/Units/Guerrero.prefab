@@ -73,6 +73,7 @@ GameObject:
   - component: {fileID: 4010909485929374}
   - component: {fileID: 33650513547084940}
   - component: {fileID: 23722111658784858}
+  - component: {fileID: 114663254377875452}
   m_Layer: 0
   m_Name: Cuerpo
   m_TagString: Untagged
@@ -277,6 +278,18 @@ MonoBehaviour:
     type: 2}
   caminoActual: []
   caminoListo: 0
+--- !u!114 &114663254377875452
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1982719056310674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abf879f3a47234a40a6f7f9db59db50e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  materialReference: {fileID: 23722111658784858}
 --- !u!114 &114979948304639264
 MonoBehaviour:
   m_ObjectHideFlags: 1
