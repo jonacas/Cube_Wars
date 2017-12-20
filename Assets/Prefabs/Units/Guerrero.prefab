@@ -22,9 +22,9 @@ GameObject:
   - component: {fileID: 33132608521149794}
   - component: {fileID: 65067508886303572}
   - component: {fileID: 23608433862924384}
-  - component: {fileID: 114562520850198046}
   - component: {fileID: 114979948304639264}
   - component: {fileID: 114484977841403890}
+  - component: {fileID: 114562520850198046}
   m_Layer: 0
   m_Name: Guerrero
   m_TagString: Untagged

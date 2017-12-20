@@ -22,9 +22,9 @@ GameObject:
   - component: {fileID: 33255666806656134}
   - component: {fileID: 65868304412727694}
   - component: {fileID: 23438102295024226}
-  - component: {fileID: 114319826263064012}
   - component: {fileID: 114083856295075458}
   - component: {fileID: 114756218473121770}
+  - component: {fileID: 114319826263064012}
   m_Layer: 0
   m_Name: Aldeano
   m_TagString: Untagged

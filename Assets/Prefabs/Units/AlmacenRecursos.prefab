@@ -70,6 +70,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4205152202510224}
   - component: {fileID: 95517154409777864}
+  - component: {fileID: 114182846809438748}
   - component: {fileID: 114576526669112114}
   m_Layer: 0
   m_Name: AlmacenRecursos
@@ -249,6 +250,17 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114182846809438748
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1960263331399086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff171550d8805164ba53c9b089fb56cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114576526669112114
 MonoBehaviour:
   m_ObjectHideFlags: 1

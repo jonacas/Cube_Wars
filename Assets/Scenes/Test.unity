@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -280,10 +280,10 @@ GameObject:
   - component: {fileID: 504294167}
   - component: {fileID: 504294168}
   - component: {fileID: 504294173}
-  - component: {fileID: 504294172}
   - component: {fileID: 504294171}
   - component: {fileID: 504294170}
   - component: {fileID: 504294169}
+  - component: {fileID: 504294174}
   m_Layer: 0
   m_Name: Jugador1
   m_TagString: Untagged
@@ -364,19 +364,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objetivoActual: 0
   estado: 0
---- !u!114 &504294172
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 504294166}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 279d7ae33cae72147864919407148521, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objetivoActual: 0
-  estado: 0
 --- !u!114 &504294173
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -386,6 +373,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 900ff3d7ebb65aa43a6f5ce643e416bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fin: 0
+--- !u!114 &504294174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 504294166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43ee8d8affb98b44d964077c4bced279, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   fin: 0
@@ -613,8 +612,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 705783837}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 512, y: 288, z: 0}
-  m_LocalScale: {x: 0.53333336, y: 0.53333336, z: 0.53333336}
+  m_LocalPosition: {x: 354.5, y: 199.5, z: 0}
+  m_LocalScale: {x: 0.36935762, y: 0.36935762, z: 0.36935762}
   m_Children:
   - {fileID: 194914090}
   m_Father: {fileID: 0}
@@ -1292,10 +1291,10 @@ GameObject:
   - component: {fileID: 1508765910}
   - component: {fileID: 1508765911}
   - component: {fileID: 1508765916}
-  - component: {fileID: 1508765915}
   - component: {fileID: 1508765914}
   - component: {fileID: 1508765913}
   - component: {fileID: 1508765912}
+  - component: {fileID: 1508765915}
   m_Layer: 0
   m_Name: Jugador2
   m_TagString: Untagged
@@ -1384,11 +1383,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1508765909}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 279d7ae33cae72147864919407148521, type: 3}
+  m_Script: {fileID: 11500000, guid: 43ee8d8affb98b44d964077c4bced279, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objetivoActual: 0
-  estado: 0
+  fin: 0
 --- !u!114 &1508765916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1512,10 +1510,10 @@ GameObject:
   - component: {fileID: 1758072909}
   - component: {fileID: 1758072910}
   - component: {fileID: 1758072915}
-  - component: {fileID: 1758072914}
   - component: {fileID: 1758072913}
   - component: {fileID: 1758072912}
   - component: {fileID: 1758072911}
+  - component: {fileID: 1758072914}
   m_Layer: 0
   m_Name: Jugador3
   m_TagString: Untagged
@@ -1604,11 +1602,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1758072908}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 279d7ae33cae72147864919407148521, type: 3}
+  m_Script: {fileID: 11500000, guid: 43ee8d8affb98b44d964077c4bced279, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objetivoActual: 0
-  estado: 0
+  fin: 0
 --- !u!114 &1758072915
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1665,7 +1662,8 @@ MonoBehaviour:
     type: 2}
   aldeanoIAprefab: {fileID: 1831679263360590, guid: 7ae350e5c28a09b4e8a9e23fece473d5,
     type: 2}
-  guerreroIAPrefab: {fileID: 0}
+  guerreroIAPrefab: {fileID: 1351127510808350, guid: 40c50238b82b9ea4198f2517ff21754a,
+    type: 2}
   enemiesInStage: []
   CG: {fileID: 1700817739}
   unidadACrear: 0

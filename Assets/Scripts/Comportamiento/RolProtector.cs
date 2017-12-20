@@ -141,7 +141,7 @@ public class RolProtector : MonoBehaviour {
             //si la media no llega al minimo, se envia un aldeano a una posicion cercana para que construya una torre
             if (media < UMBRAL_CREACION_TORRES)
             {
-                cercanias = Control.GetNodosAlAlcance(edificios[edificioActual].Nodo, 2);
+                cercanias = Control.GetNodosAlAlcance(edificios[edificioActual].Nodo, 3);
                 aldIA.SetDestino(StageData.currentInstance.GetNodeFromPosition(cercanias[Random.Range(0, cercanias.Count - 1)].position));
                 while (!aldIA.caminoListo)
                     yield return null;

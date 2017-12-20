@@ -18,7 +18,7 @@ public class Guerrero : Unidad {
         Defensa = StageData.DEFENSA_MAX_GUERRERO;
         danyo = StageData.ATAQUE_GUERRERO;
         idUnidad = TipoUnidad.Warrior;
-        IdJugador = 2;
+        IdJugador = StageData.currentInstance.GetPartidaActual().JugadorActual.idJugador;
         Nodo = StageData.currentInstance.GetNodeFromPosition(this.transform.position);
         Nodo.unidad = this;
     }

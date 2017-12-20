@@ -107,8 +107,12 @@ public class GlobalControl : MonoBehaviour {
             if (Input.GetButtonDown("ClickIzq"))
             {
                 Node nodo = LanzaRaycast();
-                print("Click en: " + nodo.fil + "//" + nodo.col);
-                IntentarEjecutarAccion(nodo);
+                if (nodo != null)
+                {
+                    print("Click en: " + nodo.fil + "//" + nodo.col);
+                    IntentarEjecutarAccion(nodo);
+                }
+               
             }
 
 

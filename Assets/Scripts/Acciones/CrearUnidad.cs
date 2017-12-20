@@ -41,7 +41,7 @@ public class CrearUnidad : Accion
                     }
                     else
                     {
-                        gameObjectUnidad = Instantiate(StageData.currentInstance.guerreroIAPrefab, destino.position, StageData.currentInstance.ExplorerPrefab.transform.rotation);
+                        gameObjectUnidad = Instantiate(StageData.currentInstance.WarriorPrefab, destino.position, StageData.currentInstance.ExplorerPrefab.transform.rotation);
                     }
                     SetUnidadANodoYViceversa(gameObjectUnidad.GetComponent<Unidad>());
                     StageData.currentInstance.GetPartidaActual().Jugadores[m_Unidad.IdJugador].unidadesDisponibles.Add(gameObjectUnidad.GetComponent<Unidad>());
@@ -55,7 +55,7 @@ public class CrearUnidad : Accion
                     }
                     else
                     {
-                        gameObjectUnidad = Instantiate(StageData.currentInstance.aldeanoIAprefab, destino.position, StageData.currentInstance.ExplorerPrefab.transform.rotation);
+                        gameObjectUnidad = Instantiate(StageData.currentInstance.WorkerPrefab, destino.position, StageData.currentInstance.ExplorerPrefab.transform.rotation);
                     }
                     SetUnidadANodoYViceversa(gameObjectUnidad.GetComponent<Unidad>());
                     //StageData.currentInstance.GetPartidaActual().JugadorActual.Aldeanos++;
