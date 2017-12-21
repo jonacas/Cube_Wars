@@ -10,10 +10,10 @@ public class CameraController : MonoBehaviour {
     private float EDGE_PANNING_MIN_Y = -20;
 
     private float EDGE_PANNING_LIMIT_ABSOLUTE_Y = 30;
-    private const float EDGE_PANNING_SPEED = 90f;                           // Velocidad del edge panning
+    private const float EDGE_PANNING_SPEED = 210f /*90f*/;                           // Velocidad del edge panning
     private const float RIGHT_CLICK_TURN_SPEED = 100f;                      // Velocidad de giro de la camara
-    private const float EDGE_PANNING_THS_HORIZONTAL = 0.475f;               // Posicion del raton necesaria para mover la pantalla en X (de 0 a 0.5)
-    private const float EDGE_PANNING_THS_VERTICAL = 0.45f;                  // Posicion del raton necesaria para mover la pantalla en Y (de 0 a 0.5)
+    private const float EDGE_PANNING_THS_HORIZONTAL = 0.4f/*0.475f*/;               // Posicion del raton necesaria para mover la pantalla en X (de 0 a 0.5)
+    private const float EDGE_PANNING_THS_VERTICAL = 0.375f/*0.45f*/;                  // Posicion del raton necesaria para mover la pantalla en Y (de 0 a 0.5)
     private const float ZOOM_SPEED = 2f;                                    // Velocidad de zoom
     private const float ZOOM_MIN_HEIGHT = 3.5f;                                // Altura minima del zoom
     private const float ZOOM_HEIGHT_SCALING = 25f;                          // Escalado de altura del zoom (el zoom maximo sera, posicion minima + escalado)

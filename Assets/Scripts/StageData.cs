@@ -28,7 +28,8 @@ public enum TipoRecurso
 public class StageData : MonoBehaviour
 {
 
-    public GameObject player, WarriorPrefab, WorkerPrefab, ExplorerPrefab, TowerPrefab, ResourceBuildPrefab;
+    public GameObject player, WarriorPrefab, WorkerPrefab, ExplorerPrefab, TowerPrefab, ResourceBuildPrefab , MistPrefab;
+    public Material materialNiebla;
     public GameObject WoodBuildPrefab, StoneBuildPrefab, MetalBuildPrefab;
     public GameObject explorerIAPrefab, aldeanoIAprefab, guerreroIAPrefab;
     public static StageData currentInstance;
@@ -117,6 +118,7 @@ public class StageData : MonoBehaviour
 	public GameObject StoneResourceModel;
 	public GameObject MetalResourceModel;
 
+    GameObject piscinaNiebla;
 
     void Awake()
     {
@@ -130,8 +132,45 @@ public class StageData : MonoBehaviour
     {
         return player;
     }
+    public void SetNieblaDeGuerra(int idJugadorActual)
+    {
 
-	public Node GetNodeFromPosition(Vector3 requester)
+        Destroy(piscinaNiebla);
+        piscinaNiebla = new GameObject("PiscinaNiebla");
+        GameObject nieblaActual;
+        foreach (Node n in grafoTotal)
+        {
+            if (n != null)
+                switch (n.GetPlayerInfluence(idJugadorActual))
+                {
+                    case -1:
+                        nieblaActual = Instantiate(MistPrefab, n.position, MistPrefab.transform.rotation, piscinaNiebla.transform);
+                        break;
+                    case 0:
+                        if (n.resourceType != TipoRecurso.NullResourceType || (n.unidad != null && (n.unidad.IdUnidad == TipoUnidad.Resource || n.unidad.IdUnidad == TipoUnidad.DefensiveBuilding)))
+                        {
+                            //Debug.Log("PATATA VOLADORA"); //NO ESTA ENTRANDO LOL!!!!!!!
+                            nieblaActual = Instantiate(MistPrefab, n.position, MistPrefab.transform.rotation, piscinaNiebla.transform);
+                            nieblaActual.GetComponent<Renderer>().material = materialNiebla;
+                        }
+                        else
+                        {
+                            nieblaActual = Instantiate(MistPrefab, n.position, MistPrefab.transform.rotation, piscinaNiebla.transform);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+        }
+    }
+
+
+    public void ClearNieblaDeGuerra()
+    {
+        Destroy(piscinaNiebla);
+    }
+
+    public Node GetNodeFromPosition(Vector3 requester)
 	{
 		///en base a las coordenadas se obtiene la fila y columna de los nodos
 		int initX = (int)Mathf.Round(requester.x / CG.incrementoX);
@@ -141,6 +180,7 @@ public class StageData : MonoBehaviour
 		{
 			return null;
 		}
+        if (grafoTotal[initX, initZ] == null) { return null; }
         LastClickedNode = grafoTotal[initZ, initX];
 		return grafoTotal [initZ, initX];
 
@@ -341,17 +381,23 @@ public class StageData : MonoBehaviour
 				if (posX < 0 || posX >= CG.filas) {	continue;	}
 				else if (posY < 0 || posY >= CG.columnas) {	continue;}
 				else
-				{	//posicion legal, ahora viene la paja.
-					int difX = (int)Mathf.Abs(center.fil - posX); 
-					int difY = (int)Mathf.Abs (center.col - posY);
-					if (numberOfSteps - difY == 0 || numberOfSteps - difX == 0) {continue;	}
+				{   //posicion legal, ahora viene la paja.
+                    int difX = (int)Mathf.Abs(center.fil - posX);
+                    int difY = (int)Mathf.Abs(center.col - posY);
+                    if (numberOfSteps - difY == 0 || numberOfSteps - difX == 0) { continue; }
 
                     if (grafo[posX, posY] == null)
                         continue;
-                    grafo [posX, posY].ClearPlayerInfluence (player);
-					//		Instantiate (testCasillaMarcada, grafo [posX, posY].position, Quaternion.identity);
-					//		Debug.Log ("peso en" + " x: " + difX + " , " + "y: " + difY + "==>" +  (numberOfSteps - difY) 
-				}
+                    if (difX <= difY)
+                    {
+                        grafo[posX, posY].SetPlayerInfluence(player, difY - numberOfSteps);
+                        //Debug.Log ("peso en" + " x: " + difX + " , " + "y: " + difY + "==>" +  grafo[posX, posY].GetPlayerInfluence(player));
+                    }
+                    else
+                    {
+                        grafo[posX, posY].SetPlayerInfluence(player, difX - numberOfSteps);
+                    }
+                }
 			}
 		}
 	}
@@ -463,7 +509,7 @@ public class StageData : MonoBehaviour
                             break;
 					}
 				}
-				grafoTotal [randFil, randCol].SetPlayerInfluence (0, Node.stepsInfluenceResource);
+				//grafoTotal [randFil, randCol].SetPlayerInfluence (0, Node.stepsInfluenceResource);
 			}
 		}
 	}
@@ -485,5 +531,39 @@ public class StageData : MonoBehaviour
 		//Debug.Log ("has tratado de eliminar un recurso que no existe o ya se ha eliminado antes: revisa el codigo.");
 
 	}
+
+    public void SetBuildingPlayerInfluence()
+    {
+        Jugador ActualPlayer = GetPartidaActual().JugadorActual;
+        List<Node> alcance;
+        for (int i = 0; i < ActualPlayer.edificios.Count; i++)
+        {
+            alcance = Control.GetNodosAlAlcance(ActualPlayer.edificios[i].Nodo, Node.stepsInfluenceBuilding);
+            for (int j = 0; j < alcance.Count; j++)
+            {
+                if (alcance[j].GetPlayerInfluence(ActualPlayer.idJugador) <= 0)
+                {
+                    SetInfluenceToNode(Node.stepsInfluenceBuilding, ActualPlayer.edificios[i].Nodo, ActualPlayer.idJugador);
+                    break;
+                }
+            }
+        }
+        alcance = Control.GetNodosAlAlcance(ActualPlayer.Capital.Nodo, Node.stepsInfluenceBuilding);
+        for (int j = 0; j < alcance.Count; j++)
+        {
+            if (alcance[j].GetPlayerInfluence(ActualPlayer.idJugador) <= 0)
+            {
+                SetInfluenceToNode(Node.stepsInfluenceBuilding, ActualPlayer.Capital.Nodo, ActualPlayer.idJugador);
+                break;
+            }
+        }
+    }
+
+
+
+
+
+
+
 
 }

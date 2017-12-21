@@ -640,8 +640,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 705783837}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 562.5, y: 316.5, z: 0}
-  m_LocalScale: {x: 0.5860243, y: 0.5860243, z: 0.5860243}
+  m_LocalPosition: {x: 481, y: 270.5, z: 0}
+  m_LocalScale: {x: 0.5009838, y: 0.5009838, z: 0.5009838}
   m_Children:
   - {fileID: 194914090}
   m_Father: {fileID: 0}
@@ -1714,6 +1714,8 @@ MonoBehaviour:
     type: 2}
   ResourceBuildPrefab: {fileID: 1960263331399086, guid: c7df62453c762d94a9923788c01c868f,
     type: 2}
+  MistPrefab: {fileID: 1614084738210830, guid: d55e6980134416a42bf55f1e9f94ea28, type: 2}
+  materialNiebla: {fileID: 2100000, guid: e31619c340f0d4a4faa801c4abb57233, type: 2}
   WoodBuildPrefab: {fileID: 1884512935227004, guid: cc507e9595b2deb48b89cbbda56c9f07,
     type: 2}
   StoneBuildPrefab: {fileID: 1456790534460852, guid: 3b945e39b9110044f91d8127a6f53a72,

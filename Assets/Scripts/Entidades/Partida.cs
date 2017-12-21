@@ -92,6 +92,14 @@ public class Partida : MonoBehaviour{
             {
                 jugadorActual = jugadores[i];
                 //print("COMIENZA EL TURNO DEL " + i);
+                if (jugadorActual.idJugador == 0)
+                {
+                    StageData.currentInstance.SetNieblaDeGuerra(jugadorActual.idJugador);
+                }
+                else
+                {
+                    StageData.currentInstance.ClearNieblaDeGuerra();
+                }
                 jugadores[i].Turno();
                 while (!jugadores[i].HaAcabadoTurno())
                     yield return null;

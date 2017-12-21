@@ -23,7 +23,7 @@ public class Capital : Unidad {
             this.Nodo = StageData.currentInstance.GetNodeFromPosition(this.transform.position);
             Nodo.unidad = this;
             primerUpdate = true;
-            StageData.currentInstance.SetInfluenceToNode(5, this.Nodo, this.IdJugador);
+            StageData.currentInstance.SetInfluenceToNode(Node.stepsInfluenceBuilding, this.Nodo, this.IdJugador);
         }
 
        /* if (Input.GetKeyDown(KeyCode.Space))
