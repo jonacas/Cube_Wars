@@ -417,7 +417,9 @@ public class StageData : MonoBehaviour
 		{
 			int randFil = Random.Range (0, CG.filas - 1);
 			int randCol = Random.Range (0, CG.columnas - 1);
-			if (grafoTotal [randFil, randCol].unidad != null || grafoTotal[randFil, randCol].resourceType != TipoRecurso.NullResourceType) {	i = i - 1;	continue;	}
+			if (grafoTotal[randFil, randCol] == null || 
+				grafoTotal [randFil, randCol].unidad != null || 
+				grafoTotal[randFil, randCol].resourceType != TipoRecurso.NullResourceType) {	i = i - 1;	continue;	}
 			else
 			{
 				//AQUI ESCOGEMOS UN MODELADO ALEATORIO A PONER.
