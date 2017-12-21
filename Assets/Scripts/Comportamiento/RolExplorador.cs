@@ -29,7 +29,7 @@ public class RolExplorador : MonoBehaviour {
 
     IEnumerator MoverExploradores()
     {
-        yield return new WaitForSeconds(1);
+        //yield return new WaitForSeconds(1);
         //print("Comienza mover exploradores");
         Node objetivo;
         List<Unidad> aux1 = StageData.currentInstance.GetPartidaActual().JugadorActual.unidadesDisponibles;
@@ -60,7 +60,7 @@ public class RolExplorador : MonoBehaviour {
             {
                 //puntosAsignado -= StageData.COSTE_PA_MOVER_UNIDAD;
                 expl.AvanzarHaciaDestino(ref puntosAsignado);
-                yield return new WaitForSeconds(5);
+                yield return new WaitForSeconds(2);
                 while (!expl.listo)
                     yield return null;
                 if (puntosAsignado < StageData.COSTE_PA_MOVER_UNIDAD)
@@ -99,7 +99,7 @@ public class RolExplorador : MonoBehaviour {
                 }
             }
         }
-        yield return new WaitForSeconds(2);
+        //yield return new WaitForSeconds(2);
         StartCoroutine("MoverExploradores");
     }
 
