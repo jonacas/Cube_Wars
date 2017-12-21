@@ -92,8 +92,8 @@ public abstract class Unidad : MonoBehaviour {
         {
             if (idJugador == -1)
                 idJugador = value;
-            else
-                Debug.LogError("Se ha intentado modificar un id ya asignado: " + idJugador + " por " + value);
+            /*else
+                Debug.LogError("Se ha intentado modificar un id ya asignado: " + idJugador + " por " + value);*/
         }
     }
 

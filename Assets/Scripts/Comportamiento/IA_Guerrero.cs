@@ -6,9 +6,10 @@ public class IA_Guerrero : Unidad {
 
     const int ACCION_MOVER = 0, ACCION_ATACAR = 1;
 
-    private bool heLlegado, listo;
+    public bool heLlegado, listo;
     private List<Vector3> caminoTotalACapital;
     int posActual;
+    int puntosDeAccion;
 
     void Awake()
     {        
@@ -20,7 +21,8 @@ public class IA_Guerrero : Unidad {
         defensaMaxima = StageData.DEFENSA_MAX_GUERRERO;
         Defensa = StageData.DEFENSA_MAX_GUERRERO;
         danyo = StageData.ATAQUE_GUERRERO;
-        idUnidad = TipoUnidad.Warrior;        
+        idUnidad = TipoUnidad.Warrior;
+        IdJugador = StageData.currentInstance.GetPartidaActual().JugadorActual.idJugador;
     }
 
     /*private void Start()
@@ -74,6 +76,12 @@ public class IA_Guerrero : Unidad {
 
     public void AvanzarHaciaDestino(ref int puntosDisponibles)
     {
+        puntosDeAccion = puntosDisponibles;
+        StartCoroutine("Avanzando");
+    }
+
+    IEnumerator Avanzando()
+    {
         //si hay unidades enemigas al alcance (guerreros y torres de defensa), las ataca si son del objetivo
         listo = false;
         List<Node> alcance;
@@ -81,23 +89,23 @@ public class IA_Guerrero : Unidad {
 
         for (int i = 0; i < alcance.Count; i++)
         {
-			if (alcance[i].unidad != null  && alcance[i].unidad.IdJugador == ((JugadorIA) StageData.currentInstance.GetPartidaActual().Jugadores[IdJugador]).rolGuerr.objetivoActual)
+            if (alcance[i].unidad != null && alcance[i].unidad.IdJugador == StageData.currentInstance.GetPartidaActual().Jugadores[IdJugador].IndexPlayerObjetivoActual)
             {
                 if (alcance[i].unidad.IdUnidad == TipoUnidad.Warrior || alcance[i].unidad.IdUnidad == TipoUnidad.DefensiveBuilding || alcance[i].unidad.IdUnidad == TipoUnidad.Capital)
                 {
                     Atacar at = (Atacar)acciones[ACCION_ATACAR];
                     if (at.Ejecutar(alcance[i]))
                     {
-						puntosDisponibles -= StageData.COSTE_PA_ATACAR;
+                        puntosDeAccion -= StageData.COSTE_PA_ATACAR;
                         listo = true;
-                        return;
+                        StopCoroutine("Abanzando");
                     }
                 }
             }
         }
 
         //si no atacamos, movemos
-        caminoActual = caminoTotalACapital.GetRange(posActual, acciones[ACCION_ATACAR].Alcance - 1);
+        caminoActual = caminoTotalACapital.GetRange(posActual, acciones[ACCION_ATACAR].Alcance);
 
         //comprobamos a que posiciones podemos movernos
         Vector3 destino = Vector3.zero;
@@ -117,15 +125,21 @@ public class IA_Guerrero : Unidad {
         {
             heLlegado = true;
             listo = true;
-            return;
+            StopCoroutine("Avanzando");
         }
 
         //si puede moverse, lo hace
-        MoverUnidad mv = (MoverUnidad)acciones[ACCION_MOVER];
+        MoverUnidad mv = (MoverUnidad)acciones[ACCION_MOVER];       
         if (mv.Ejecutar(StageData.currentInstance.GetNodeFromPosition(destino)))
         {
+            while (!mv.Fin)
+            {
+                yield return null;
+            }
+
+            mv.CancelarAccion();
             posActual += incrementoPos;
-            puntosDisponibles -= StageData.COSTE_PA_MOVER_UNIDAD;
+            puntosDeAccion -= StageData.COSTE_PA_MOVER_UNIDAD;
         }
         listo = true;
     }

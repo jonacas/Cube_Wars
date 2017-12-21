@@ -168,10 +168,16 @@ public class ArbolMaestro{
 
         int suma;
         int asignacion =0 ;
+        int torres = 0;
         foreach (Unidad un in jug.edificios)
         {
+            if (un.IdUnidad == TipoUnidad.DefensiveBuilding)
+                torres++;
+            if (torres >= 5)
+                return 0;
+
             List<Node> cercanias;
-            cercanias = Control.GetNodosAlAlcance(un.Nodo, 5);
+            cercanias = Control.GetNodosAlAlcance(un.Nodo, 4);
             suma = 0;
             foreach (Node n in cercanias)
             {
@@ -304,6 +310,8 @@ public class ArbolMaestro{
             {
                 for (int k = 0; k < partidaActual.numJugadores; k++)
                 {//se suma la influencia en el nodo del jugador
+                    if (jug.influencias[i, j] == null)
+                        continue;
                     if(jug.influencias[i, j].GetPlayerInfluence(k) != -1)
                         influenciasJugadores[k] += jug.influencias[i, j].GetPlayerInfluence(k);
                 }

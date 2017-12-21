@@ -36,7 +36,7 @@ public class RolProtector : MonoBehaviour {
         else
             numeroAldeanosMINIMOS = false;
           
-        print("COMIENZA ROL PROTECTOR");
+        //print("COMIENZA ROL PROTECTOR");
 
         if (numeroAldeanosMINIMOS)
         {
@@ -79,7 +79,7 @@ public class RolProtector : MonoBehaviour {
 
     IEnumerator PrepararOrdenesAldeanos()
     {
-        print("PrepararOrdenesAldeanos");
+        //print("PrepararOrdenesAldeanos");
         ///asignamos a cada aldeano un recurso que deb ir a explotar
 		List<Unidad> aldeanos = new List<Unidad>();
         List<Unidad> unidades = StageData.currentInstance.GetPartidaActual().JugadorActual.unidadesDisponibles;
@@ -90,7 +90,7 @@ public class RolProtector : MonoBehaviour {
         {
             if (unidades[i].IdUnidad == TipoUnidad.Worker)
             {
-                print("borr");
+                //print("borr");
                 aldeanos.Add(unidades[i]);
             }
         }
@@ -120,9 +120,9 @@ public class RolProtector : MonoBehaviour {
         int edificioActual = 0;
         foreach (Unidad al in aldeanos)
         {
-            print("preparandoAldeano PROTEC");
+            //print("preparandoAldeano PROTEC");
             aldIA = (IA_Aldeano)al;
-            print("set destino PROTEC");
+            //print("set destino PROTEC");
 
 
             if (edificioActual >= unidadesParaEdificios.Count)

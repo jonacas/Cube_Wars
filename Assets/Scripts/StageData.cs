@@ -287,6 +287,8 @@ public class StageData : MonoBehaviour
 					if (numberOfSteps - difY == 0 || numberOfSteps - difX == 0) {continue;	}
 					if (difX <= difY) 
 					{
+                        if (grafo[posX, posY] == null)
+                            continue;
 						grafo [posX, posY].SetPlayerInfluence (player, numberOfSteps - difY);
 						if (grafo [posX, posY].resourceType != TipoRecurso.NullResourceType) 
 						{
@@ -297,8 +299,11 @@ public class StageData : MonoBehaviour
 					}
 					else 
 					{
-						grafo [posX, posY].SetPlayerInfluence (player, numberOfSteps - difX);
-						if (grafo [posX, posY].resourceType != TipoRecurso.NullResourceType) 
+                        if (grafo[posX, posY] == null)
+                            continue;
+                        grafo [posX, posY].SetPlayerInfluence (player, numberOfSteps - difX);
+                       
+                        if (grafo [posX, posY].resourceType != TipoRecurso.NullResourceType) 
 						{
 							partidaActual.Jugadores [player].RecursoEncontrado (grafo [posX, posY].position);
 						}
@@ -341,7 +346,9 @@ public class StageData : MonoBehaviour
 					int difY = (int)Mathf.Abs (center.col - posY);
 					if (numberOfSteps - difY == 0 || numberOfSteps - difX == 0) {continue;	}
 
-					grafo [posX, posY].ClearPlayerInfluence (player);
+                    if (grafo[posX, posY] == null)
+                        continue;
+                    grafo [posX, posY].ClearPlayerInfluence (player);
 					//		Instantiate (testCasillaMarcada, grafo [posX, posY].position, Quaternion.identity);
 					//		Debug.Log ("peso en" + " x: " + difX + " , " + "y: " + difY + "==>" +  (numberOfSteps - difY) 
 				}

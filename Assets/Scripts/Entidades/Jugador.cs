@@ -187,7 +187,7 @@ public abstract class Jugador : MonoBehaviour
     public virtual void Turno()
     {
         SumarRecursosDeTodosLosAlmacenes();
-        print("El jugador: " + idJugador + " tiene:\nMadera: " + madera + "\nPiedra: " + piedra + "\nMetal: " + metal + "\nComida: " + comida);
+        //print("El jugador: " + idJugador + " tiene:\nMadera: " + madera + "\nPiedra: " + piedra + "\nMetal: " + metal + "\nComida: " + comida);
     }
 
 

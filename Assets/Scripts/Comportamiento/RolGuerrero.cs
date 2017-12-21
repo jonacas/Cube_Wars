@@ -2,209 +2,120 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RolGuerrero : MonoBehaviour {
+public class RolGuerrero : MonoBehaviour
+{
+    const int NUMERO_MINIMO_DE_GUERREROS = 5;
 
-    public enum EstadoAtaque
+    List<Vector3> caminoANodoDestino;
+    public bool fin;
+    Partida partidaActual;
+    int numeroCreaciones;
+    int puntosDispo;
+    bool numeroAldeanosMINIMOS;
+    List<Unidad> guerreros;
+
+    int idJugador;
+
+    void Start()
     {
-        Planificacion, Preparacion, Ataque, Retirada
+        idJugador = -1;
+        partidaActual = StageData.currentInstance.GetPartidaActual();
+        caminoANodoDestino = new List<Vector3>();
     }
 
-    private int DISTANCIA_PREPARACION_CAPITAL = 5;   
-    private const int MINIMO_GUERREROS = 3;
-
-    private Jugador jug;
-    private List<IA_Guerrero> guerrerosDisponibles;
-    private List<Vector3> caminoCapial;
-    private Unidad un;
-    private bool fin;
-    private List<Node> casillasDestinoPreparacion;
-    public int objetivoActual;
-
-
-    private int puntosDispAux;
-
-    public EstadoAtaque estado;
-
-
-	// Use this for initialization
-	void Awake () {
-        jug = this.gameObject.GetComponent<Jugador>();
-        guerrerosDisponibles = new List<IA_Guerrero>();
-        un = this.gameObject.GetComponent<Unidad>();
-	}
-
-
-    public void Ataca(int objetivo, int puntosDisponibles, bool empezarDeCero = false)
+    public void SetIdJugador(int id)
     {
-        puntosDispAux = puntosDisponibles;
-        if(empezarDeCero)
-            estado = EstadoAtaque.Planificacion;
-        fin = false;
-        switch (estado)
+        if (idJugador == -1)
         {
-            case EstadoAtaque.Planificacion:
-                   objetivoActual = objetivo;
-                 guerrerosDisponibles.Clear();
-
-                //contamos los guerreros y si hay poca el ataque se cancela
-
-                //se obtienen los guerreros de los que se dispone
-                for (int i = 0; i < jug.unidadesDisponibles.Count; i++)
-                {
-                    if (jug.unidadesDisponibles[i].IdUnidad == TipoUnidad.Warrior)
-                    {
-                        guerrerosDisponibles.Add((IA_Guerrero)jug.unidadesDisponibles[i]);
-                    }
-                }
-
-                StartCoroutine("dirigirTropas");
-                puntosDispAux = puntosDisponibles;
-                break;
-
-            case EstadoAtaque.Preparacion:
-               puntosDispAux = puntosDisponibles;
-                StartCoroutine("PrepararTropas");
-                break;
-
-            case EstadoAtaque.Ataque:
-                puntosDispAux = puntosDisponibles;
-                StartCoroutine("Atacar");
-                break;
+            idJugador = id;
         }
-
+        else
+        {
+            Debug.LogError("Se intenta cambiar id de jugador cuando no toca BITCH");
+        }
     }
 
-    IEnumerator dirigirTropas()
+    public bool ComenzarTurno(ref int puntosAsig)
     {
-        un.caminoListo = false;
-        StageData.currentInstance.GetPathToTarget(this.transform.position, jug.capitalesEnemigas[objetivoActual].transform.position, un);
+        partidaActual = StageData.currentInstance.GetPartidaActual();
+        // Buscamos ahora a los aldeanos disponibles.
+        puntosDispo = puntosAsig; 
 
-        while (!un.caminoListo)
-            yield return null;
+        print("COMIENZA ROL GUERRERO");
 
-        caminoCapial = un.caminoActual;
+        guerreros = new List<Unidad>();
 
-        //se preparan las tropas a una distancia segura
-        //elegimos alrededor de que nodo se concentraran
-        Node nodoDestino = StageData.currentInstance.GetNodeFromPosition(caminoCapial[caminoCapial.Count - DISTANCIA_PREPARACION_CAPITAL]);
-
-        //obtenemos nodos suficientes alrededor para colocar a los guerreros
-        casillasDestinoPreparacion = new List<Node>();
-        int radioNecesario = guerrerosDisponibles.Count / 8;
-        while (casillasDestinoPreparacion.Count <= guerrerosDisponibles.Count)
+        foreach (Unidad u in StageData.currentInstance.GetPartidaActual().Jugadores[idJugador].unidadesDisponibles)
         {
-            radioNecesario++;
-            casillasDestinoPreparacion = Control.GetNodosAlAlcance(nodoDestino, radioNecesario);
+            if (u.IdUnidad == TipoUnidad.Warrior)
+            {
+                guerreros.Add(u);
+            }
         }
 
-        //asignamos a cada unidad un destino
-        for (int i = 0; i < guerrerosDisponibles.Count; i++)
+        if (guerreros.Count < NUMERO_MINIMO_DE_GUERREROS)
         {
-            guerrerosDisponibles[i].SetDestino(casillasDestinoPreparacion[i]);
-            while (!guerrerosDisponibles[i].caminoListo)
+                return false;
+                fin = true;
+        }
+        else
+        {
+            int movimientosDisponibles = puntosDispo / StageData.COSTE_PA_MOVER_UNIDAD;
+
+            if (movimientosDisponibles > 0)
+            {
+                StartCoroutine("PrepararOrdenesGuerrero");
+                return true;
+            }
+            else
+            {
+                return false;
+                fin = true;
+            }
+
+        }
+
+        //Comprobamos si necesitamos recursos mínimos, para cumplir necesidades mínimas.
+    }
+
+    IEnumerator PrepararOrdenesGuerrero()
+    {
+
+        //asignamos a cada guerrero una posicion cercana a la capital
+        List<Node> cercanias;
+        cercanias = Control.GetNodosAlAlcance(StageData.currentInstance.GetPartidaActual().Jugadores[StageData.currentInstance.GetPartidaActual().JugadorActual.IndexPlayerObjetivoActual].Capital.Nodo, 3);
+
+        IA_Guerrero guerIA;
+        int nodoActual = 0;
+        foreach (Unidad guer in guerreros)
+        {
+            //print("preparandoAldeano PROTEC");
+            guerIA = (IA_Guerrero)guer;
+            //print("set destino PROTEC");
+
+            guerIA.SetDestino(cercanias[nodoActual]);
+
+            while (!guerIA.caminoListo)
+                yield return null;
+        }
+        yield return null;
+        StartCoroutine("MoverGuerreros");
+    }
+
+    IEnumerator MoverGuerreros()
+    {
+
+        foreach (IA_Guerrero guerr in guerreros)
+        {
+            if (puntosDispo < StageData.COSTE_PA_ATACAR)
+                break;
+
+            guerr.AvanzarHaciaDestino(ref puntosDispo);
+
+            while (!guerr.listo)
                 yield return null;
         }
 
-        estado = EstadoAtaque.Preparacion;
-        //al terminar, volvemos a ejecutar para empezar la accion en si
-        Ataca(objetivoActual, puntosDispAux);
         fin = true;
-    }
-
-    IEnumerator PrepararTropas()
-    {
-        //las unidades avanzan hacia la zona de ataque
-        int guerrerosEnPosicion = 0;
-        while (puntosDispAux > 20)
-        {
-            for (int i = guerrerosDisponibles.Count - 1; i >= 0; i--)
-            {
-
-                if (guerrerosDisponibles[i] == null)
-                {
-                    guerrerosDisponibles.Remove(guerrerosDisponibles[i]);
-                }
-                else
-                {
-                    if (!guerrerosDisponibles[i].HaLlegado())
-                    {
-                        guerrerosDisponibles[i].AvanzarHaciaDestino(ref puntosDispAux);
-                        while (!guerrerosDisponibles[i].AccionTerminada())
-                            yield return null;
-                    }
-                    else
-                        guerrerosEnPosicion++;
-                }
-            }
-
-            //si el 70 o mas de los guerreros han llegado, comienza el ataque
-            if ((float)guerrerosEnPosicion / (float)guerrerosDisponibles.Count > 0.7f)
-            {
-                StartCoroutine("ColocarTropasEnCapital");
-                StopCoroutine("PrepararTropas");
-            }
-        }
-        fin = true;
-    }
-
-    IEnumerator ColocarTropasEnCapital()
-    {
-        Node nodoDestino = StageData.currentInstance.GetNodeFromPosition(jug.capitalesEnemigas[objetivoActual].transform.position);
-
-        //obtenemos nodos suficientes alrededor para colocar a los guerreros
-        casillasDestinoPreparacion = new List<Node>();
-        int radioNecesario = guerrerosDisponibles.Count / 8;
-        while (casillasDestinoPreparacion.Count <= guerrerosDisponibles.Count)
-        {
-            radioNecesario++;
-            casillasDestinoPreparacion = Control.GetNodosAlAlcance(nodoDestino, radioNecesario);
-        }
-
-        //asignamos a cada unidad un destino
-        for (int i = 0; i < guerrerosDisponibles.Count; i++)
-        {
-            guerrerosDisponibles[i].SetDestino(casillasDestinoPreparacion[i]);
-            while (!guerrerosDisponibles[i].caminoListo)
-                yield return null;
-        }
-
-        estado = EstadoAtaque.Ataque;
-        //al terminar, volvemos a ejecutar para empezar la accion en si
-        Ataca(objetivoActual, puntosDispAux);
-    }
-
-    IEnumerator Atacar()
-    {
-        int guerrerosEnCapital = 0;
-
-        while (puntosDispAux > StageData.COSTE_PA_ATACAR)
-        {
-            for (int i = guerrerosDisponibles.Count - 1; i >= 0; i--)
-            {
-
-                if (guerrerosDisponibles[i] == null)
-                {
-                    guerrerosDisponibles.Remove(guerrerosDisponibles[i]);
-                }
-                else
-                {
-                    guerrerosDisponibles[i].AvanzarHaciaDestino(ref puntosDispAux);
-                    while (!guerrerosDisponibles[i].AccionTerminada())
-                        yield return null;
-                }
-            }
-
-            if (guerrerosDisponibles.Count <= MINIMO_GUERREROS)
-            {
-                estado = EstadoAtaque.Preparacion;
-            }
-        }
-        fin = true;
-    }
-
-
-    public bool HaTerminado()
-    {
-        return fin;
     }
 }

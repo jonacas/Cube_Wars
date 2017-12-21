@@ -13,7 +13,7 @@ public class JugadorIA : Jugador {
     public RolProtector rolPro;
     public RolRecolector rolReco;
 
-
+    int turnos = 0;
 
     Ordenes reparto;
 
@@ -30,10 +30,14 @@ public class JugadorIA : Jugador {
         rolLat = this.GetComponent<RolLatente>();
         rolPro = this.GetComponent<RolProtector>();
         rolReco = this.GetComponent<RolRecolector>();
+
+        rolGuerr.SetIdJugador(idJugador);
+
     }
 
     public override void Turno()
     {
+        turnos++;
         base.Turno();
         puntosDeAccion = 100 + 20 * edificios.Count;
         //print("TURNO DE " + idJugador);
@@ -93,6 +97,19 @@ public class JugadorIA : Jugador {
             rolLat.ComenzarTurno(ref asignacion);
             /*while (!rolLat.fin)
                 yield return null;*/
+            yield return new WaitForSeconds(3);
+        }
+
+        asignacion = Mathf.RoundToInt(puntosDeAccion * reparto.GetOrdenAtaque());
+        if (turnos > 7)
+            asignacion = 150;
+        puntosDeAccion -= asignacion;
+        if (!(asignacion < StageData.COSTE_PA_ATACAR))
+        {
+            rolGuerr.fin = false;
+            rolGuerr.ComenzarTurno(ref asignacion);
+            while (!rolGuerr.fin)
+                yield return null;
             yield return new WaitForSeconds(3);
         }
 

@@ -8,11 +8,14 @@ public class MoverUnidad :  Accion{
     int posicionActualRuta = 0;
 	private const float MOVE_SPEED = 10f;
     public List<Node> NodosAlAlcance;
+    public bool Fin;
+
 
     float margen = 1.0f; //Margen para indicar que se está lo suficientemente cerca de un punto.
 
     private void Awake()
-    {       
+    {
+        Fin = false;
         m_Unidad = GetComponent<Unidad>();
         switch (m_Unidad.IdUnidad)
         {
@@ -38,7 +41,7 @@ public class MoverUnidad :  Accion{
 
     public bool Ejecutar(Node destino)
     {
-        
+        Fin = false;
         VerNodosAlAlcance();
         //print("Ejecutar entrado");
         //print(NodosAlAlcance.Count);
@@ -82,6 +85,7 @@ public class MoverUnidad :  Accion{
         NodosAlAlcance = Control.GetNodosAlAlcance(StageData.currentInstance.GetNodeFromPosition(transform.position), 3);
         Nodo = StageData.currentInstance.GetNodeFromPosition(transform.position);
         Nodo.unidad = transform.GetComponent<Unidad>();
+        Fin = true;
         StageData.currentInstance.SetInfluenceToNode(Alcance, Nodo, m_Unidad.IdJugador);
 
     }   
@@ -111,9 +115,7 @@ public class MoverUnidad :  Accion{
                 print(NodosAlAlcance[i].unidad + "   " + NodosAlAlcance[i].resourceType + "  Eliminado");
                 NodosAlAlcance.Remove(NodosAlAlcance[i]);
             }*/
-        }
-
-        m_Unidad.ResaltarCasillasAlAlcance(NodosAlAlcance);
+        }        
         return NodosAlAlcance;
     }
 

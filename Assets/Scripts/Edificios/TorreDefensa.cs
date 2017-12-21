@@ -16,12 +16,10 @@ public class TorreDefensa : Unidad{
         Defensa = StageData.DEFENSA_MAX_TORRE_DEFENSIVA;
 		idUnidad = TipoUnidad.DefensiveBuilding;  
 		Nodo = StageData.currentInstance.GetNodeFromPosition(transform.position);
-        Debug.Log("Pos Nodo Centro: " + Nodo.fil + " , " + Nodo.col );
-        Debug.Log("Pos Nodo 0,0: " + StageData.currentInstance.grafoTotal[0,0].position.x + " , " +
-                                     StageData.currentInstance.grafoTotal[0, 0].position.z);
-        Debug.Log("Pos Nodo ExtremoOpuesto: " + StageData.currentInstance.grafoTotal[49, 49].position.x + " , " +
-                                     StageData.currentInstance.grafoTotal[49, 49].position.z);
-        //StageData.currentInstance.SetInfluenceToNode(Node.stepsInfluenceDefensiveBuilding, Nodo, StageData.currentInstance.GetPartidaActual().JugadorActual.idJugador);
+        //Debug.Log("Pos Nodo Centro: " + Nodo.fil + " , " + Nodo.col );
+        //Debug.Log("Pos Nodo 0,0: " + StageData.currentInstance.grafoTotal[0,0].position.x + " , " + StageData.currentInstance.grafoTotal[0, 0].position.z);
+        //Debug.Log("Pos Nodo ExtremoOpuesto: " + StageData.currentInstance.grafoTotal[49, 49].position.x + " , " + StageData.currentInstance.grafoTotal[49, 49].position.z);
+        StageData.currentInstance.SetInfluenceToNode(Node.stepsInfluenceDefensiveBuilding, Nodo, StageData.currentInstance.GetPartidaActual().JugadorActual.idJugador);
         //linea innecesaria pa al version final?
     }
 

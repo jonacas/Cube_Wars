@@ -43,7 +43,7 @@ public class RolLatente : MonoBehaviour {
                 if (haFuncionado)
                 {
                     numeroCreaciones--;
-                    print(numeroCreaciones);
+                    //print(numeroCreaciones);
                     yield return new WaitForSeconds(0.5f); // DELAY QUE SE TARDA ENTRE CREAR UNA UNIDAD Y OTRA
                 }
 			}            
